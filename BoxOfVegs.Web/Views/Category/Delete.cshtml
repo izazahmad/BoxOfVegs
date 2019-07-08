@@ -1,0 +1,15 @@
+﻿@model BoxOfVegs.Entities.Category
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete Category</h2>
+<h1>Are you sure?</h1>
+
+<form method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+   
+    <button type="submit">Yes Delete</button>
+</form>
+<a href="/Index">Cancel</a>
+
