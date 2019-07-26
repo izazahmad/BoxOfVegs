@@ -1,0 +1,127 @@
+﻿@model List<Category>
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Product</h2>
+
+<form method="post" id="createProduct">
+    <br />
+    <div class="col-12 col-md-8 col-lg-8 col-xl-9 order-1 order-md-2">
+        <div class="website-search">
+            <div class="row no-gutters">
+                <div class="col-2 col-md-2 col-lg-1 col-xl-2">
+                    <div >
+                        <label>Name</label>
+                    </div>
+                </div>
+                <div class="col-8 col-md-8 col-lg-5 col-xl-7">
+                    <input name="Name" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="col-12 col-md-8 col-lg-8 col-xl-9 order-1 order-md-2">
+        <div class="website-search">
+            <div class="row no-gutters">
+                <div class="col-2 col-md-2 col-lg-1 col-xl-2">
+                    <div >
+                        <label>Description</label>
+                    </div>
+                </div>
+                <div class="col-8 col-md-8 col-lg-5 col-xl-7">
+                    <input name="Description" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <br />
+
+    <div class="col-12 col-md-8 col-lg-8 col-xl-9 order-1 order-md-2">
+        <div class="website-search">
+            <div class="row no-gutters">
+                <div class="col-2 col-md-2 col-lg-1 col-xl-2">
+                    <div >
+                        <label>Price</label>
+                    </div>
+                </div>
+                <div class="col-8 col-md-8 col-lg-5 col-xl-7">
+                    <input name="Price" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <br />
+
+
+    <div class="col-12 col-md-8 col-lg-8 col-xl-9 order-1 order-md-2">
+        <div class="website-search">
+            <div class="row no-gutters">
+                <div class="col-2 col-md-2 col-lg-1 col-xl-2">
+                    <div >
+                        <lable>Category</lable>
+                    </div>
+                </div>
+                <div class="col-8 col-md-8 col-lg-5 col-xl-7">
+                    <select name="CategoryId">
+
+                        @foreach (var category in Model)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+
+                    </select>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<br />
+    
+
+            <div class="col-4 col-md-4 col-lg-3 col-xl-2">
+                <div>
+                    <button id="saveBtn" type="button" class="no-round-btn">Save</button>
+                </div>
+            </div>
+            
+
+
+
+    <br />
+    
+</form>
+<script>
+    $("#saveBtn").click(function () {
+
+        
+
+        $.ajax({
+            type:'POST',
+            url: '/Product/Create',
+            data: $("#createProduct").serialize()
+        })
+            .done(function (responce) {
+                $('#tableContainer').html(responce);
+                $("#actionContainer").html("");
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            });
+
+    });
+</script>
+
+

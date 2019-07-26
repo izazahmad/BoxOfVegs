@@ -49,9 +49,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BOVContext.cs" />
-    <Compile Include="Migrations\201907020826540_initial.cs" />
-    <Compile Include="Migrations\201907020826540_initial.Designer.cs">
-      <DependentUpon>201907020826540_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201907232049275_Initial.cs" />
+    <Compile Include="Migrations\201907232049275_Initial.Designer.cs">
+      <DependentUpon>201907232049275_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907232058599_bitchangedProduct.cs" />
+    <Compile Include="Migrations\201907232058599_bitchangedProduct.Designer.cs">
+      <DependentUpon>201907232058599_bitchangedProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907251007247_bitchang.cs" />
+    <Compile Include="Migrations\201907251007247_bitchang.Designer.cs">
+      <DependentUpon>201907251007247_bitchang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907251351198_imageurl.cs" />
+    <Compile Include="Migrations\201907251351198_imageurl.Designer.cs">
+      <DependentUpon>201907251351198_imageurl.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,8 +81,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201907020826540_initial.resx">
-      <DependentUpon>201907020826540_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907232049275_Initial.resx">
+      <DependentUpon>201907232049275_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907232058599_bitchangedProduct.resx">
+      <DependentUpon>201907232058599_bitchangedProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907251007247_bitchang.resx">
+      <DependentUpon>201907251007247_bitchang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907251351198_imageurl.resx">
+      <DependentUpon>201907251351198_imageurl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

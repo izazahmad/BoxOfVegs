@@ -16,7 +16,10 @@
     <link rel="stylesheet" href="~/Content/css/scroll.css">
     <link rel="stylesheet" href="~/Content/css/icomoon.css">
     <link rel="stylesheet" href="~/Content/css/jquery.fancybox.min.css">
+    <link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 
 
 </head>
 <body>
@@ -126,6 +129,7 @@
                         </div>
                     </div>
                 </div>
+                
             </nav>
             <div id="mobile-menu">
                 <div class="container">
@@ -247,11 +251,11 @@
                                     </div>
                                     <div class="col-8 col-md-8 col-lg-5 col-xl-7">
                                         <div class="search-input">
-                                            <input class="no-round-input no-border" type="text" placeholder="What do you need">
+                                            <input id="mainSearchTxt" class="no-round-input no-border" type="text" placeholder="What do you need">
                                         </div>
                                     </div>
                                     <div class="col-4 col-md-4 col-lg-3 col-xl-2">
-                                        <button class="no-round-btn">Search</button>
+                                        <button class="no-round-btn" id="mainSearchBtn">Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -327,7 +331,7 @@
 
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
     <script src="~/Content/js/jquery-ui.min.js"></script>
     <script src="~/Content/js/jquery.countdown.min.js"></script>
     <script src="~/Content/js/slick.min.js"></script>
@@ -340,9 +344,11 @@
     <script src="~/Content/js/vanilla-tilt.min.js"></script>
     <script src="~/Content/js/main.js"></script>
     <script>var sence = document.getElementById('img-block')
-      var parallaxInstance = new Parallax(sence, {
-      	hoverOnly: true,
-      });</script>
+        var parallaxInstance = new Parallax(sence, {
+          hoverOnly: true,
+        });</script>
+
+    <a id="scrollUp" href="#top" style="position: fixed; z-index: 105;"><i class="arrow_carrot-up"></i></a>
 
 </body>
 </html>

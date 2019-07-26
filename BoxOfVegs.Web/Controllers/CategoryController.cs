@@ -12,12 +12,17 @@ namespace BoxOfVegs.Web.Controllers
     {
         CategoriesService categoryService = new CategoriesService();
         //GET: Category
+        public RepositoryWork _unitOfWork = new RepositoryWork();
 
        [HttpGet]
         public ActionResult Index()
         {
-            var categories = categoryService.GetCategories();
-            return View(categories);
+            //var categories = categoryService.GetCategories();
+            //return View(categories);
+
+            List<Category> allcategories = _unitOfWork.GetRepositoryInstance<Category>().GetAllRecordsIQueryable().ToList();
+            return View(allcategories);
+
         }
         [HttpGet]
         public ActionResult Create()
@@ -55,8 +60,8 @@ namespace BoxOfVegs.Web.Controllers
         [HttpPost]
         public ActionResult Delete(Category category)
         {
-            category = categoryService.GetCategory(category.Id);
-            categoryService.DeleteCategory(category.Id);
+            category = categoryService.GetCategory(category.CategoryID);
+            categoryService.DeleteCategory(category.CategoryID);
             return RedirectToAction("Index");
         }
     }

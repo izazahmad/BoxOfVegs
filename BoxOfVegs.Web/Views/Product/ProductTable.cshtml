@@ -1,0 +1,190 @@
+﻿@model List<Product>
+@{
+    ViewBag.Title = "ProductTable";
+}
+<div>
+    <form method="post">
+        <br />
+        <div class="col-12 col-md-8 col-lg-8 col-xl-9 order-1 order-md-2">
+            <div class="website-search">
+                <div class="row no-gutters">
+                    <div class="col-8 col-md-8 col-lg-5 col-xl-7">
+                        <div class="search-input">
+                            <input class="no-round-input" id="searchTxt" name="Search" placeholder="Enter Text for Search" />
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-3 col-xl-2">
+                        <button type="button" id="searchBtn" class="no-round-btn">Search</button>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-3 col-xl-2">
+                        <button type="button" id="newBtn" class="no-round-btn">New</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+    
+</div>
+
+<div>
+
+
+
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <td>Product Name</td>
+                <td>Category</td>
+                <td>Price</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.ProductName</td>
+                    <td>
+                    
+                        @if(product.Category!=null)
+                        {
+                            <text>@product.Category.CategoryName</text>
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+
+                    </td>
+                    <td>@product.Price</td>
+                    <td>
+                        <button class="editBtn no-round-btn"  type="button"  data-id="@product.ProductID">Edit</button>
+                        <button class="deleteBtn no-round-btn"  data-id="@product.ProductID" type="button">Delete</button>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+</div>
+<script>
+
+    $("#searchBtn").click(function () {
+
+        var searchValue = $("#searchTxt").val();
+        //$.ajax({
+        //    type: "GET",
+        //    url: url,
+        //data:{data}
+
+        //})
+        //    .done(function (data) {
+
+        //    })
+        //    .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        //    });
+        $.ajax({
+            
+            url: '/Product/ProductTable',
+            data: {
+                search: searchValue
+            }
+        })
+            .done(function (responce) {
+                $('#tableContainer').html(responce);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            });
+
+    });
+    //$("#mainSearchBtn").click(function () {
+
+    //    var searchValue = $("#mainSearchTxt").val();
+        
+    //    $.ajax({
+
+    //        url: '/Product/ProductTable',
+    //        data: {
+    //            search: searchValue
+    //        }
+    //    })
+    //        .done(function (responce) {
+    //            $('#tableContainer').html(responce);
+
+    //        })
+    //        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+    //        });
+
+    //});
+
+    $("#newBtn").click(function () {
+
+        //var searchValue = $("#searchTxt").val();
+
+        $.ajax({
+
+            url: '/Product/Create'
+            
+        })
+            .done(function (responce) {
+                $('#actionContainer').html(responce);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+
+    });
+
+    $(".editBtn").click(function () {
+
+        //var searchValue = $("#mainSearchTxt").val();
+
+        $.ajax({
+
+            url: '/Product/Edit',
+            data: {
+                Id: $(this).attr("data-id")
+            }
+
+        })
+            .done(function (responce) {
+                $('#actionContainer').html(responce);
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+
+    });
+    $(".deleteBtn").click(function () {
+
+        var confirmDelete = confirm("Are you sure?");
+
+        if (confirmDelete)
+        {
+            $.ajax({
+                type: 'POST',
+            url: '/Product/Delete',
+                data: {
+                    Id: $(this).attr("data-Id")
+                }
+
+            })
+                .done(function (responce) {
+                    $('#tableContainer').html(responce);
+
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Fail");
+                });
+
+
+        }
+        
+    });
+
+</script>
