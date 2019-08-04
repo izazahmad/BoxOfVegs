@@ -13,12 +13,10 @@ using System.Web.Mvc;
 
 namespace BoxOfVegs.Web.Controllers
 {
-    public class CategoryController : Controller
+    public class DashboardController : Controller
     {
         // GET: Admin
         public RepositoryWork repoWork = new RepositoryWork();
-        BOVContext context = new BOVContext();
-        CategoriesService service = new CategoriesService();
         public ActionResult Index()
         {
             return View();
@@ -34,12 +32,12 @@ namespace BoxOfVegs.Web.Controllers
             }
             return list;
         }
-
+        
         public ActionResult Categories(string search, int? pageNO)
         {
             CategoryPagingModels model = new CategoryPagingModels();
 
-            model.Searching = search;
+             model.Searching = search;
             int pageSize = 5;
             //BOVContext context = new BOVContext();
 
@@ -68,7 +66,7 @@ namespace BoxOfVegs.Web.Controllers
             //return View(model.CreateModel(search, 5, page));
 
             //CategoryViewModels model = new CategoryViewModels();
-            pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
+             pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
             //if(!string.IsNullOrEmpty(search))
             //{ 
             var totalRec = repoWork.GetRepositoryInstance<Category>().GetCountByWhere(search, x => x.CategoryName != null &&
@@ -79,10 +77,10 @@ namespace BoxOfVegs.Web.Controllers
             //    var totalRec = repoWork.GetRepositoryInstance<Category>().GetAllrecordCount();
             //}
             model.category = repoWork.GetRepositoryInstance<Category>().GetToShow(search, pageNO.Value, pageSize, x => x.CategoryName != null &&
-                         x.CategoryName.ToLower().Contains(search.ToLower()), x => x.CategoryID, x => x.Products);
+                         x.CategoryName.ToLower().Contains(search.ToLower()), x => x.CategoryID, x =>x.Products);
 
-            if (model.category != null)
-            {
+              if (model.category != null)
+               {
                 model.Pager = new Pager(totalRec, pageNO, 5);
 
                 return PartialView("Categories", model);
@@ -132,26 +130,19 @@ namespace BoxOfVegs.Web.Controllers
             repoWork.GetRepositoryInstance<Category>().Update(category);
             return RedirectToAction("Index");
         }
-        //[HttpGet]
-        //public ActionResult DeleteCategory(int categoryID)
-        //{
-        //    var category = repoWork.GetRepositoryInstance<Category>().GetRecordByParameter(x=>x.CategoryID==categoryID,x=>x.Products);
-        //    return View(category);
-        //}
-        [HttpPost]
+        [HttpGet]
         public ActionResult DeleteCategory(int categoryID)
         {
-            var category = repoWork.GetRepositoryInstance<Category>().GetRecordByParameter(x => x.CategoryID == categoryID, x => x.Products);
-            ////repoWork.GetRepositoryInstance<Category>().RemoveRangeBywhereClause(x => x.Products);
-            ////repoWork.GetRepositoryInstance<Category>().Remove(category);
-            //context.Products.RemoveRange(category.Products);
-            //repoWork.GetRepositoryInstance<Category>().RemovebyWhereClause(category.Products);
-            //repoWork.GetRepositoryInstance<Category>().Remove(category);
-
-            service.DeleteCategory(categoryID);
-
-            return RedirectToAction("Categories");
+            var category = repoWork.GetRepositoryInstance<Category>().GetRecord(categoryID);
+            return View(category);
         }
-
+        [HttpPost]
+        public ActionResult DeleteCategory(Category category)
+        {
+            
+            repoWork.GetRepositoryInstance<Category>().Remove(category);
+            return RedirectToAction("Index");
+        }
+        
     }
 }

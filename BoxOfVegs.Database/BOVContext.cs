@@ -24,5 +24,10 @@ namespace BoxOfVegs.Database
         //    modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         //    base.OnModelCreating(modelBuilder);
         //}
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>().MapToStoredProcedures();
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BoxOfVegs.Database;
 using BoxOfVegs.Entities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -25,6 +26,19 @@ namespace BoxOfVegs.Services
             context.SaveChanges();
         }
 
+
+        //public List<EntityTbl> GetSearch(string search)
+        //{
+        //    if(!string.IsNullOrEmpty(search))
+        //    {
+        //        return table.Contains(search.ToLower());
+        //    }
+        //    else
+        //    {
+        //        return table.ToList();
+        //    }
+        //}
+
         public int GetAllrecordCount()
         {
             return table.Count();
@@ -44,20 +58,59 @@ namespace BoxOfVegs.Services
         {
             return table.Find(recordID);
         }
+
+
+        public int GetCountByWhere(string search,Expression<Func<EntityTbl, bool>> wherePredict)
+        {
+            if(!string.IsNullOrEmpty(search))
+            { 
+            return table.Where(wherePredict).Count();
+            }
+            else
+            {
+                return table.Count();
+            }
+            //if (!string.IsNullOrEmpty( search))
+            //{
+            //    return table.Where(EntityTbl => EntityTbl. != null &&
+            //         category.Name.ToLower().Contains(search.ToLower())).Count();
+            //}
+            //else
+            //{
+            //    return table.Count();
+            //}
+
+        }
+
+
+
         //public Product Getproduct(int recordID)
         //{
         //    //return table.Find(recordID);
         //    return context.Products.Where(x => x.ProductID == recordID).Include(x => x.Category).FirstOrDefault();
         //}
 
-        public EntityTbl GetRecordByParameter(Expression<Func<EntityTbl, bool>> wherePredict)
+        public EntityTbl GetRecordByParameter(Expression<Func<EntityTbl, bool>> wherePredict, Expression<Func<EntityTbl,IList>> whereList)
         {
-            return table.Where(wherePredict).FirstOrDefault();
+            return table.Where(wherePredict)
+                .Include(whereList)
+                .FirstOrDefault();
         }
 
         public IEnumerable<EntityTbl> GetListParameter(Expression<Func<EntityTbl, bool>> wherePredict)
         {
-            return table.Where(wherePredict).ToList();
+            
+                return table.Where(wherePredict).ToList();
+           
+            
+        }
+
+        public List<EntityTbl> GetListBySearch(Expression<Func<EntityTbl, bool>> wherePredict)
+        {
+            
+                return table.Where(wherePredict).ToList();
+           
+
         }
 
 
@@ -74,6 +127,20 @@ namespace BoxOfVegs.Services
             }
         }
 
+
+        public List<EntityTbl> GetResultSqlprocedure(string query, params object[] parameters)
+        {
+            if (parameters != null)
+            {
+                return context.Database.SqlQuery<EntityTbl>(query, parameters).ToList();
+            }
+            else
+            {
+                return context.Database.SqlQuery<EntityTbl>(query).ToList();
+            }
+        }
+
+
         public void InactiveAndDeleteMarkByWhereClause(Expression<Func<EntityTbl, bool>> wherePredict, Action<EntityTbl> ForEachPredict)
         {
             table.Where(wherePredict).ToList().ForEach(ForEachPredict);
@@ -87,14 +154,14 @@ namespace BoxOfVegs.Services
             context.SaveChanges();
         }
 
-        public void RemovebyWhereClause(Expression<Func<EntityTbl, bool>> wherePredict)
+        public void RemovebyWhereClause(List<EntityTbl> entity)
         {
-            EntityTbl entity = table.Where(wherePredict).FirstOrDefault();
+            table.RemoveRange(entity);
         }
 
-        public void RemoveRangeBywhereClause(Expression<Func<EntityTbl, bool>> wherePredict)
+        public void RemoveRangeBywhereClause(Expression<Func<EntityTbl, IList>> wherePredict)
         {
-            List<EntityTbl> entity = table.Where(wherePredict).ToList();
+            List<EntityTbl> entity = table.Include(wherePredict).ToList();
             foreach (var ent in entity)
             {
                 Remove(ent);
@@ -126,6 +193,33 @@ namespace BoxOfVegs.Services
 
 
         }
+        public List<EntityTbl> GetToShow(string search, int PageNo, int PageSize, Expression<Func<EntityTbl, bool>> wherePredict, Expression<Func<EntityTbl, int>> orderByPredict, Expression<Func<EntityTbl, IList>> whereinclude)
+        {
+            if (!string.IsNullOrEmpty(search))
+            {
+                return table.Where(wherePredict)
+                    .OrderBy(orderByPredict)
+                    .Skip((PageNo-1)*PageSize)
+                    .Include(whereinclude)
+                    .ToList();
+            }
+            else
+            {
+                return table
+                    .OrderBy(orderByPredict)
+                    
+                    .Skip((PageNo - 1) * PageSize)
+                    .Take(PageSize)
+                    .Include(whereinclude)
+                    .ToList();
+            }
+
+
+        }
+
+
+
+
 
     }
 }

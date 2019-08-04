@@ -1,7 +1,11 @@
-﻿using BoxOfVegs.Services;
+﻿using BoxOfVegs.Database;
+using BoxOfVegs.Entities;
+using BoxOfVegs.Services;
 using BoxOfVegs.Web.ViewModels;
+using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,26 +14,44 @@ namespace BoxOfVegs.Web.Controllers
 {
     public class HomeController : Controller
     {
+
+        public RepositoryWork repoWork = new RepositoryWork();
+        BOVContext context = new BOVContext();
         CategoriesService categoryService = new CategoriesService();
-        public ActionResult Index()
+        public ActionResult Index(string search, int? page)
         {
+            
             HomeViewModels model = new HomeViewModels();
-            model.Categories = categoryService.GetCategories();
-            return View(model);
+            return View(model.CreateModel(search, 4, page));
         }
 
-        public ActionResult About()
+
+        public ActionResult AddToCart(int productId)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            if (Session["cart"] == null)
+            {
+                List<Item> cart = new List<Item>();
+                var product = context.Products.Find(productId);
+                cart.Add(new Item()
+                {
+                    Product = product,
+                    Quantity = 1
+                });
+                Session["cart"] = cart;
+            }
+            else
+            {
+                List<Item> cart = (List<Item>)Session["cart"];
+                var product = context.Products.Find(productId);
+                cart.Add(new Item()
+                {
+                    Product = product,
+                    Quantity = 1
+                });
+                Session["cart"] = cart;
+            }
+            return Redirect("Index");
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

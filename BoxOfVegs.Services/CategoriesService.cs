@@ -2,6 +2,7 @@
 using BoxOfVegs.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,14 +43,26 @@ namespace BoxOfVegs.Services
                 context.SaveChanges();
             }
         }
-        public void DeleteCategory(int Id)
+        //public void DeleteCategory(int Id)
+        //{
+        //    using (var context = new BOVContext())
+        //    {
+        //        //context.Entry(category).State = System.Data.Entity.EntityState.Deleted;
+
+        //        var category = context.Categories.Find(Id);
+
+        //        context.Categories.Remove(category);
+        //        context.SaveChanges();
+        //    }
+        //}
+
+        public void DeleteCategory(int ID)
         {
             using (var context = new BOVContext())
             {
-                //context.Entry(category).State = System.Data.Entity.EntityState.Deleted;
+                var category = context.Categories.Where(x => x.CategoryID == ID).Include(x => x.Products).FirstOrDefault();
 
-                var category = context.Categories.Find(Id);
-
+                context.Products.RemoveRange(category.Products); //first delete products of this category
                 context.Categories.Remove(category);
                 context.SaveChanges();
             }
