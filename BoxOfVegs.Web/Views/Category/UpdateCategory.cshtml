@@ -10,9 +10,7 @@
 
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="#">Dashboard</a>
-        </li>
+        
         <li class="breadcrumb-item active">Categories</li>
         <li class="breadcrumb-item active">Update Category</li>
     </ol>
@@ -24,43 +22,72 @@
         </div>
         <div class="card-body">
 
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("UpdateCategory", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                        @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.CategoryID)
 
             <div class="form-group">
-                
-                
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-6 col-md-4">
-                        @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-6 col-md-4">
-                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                    </div>
-                </div>
 
                 <div class="row">
-                        <div class="col-auto ">
-
-                        <input type="submit" value="Save" class="btn btn-outline-primary" />
+                    <div class="col-md-8">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Category Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-6 col-md-4">
+                                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    
-                          <div class="col-auto">
-                          <a onclick="window.history.back();" class="btn btn-outline-primary">Cancel</a>
-                          </div>
-                    </div>
 
+                        <div class="form-group">
+                            @Html.Label("Image", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-6 col-md-4">
+                                <input type="file" name="file" id="file" style="width: 100%;" />
+                                @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.isFeatured, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-6 col-md-4">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.isFeatured)
+                                    @Html.ValidationMessageFor(model => model.isFeatured, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-6 col-md-4">
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                     
+                        <div class="row">
+                            <div class="col-auto ">
+
+                                <input type="submit" value="Save" class="btn btn-outline-primary" />
+                            </div>
+
+                            <div class="col-auto">
+                                <a onclick="window.history.back();" class="btn btn-outline-primary">Cancel</a>
+                            </div>
+                        </div>
                     </div>
+                        <div class="col-md-4">
+                            <div class="thumb">
+                                <img class="img-thumbnail img-fluid" id="productImage" src="~/Content/images/category/@Model.ImageUrl" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
                     }
 
                 </div>

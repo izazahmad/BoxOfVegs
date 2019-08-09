@@ -1,0 +1,145 @@
+﻿@model HomeViewModels
+@{
+    ViewBag.Title = "ProductDetails";
+    
+}
+
+@if (Model != null && Model.Product != null)
+{
+    var imageURL = "placeholder-image.png";
+
+   var imageUrl = string.IsNullOrEmpty(Model.Product.ImageUrl) ? imageURL : Model.Product.ImageUrl;
+    <div id="main">
+        
+        <div class="shop-layout">
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-xl-9">
+                        <div class="shop-detail">
+                            <div class="row">
+                                
+                                <div class="col-12 col-lg-6">
+                                    <div class="shop-detail_img">
+                                        <button class="round-icon-btn" id="zoom-btn"> <i class="icon_zoom-in_alt"></i></button>
+                                        <div class="big-img">
+                                            <div class="big-img_block"><img src="~/Content/images/product/@imageUrl" alt="product image"></div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="img_control"></div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="shop-detail_info">
+                                        <h5 class="product-type color-type">@Model.Product.Category.CategoryName</h5>
+                                        <h2 class="product-name">@Model.Product.ProductName</h2>
+                                        <p class="product-describe">@Model.Product.Description</p>
+                                        <p class="delivery-status">Free delivery</p>
+                                        <div class="price-rate">
+                                            <h3 class="product-price">
+                                                £ @Model.Product.Price
+                                            </h3>
+                                            <h5 class="product-rated"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i><span>(15)</span></h5>
+                                        </div>
+
+                                        @using (Html.BeginForm("AddInCart", "Shop", new { productId = Model.Product.ProductID }, FormMethod.Post))
+                                        {
+                                            <div class="quantity-select">
+                                                <label for="quantity">Quantity:</label>
+                                                <input class="no-round-input" id="quantity" type="number" min="0" value="1" name="qty">
+                                            </div>
+                                            <div class="product-select">
+
+
+                                                <button class="add-to-cart normal-btn outline">Add to Cart</button>
+
+
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="shop-detail_more-info">
+                                        <div id="tab-so3">
+                                            <ul class="mb-0">
+                                                <li class="active" > <a href="#tab">Customer Reviews </a></li>
+                                            </ul>
+                                           
+                                            <div id="tab">
+                                                <div class="customer-reviews_block">
+                                                    <div class="customer-review">
+                                                        <div class="row">
+                                                            <div class="col-12 col-sm-3 col-lg-2">
+                                                                <div class="customer-review_left">
+                                                                    <div class="customer-review_img text-center"><img class="img-fluid" src="assets/images/shop/reviewer_01.png" alt="customer image"></div>
+                                                                    <div class="customer-rate"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-sm-9 col-lg-10">
+                                                                <div class="customer-comment">
+                                                                    <h5 class="comment-date">27 Aug 2016</h5>
+                                                                    <h3 class="customer-name">Jenney Kelley</h3>
+                                                                    <p class="customer-commented">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna alation uidem dolore eu fugiat nulla pariatur. </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="customer-review">
+                                                        <div class="row">
+                                                            <div class="col-12 col-sm-3 col-lg-2">
+                                                                <div class="customer-review_left">
+                                                                    <div class="customer-review_img text-center"><img class="img-fluid" src="assets/images/shop/reviewer_02.png" alt="customer image"></div>
+                                                                    <div class="customer-rate"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-sm-9 col-lg-10">
+                                                                <div class="customer-comment">
+                                                                    <h5 class="comment-date">27 Aug 2016</h5>
+                                                                    <h3 class="customer-name">Jenney Kelley</h3>
+                                                                    <p class="customer-commented">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna alation uidem dolore eu fugiat nulla pariatur. </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="add-review">
+                                                        <div class="add-review_top">
+                                                            <h2>Add Review</h2>
+                                                        </div>
+                                                        <div class="add-review_bottom">
+                                                            <form action="" method="post">
+                                                                <div class="row">
+                                                                    <div class="col-12 col-md-6">
+                                                                        <input class="no-round-input" type="text" placeholder="Name*">
+                                                                    </div>
+                                                                    <div class="col-12 col-md-6">
+                                                                        <input class="no-round-input" type="text" placeholder="Email*">
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="rating">
+                                                                            <h5>Your rating:</h5><span><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <textarea class="textarea-form" id="review" name="" cols="30" rows="4" placeholder="Message"></textarea>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <button class="normal-btn">Submit Review</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

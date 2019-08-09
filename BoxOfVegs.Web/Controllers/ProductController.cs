@@ -11,26 +11,45 @@ namespace BoxOfVegs.Web.Controllers
 {
     public class ProductController : Controller
     {
-       public RepositoryWork repoWork = new RepositoryWork();
-        ProductService productsService = new ProductService();
+      // public RepositoryWork repoWork = new RepositoryWork();
+       // ProductService services = new ProductService();
+        ServicesForProducts services = new ServicesForProducts();
         // GET: Product
         public ActionResult Index()
         {
-            return View("Products");
+            return View();
         }
 
 
-        public ActionResult Products()
+        public ActionResult Products(string search, int? pageNO)
         {
-            List<Product> allProducts = repoWork.GetRepositoryInstance<Product>().GetAllRecordsIQueryable().ToList();
-            return View(allProducts);
-            
+            ProductPagingModels model = new ProductPagingModels();
+
+            model.Searching = search;
+            int pageSize = 5;
+
+            pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
+            var totalRec = services.GetCountOfProducts(search);
+            model.Products = services.GetProductsList(search, pageNO.Value);
+            if (model.Products != null)
+            {
+                model.Pager = new Pager(totalRec, pageNO, pageSize);
+
+                return PartialView("Products", model);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+
         }
 
         public List<SelectListItem> GetCategories()
         {
+            ServicesForCategories categoryService = new ServicesForCategories();
             List<SelectListItem> list = new List<SelectListItem>();
-            var categories = repoWork.GetRepositoryInstance<Category>().GetAllRecords();
+            //var categories = repoWork.GetRepositoryInstance<Category>().GetAllRecords();
+            var categories = categoryService.AllCategories();
             foreach (var item in categories)
             {
                 list.Add(new SelectListItem { Value = item.CategoryID.ToString(), Text = item.CategoryName });
@@ -60,8 +79,9 @@ namespace BoxOfVegs.Web.Controllers
 
             product.ImageUrl = fileName;
             //product.CreatedDate = DateTime.Now;
-            repoWork.GetRepositoryInstance<Product>().AddRecord(product);
-                return RedirectToAction("Products");
+            //repoWork.GetRepositoryInstance<Product>().AddRecord(product);
+            services.AddProduct(product);
+                return RedirectToAction("Index");
             
         }
 
@@ -69,7 +89,8 @@ namespace BoxOfVegs.Web.Controllers
         {
             
             ViewBag.CategoryList = GetCategories();
-            var product = repoWork.GetRepositoryInstance<Product>().GetRecord(productID);
+           // var product = repoWork.GetRepositoryInstance<Product>().GetRecord(productID);
+            var product = services.GetProduct(productID);
             product.ImageUrl = product.ImageUrl;
             return View(product);
         }
@@ -86,86 +107,38 @@ namespace BoxOfVegs.Web.Controllers
             }
             product.ImageUrl = file != null ? fileName : product.ImageUrl;
             //tbl.ModifiedDate = DateTime.Now;
-            repoWork.GetRepositoryInstance<Product>().Update(product);
-            return RedirectToAction("Products");
+           // repoWork.GetRepositoryInstance<Product>().Update(product);
+            services.UpdateProduct(product);
+            return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        
+        
+        [HttpPost]
         public ActionResult DeleteProduct(int productID)
         {
-            var product = repoWork.GetRepositoryInstance<Product>().GetRecord(productID);
-            return View(product);
-        }
-        [HttpPost]
-        public ActionResult DeleteProduct(Product product)
-        {
 
-            repoWork.GetRepositoryInstance<Product>().Remove(product);
+            //repoWork.GetRepositoryInstance<Product>().Remove(product);
+            services.RemoveProduct(productID);
             return RedirectToAction("Products");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        // GET: Product
-        public ActionResult ProductTable(string search)
+        [HttpGet]
+        public ActionResult ProductDetails(int productId)
         {
+            HomeViewModels model = new HomeViewModels();
 
-            var products = productsService.GetProducts();
-            if(!string.IsNullOrEmpty(search))
+            model.Product = services.GetProduct(productId);
+            model.Product.ImageUrl = model.Product.ImageUrl;
+
+            if (model.Product == null)
             {
-                products=products.Where(p =>  p.ProductName.ToLower().Contains(search.ToLower()) && p.ProductName != null).ToList();
+                return HttpNotFound();
             }
-            return PartialView(products);
-        }
-        
-        [HttpGet]
-        public ActionResult Create()
-        {
-            CategoriesService categoryService = new CategoriesService();
-            var categories = categoryService.GetCategories();
-            return PartialView(categories);
-        }
-        [HttpPost]
-        public ActionResult Create(CategoryViewModels model)
-        {
+            else
+            { 
 
-            CategoriesService categoryService = new CategoriesService();
-            var newProduct = new Product();
-            newProduct.ProductName = model.Name;
-            newProduct.Description = model.Description;
-            newProduct.Price = model.Price;
-            newProduct.Category = categoryService.GetCategory(model.CategoryID);
-            productsService.SaveProduct(newProduct);
-            return RedirectToAction("ProductTable");
+            return View(model);
+            }
         }
-
-        [HttpGet]
-        public ActionResult Edit(int Id)
-        {
-            var product = productsService.GetProduct(Id);
-            return PartialView(product);
-        }
-        [HttpPost]
-        public ActionResult Edit(Product product)
-        {
-            productsService.UpdateProduct(product);
-            return RedirectToAction("ProductTable");
-        }
-        [HttpPost]
-        public ActionResult Delete(int Id)
-        {
-            productsService.DeleteProduct(Id);
-            return RedirectToAction("ProductTable");
-        }
-
     }
 }

@@ -19,6 +19,10 @@ namespace BoxOfVegs.Entities
         [MaxLength(500)]
         public string Description { get; set; }
 
+        public string ImageUrl { get; set; }
+
+        public bool isFeatured { get; set; }
+
         public List<Product> Products { get; set; }
         
         

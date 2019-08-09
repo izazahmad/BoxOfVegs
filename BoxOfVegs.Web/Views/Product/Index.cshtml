@@ -1,23 +1,21 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 
-<div class="container">
-    <div id="tableContainer">
+    <div class="container-fluid">
 
-        @{
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
 
-            Html.RenderAction("ProductTable");
-            //Html.RenderAction("Create");
+            <li class="breadcrumb-item active">Products</li>
+        </ol>
 
-        }
+        <div id="pagination">
+            @{
+                Html.RenderAction("Products");
+            }
+        </div>
     </div>
-    <hr/>
-
-    <div id="actionContainer">
-
-
-    </div>
-</div>

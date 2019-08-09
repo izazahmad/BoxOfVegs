@@ -78,6 +78,15 @@ namespace BoxOfVegs.Services
                 }
             }
         }
+
+        public List<Category> GetFeaturedCategory()
+        {
+            using (var context = new BOVContext())
+            {
+                return context.Categories.Where(x => x.isFeatured /*&& x.ImageURL != null*/).Include(x => x.Products).ToList();
+            }
+        }
+
         public void UpdateCategory(Category category)
         {
             using (var context = new BOVContext())

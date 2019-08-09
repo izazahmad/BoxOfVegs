@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "EditProduct";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    //var imagURL="/Content/images/system/placeholder-image.png";
 }
 
 
@@ -10,13 +11,11 @@
 
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="../Admin">Dashboard</a>
-        </li>
+        
         <li class="breadcrumb-item">
         <a href="../Products">Products</a>
         </li>
-        <li class="breadcrumb-item active">Edit Product</li>
+        <li class="breadcrumb-item ">Edit Product</li>
     </ol>
 
     <div class="card mb-3">
@@ -31,7 +30,7 @@
                 @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h4>Product</h4>
+                
                 <hr />
                 <div class="row">
                     <div class="col-md-8">
@@ -117,7 +116,7 @@
                     <div class="col-md-4">
                         <div class="thumb">
                             <img class="img-thumbnail img-fluid" id="productImage" src="~/Content/images/product/@Model.ImageUrl" />
-                           
+
                         </div>
                     </div>
                     </div>

@@ -15,43 +15,70 @@ namespace BoxOfVegs.Web.Controllers
     public class HomeController : Controller
     {
 
-        public RepositoryWork repoWork = new RepositoryWork();
-        BOVContext context = new BOVContext();
-        CategoriesService categoryService = new CategoriesService();
-        public ActionResult Index(string search, int? page)
+        //public RepositoryWork repoWork = new RepositoryWork();
+        //BOVContext context = new BOVContext();
+        //CategoriesService categoryService = new CategoriesService();
+        ServicesForProducts services = new ServicesForProducts();
+        ServicesForCategories categoryServices = new ServicesForCategories();
+        public ActionResult Index()
         {
             
             HomeViewModels model = new HomeViewModels();
-            return View(model.CreateModel(search, 4, page));
+            model.Products = services.GetNewAddedProducts(4);
+            model.Categories = categoryServices.AllCategories();
+            model.FeaturedCategories = categoryServices.GetFeaturedCategory();
+            return View(model);
+            //return View(model.CreateModel(search, 4, pageNO));
+
+            //HomeViewModels model = new HomeViewModels();
+
+            // model.Searching = search;
+            //    int pageSize = 5;
+
+            //    pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
+            //    var totalRec = services.GetCountOfProducts(search);
+            //    model.Products = services.GetProductsList(search, pageNO.Value);
+            //    if (model.Products != null)
+            //    {
+            //        model.Pager = new Pager(totalRec, pageNO, pageSize);
+
+            //        return PartialView("Products", model);
+            //    }
+            //    else
+            //    {
+            //        return HttpNotFound();
+            //    }
+
+            //}
         }
 
 
-        public ActionResult AddToCart(int productId)
-        {
-            if (Session["cart"] == null)
-            {
-                List<Item> cart = new List<Item>();
-                var product = context.Products.Find(productId);
-                cart.Add(new Item()
-                {
-                    Product = product,
-                    Quantity = 1
-                });
-                Session["cart"] = cart;
-            }
-            else
-            {
-                List<Item> cart = (List<Item>)Session["cart"];
-                var product = context.Products.Find(productId);
-                cart.Add(new Item()
-                {
-                    Product = product,
-                    Quantity = 1
-                });
-                Session["cart"] = cart;
-            }
-            return Redirect("Index");
-        }
+        //public ActionResult AddInCart(int productId)
+        //{
+        //    if (Session["cart"] == null)
+        //    {
+        //        List<Item> cart = new List<Item>();
+        //        var product = context.Products.Find(productId);
+        //        cart.Add(new Item()
+        //        {
+        //            Product = product,
+        //            Quantity = 1
+        //        });
+        //        Session["cart"] = cart;
+        //    }
+        //    else
+        //    {
+        //        List<Item> cart = (List<Item>)Session["cart"];
+        //        var product = context.Products.Find(productId);
+        //        cart.Add(new Item()
+        //        {
+        //            Product = product,
+        //            Quantity = 1
+        //        });
+        //        Session["cart"] = cart;
+        //    }
+        //    return Redirect("Index");
+        //}
 
     }
 }

@@ -73,6 +73,10 @@
     <Compile Include="Migrations\201907282329252_test.Designer.cs">
       <DependentUpon>201907282329252_test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908051536135_pictureaddincategory.cs" />
+    <Compile Include="Migrations\201908051536135_pictureaddincategory.Designer.cs">
+      <DependentUpon>201908051536135_pictureaddincategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907282329252_test.resx">
       <DependentUpon>201907282329252_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908051536135_pictureaddincategory.resx">
+      <DependentUpon>201908051536135_pictureaddincategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

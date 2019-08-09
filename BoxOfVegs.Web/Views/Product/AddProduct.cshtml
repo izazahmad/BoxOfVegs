@@ -3,18 +3,16 @@
 @{
     ViewBag.Title = "AddProduct";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    //var imageDeflt = "/Content/images/system/placeholder-image.png";
+    
 }
 
 <div class="container-fluid">
 
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="../Admin">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Products</li>
-        <li class="breadcrumb-item active">Add Product</li>
+        
+        <li class="breadcrumb-item">Products</li>
+        <li class="breadcrumb-item ">Add Product</li>
     </ol>
 
     <div class="card mb-3">
@@ -68,11 +66,7 @@
                         </div>
                     </div>
 
-                    @*<div class="form-group">
-                            <label>Image</label>
-                            <input type="hidden" id="ImageURL" name="ImageURL" />
-                            <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
-                        </div>*@
+                   
 
                     <div class="form-group">
                         @Html.Label("Image", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -107,6 +101,7 @@
                         </div>
                         <div class="col-auto">
                             <a onclick="window.history.back();" class="btn btn-outline-primary">Cancel</a>
+
                         </div>
                     </div>
 
