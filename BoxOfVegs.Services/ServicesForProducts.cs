@@ -167,6 +167,13 @@ namespace BoxOfVegs.Services
                 return products.Count;
             }
         }
+        public List<Product> GetProductByCatName(string categoryName)
+        {
+            using (var context = new BOVContext())
+            {
+                return context.Products.Where(x => x.Category.CategoryName== categoryName).ToList();
+            }
+        }
         public List<Product> ShopProducts(string search, int? minPrice, int? maxPrice, int? categoryID, int? sortBy, int pageNo, int pageSize)
         {
             using (var context = new BOVContext())

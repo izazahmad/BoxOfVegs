@@ -36,9 +36,23 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="header-right d-flex flex-column flex-md-row justify-content-md-end justify-content-center align-items-center">
-
-                                <div class="login d-flex"><a href="login.html"><i class="fas fa-user"></i>Login</a></div>
+                                @if (Session["UserID"] == null)
+                                {
+                                    <div class="login d-flex"><a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>Login</a></div>
+                                }
+                                else
+                                {
+                            
+                            <div class="login d-flex">
+                                <a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>@Session["FirstName"] </a>
+                                &nbsp &nbsp
+                                <a class="text-danger" href="@Url.Action("Logout", "User")">Logout</a>
                             </div>
+
+                                          
+                                        }
+                                    
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -62,7 +76,9 @@
                                     </li>
 
 
-                                    <li class="toggleable"><a class="menu-item" href="@Url.Action("Checkout", "Shop")">Checkout</a></li>
+                                    <li class="toggleable">
+                                    <a class="menu-item" href="@Url.Action("Checkout", "Shop")">Checkout</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -72,19 +88,24 @@
                             <div class="navgition-menu d-flex align-items-center justify-content-center">
                                 <ul class="mb-0">
                                     <li class="toggleable">
-                                        <a class="menu-item" href="#">Cart<b class="arrow_carrot-2down"></b></a>
+                                        <a class="menu-item" href="@Url.Action("Checkout", "Shop")">Cart<b class="arrow_carrot-2down"></b></a>
                                         <ul class="sub-menu">
-                                            <li class="dropdown-divider"></li>
+
                                             @if (Session["cart"] != null)
                                             {
                                                 foreach (CartViewModel item in (List<CartViewModel>)Session["cart"])
                                                 {
                                                     <li>
-                                                         <a href="@Url.Action("DeleteFromCart","Shop",new { productId=item.productid})">@item.productname (@item.qty) <i class="fa fa-times"></i></a>
+                                                        <a href="@Url.Action("DeleteFromCart","Shop",new { productId=item.ProductID})">@item.ProductName (@item.Quanity)- £ @item.Subtotal <i class="fa fa-times"></i></a>
                                                     </li>
                                                 }
+                                                <li class="divider"></li>
+                                                <li><a href="@Url.Action("Checkout", "Shop")">Total: £ @Session["total"]</a></li>
+
                                             }
-                                            <li><a href="#">IT</a></li>
+                                            
+
+
 
                                         </ul>
                                     </li>
@@ -98,7 +119,9 @@
             </nav>
 
 
-            <form method="post">
+           
+            @using (Html.BeginForm("Index", "Shop", FormMethod.Post))
+            {
                 <div class="navigation-filter">
                     <div class="container">
                         <div class="row">
@@ -111,20 +134,19 @@
                                 <div class="website-search">
                                     <div class="row no-gutters">
 
-                                        @using (Html.BeginForm("Index", "Shop", FormMethod.Post))
-                                        {
-                                            <div class="col-8 col-md-8 col-lg-5 col-xl-7">
-                                                <div class="search-input">
-                                                    <input id="mainSearchTxt" class="no-round-input no-border" type="text" placeholder="What do you need" name="search">
-                                                </div>
-                                            </div>
-                                            <div class="col-4 col-md-4 col-lg-3 col-xl-2">
-                                                <button class="no-round-btn" id="mainSearchBtn">Search</button>
-                                            </div>
-                                        }
 
-
+                                        <div class="col-8 col-md-8 col-lg-5 col-xl-7">
+                                            <div class="search-input">
+                                                <input id="mainSearchTxt" class="no-round-input no-border" type="text" placeholder="What do you need" name="search">
+                                            </div>
                                         </div>
+                                        <div class="col-4 col-md-4 col-lg-3 col-xl-2">
+                                            <button class="no-round-btn" id="mainSearchBtn">Search</button>
+                                        </div>
+
+
+
+                                    </div>
                                 </div>
                             </div>
 
@@ -133,7 +155,8 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            }
+           
             <br />
             <br />
         </header>
@@ -198,25 +221,7 @@
         var parallaxInstance = new Parallax(sence, {
             hoverOnly: true,
         });</script>
-    @*<script>
-    $("#mainSearchBtn").click(function () {
-    var searchValue = $("#mainSearchTxt").val();
-
-    $.ajax({
-    url: '@Url.Action("Index", "Shop")',
-    data: {
-    search: searchValue
-    }
-    })
-    .done(function (response) {
-
-    $("#shopproducts").html(response);
-    })
-    .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-    alert("FAIL");
-    });
-    });
-    </script>*@
+   
 
     <a id="scrollUp" href="#top" style="position: fixed; z-index: 105;"><i class="arrow_carrot-up"></i></a>
 

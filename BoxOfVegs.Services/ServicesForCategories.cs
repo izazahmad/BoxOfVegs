@@ -87,6 +87,8 @@ namespace BoxOfVegs.Services
             }
         }
 
+        
+
         public void UpdateCategory(Category category)
         {
             using (var context = new BOVContext())

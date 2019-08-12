@@ -1,4 +1,5 @@
 ﻿using BoxOfVegs.Database;
+using BoxOfVegs.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,13 @@ namespace BoxOfVegs.Services
         //        return pageSizeConfig != null ? int.Parse(pageSizeConfig.Value) : 6;
         //    }
         //}
+        public void AddOrder(Order order)
+        {
+            using (var context = new BOVContext())
+            {
+                context.Orders.Add(order);
+                context.SaveChanges();
+            }
+        }
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="IRepository.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicesForAccounts.cs" />
     <Compile Include="ServicesForCategories.cs" />
     <Compile Include="ServicesForProducts.cs" />
     <Compile Include="ServicesForShop.cs" />

@@ -19,12 +19,15 @@ namespace BoxOfVegs.Web.ViewModels
     }
     public class CartViewModel
     {
-        public int productid { get; set; }
-        public string productname { get; set; }
 
-        public float price { get; set; }
-        public int qty { get; set; }
-        public float bill { get; set; }
+        public int ProductID { get; set; }
+        public string ProductName { get; set; }
+        public string ProductURL { get; set; }
+
+        public Decimal Price { get; set; }
+        public int Quanity { get; set; }
+        public Decimal Subtotal { get; set; }
+        
     }
        
 }

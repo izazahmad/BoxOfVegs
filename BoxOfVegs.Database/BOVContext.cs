@@ -17,6 +17,8 @@ namespace BoxOfVegs.Database
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         ////remove the convention to pluralize table names
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -42,32 +42,74 @@
     </div>
 </div>
 
-<div class="items-category">
+<div class="feature-products">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
                 <h1 class="title mx-auto">Vegetable & Fruite Boxes</h1>
-                <br />
             </div>
-            <div class="row no-gutters-sm">
-                @foreach (var item in Model.FeaturedCategories)
-                {
-                    var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? imageURL : item.ImageUrl;
+            <div class="col-12">
+                <div id="tab">
 
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <a class="product-item d-flex flex-column align-items-center justify-content-center" href="#" style="background-image: url(~/Content/images/logo.png)">
-                            <div class="categories-img"><img src="~/Content/images/category/@imageUrl" alt=""></div>
-                            <h2>@item.CategoryName</h2>
-                            <p>@item.Products.Count Products Available</p>
-                        </a>
+                    <div class="row no-gutters-sm">
+                        @foreach (var item in Model.ProductByCategoryName)
+                        {
+
+                            var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? imageURL : item.ImageUrl;
+
+                            <div class="col-6 col-md-4 col-lg-3">
+                                <div class="product">
+                                    <a class="product-img" href="@Url.Action("ProductDetails", "Product", new { productId = item.ProductID })"><img src="~/Content/images/product/@imageUrl" alt=""></a>
+
+                                    <h5 class="product-more">Boxes</h5>
+
+                                    <h3 class="product-name">@item.ProductName</h3>
+                                    <h3 class="product-price">
+                                        £ @item.Price
+
+                                    </h3>
+
+
+                                    @if (item.Quantity > 0)
+                                    {
+
+                                        <h3 class="product-availability">
+                                            Available
+                                        </h3>
+                                    }
+                                    else
+                                    {
+                                        <h3 class="product-availability">
+                                            Not Available
+                                        </h3>
+                                    }
+
+                                <div class="product-select">
+                                    @if (item.Quantity > 0)
+                                    {
+                                        using (Html.BeginForm("AddInCart", "Shop", new { qty = 1, productId = item.ProductID }, FormMethod.Post))
+                                        {
+                                            <button class="add-to-cart round-icon-btn" type="submit">  <i class="icon_bag_alt"></i></button>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p>Product not available</p>
+                                    }
+                                </div>
+                                </div>
+                            </div>
+
+                        }
+
                     </div>
-                }
+
+
                 </div>
-               
             </div>
+        </div>
     </div>
 </div>
-<!-- End items-category-->
 <div class="feature-products">
     <div class="container">
         <div class="row">
@@ -81,7 +123,7 @@
                             @foreach (var item in Model.Products)
                             {
 
-                               var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? imageURL : item.ImageUrl;
+                                var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? imageURL : item.ImageUrl;
 
                                 <div class="col-6 col-md-4 col-lg-3">
                                     <div class="product">
@@ -94,13 +136,11 @@
                                             £ @item.Price
                                            
                                         </h3>
+
                                       
                                         @if (item.Quantity > 0)
                                         {
-                                            @*using (Html.BeginForm("AddToCart", "Home", new { productId = item.ProductID }, FormMethod.Post))
-            {
-                <button type="submit" class="pull-right"><i class="fa fa-shopping-cart"></i></button>
-            }*@
+            
                                             <h3 class="product-availability">
                                                 Available
                                             </h3>
@@ -112,21 +152,22 @@
                                             </h3>
                                         }
 
-                                        @*</h3>*@
-
-                                        @*<h5 class="product-category">@item.Category.CategoryName</h5>*@
-
-
-                                        <div class="product-select">
-                                            <button class="add-to-wishlist round-icon-btn"> <i class="icon_heart_alt"></i></button>
-
-                                            <button class="add-to-cart round-icon-btn" type="submit">  <i class="icon_bag_alt"></i></button>
-
-                                            <button class="add-to-compare round-icon-btn"><i class="fas fa-random"></i></button>
-                                            <button class="quickview round-icon-btn"> <i class="far fa-eye"></i></button>
-                                        </div>
+                                    <div class="product-select">
+                                        @if (item.Quantity > 0)
+                                        {
+                                            using (Html.BeginForm("AddInCart", "Shop", new { qty = 1, productId = item.ProductID }, FormMethod.Post))
+                                            {
+                                                <button class="add-to-cart round-icon-btn" type="submit">  <i class="icon_bag_alt"></i></button>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p>Product not available</p>
+                                        }
+                                    </div>
                                     </div>
                                 </div>
+                                
                             }
 
                         </div>

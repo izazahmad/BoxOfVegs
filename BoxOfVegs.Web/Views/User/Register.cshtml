@@ -1,0 +1,90 @@
+﻿@model UserRegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+
+<div class="account">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 mx-auto">
+                <h1 class="title">Register</h1>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <label for="user-name">Username</label>
+
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "no-round-input" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+
+                    <label for="password">Password </label>
+
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "no-round-input" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+
+
+                    <label for="password">Confirm Password </label>
+
+                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "no-round-input" } })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+
+                    @*@Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <label>First Name</label>
+
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "no-round-input" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+
+
+
+                    <label>Last Name</label>
+
+                    @*@Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "no-round-input" } })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+
+                    @*@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <label>Email</label>
+
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "no-round-input" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    <div class="account-function">
+                        <button class="no-round-btn">Register</button><a class="create-account" href="@Url.Action("Login", "User")">Or login</a>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="account">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 mx-auto">
+                <h1 class="title">Register</h1>
+                <form>
+                    <label for="user-name">Username</label>
+                    <input class="no-round-input" id="user-name" type="text">
+                    <label for="password">Password *</label>
+                    <input class="no-round-input" id="password" type="text">
+                    <label for="confirm">Comfirm password *</label>
+                    <input class="no-round-input" id="confirm" type="text">
+                    <div class="account-function">
+                        <button class="no-round-btn">Register</button><a class="create-account" href="login.html">Or login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>*@
+<!-- End account-->

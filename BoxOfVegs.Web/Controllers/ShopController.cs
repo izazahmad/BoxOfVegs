@@ -1,4 +1,5 @@
-﻿using BoxOfVegs.Services;
+﻿using BoxOfVegs.Entities;
+using BoxOfVegs.Services;
 using BoxOfVegs.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,18 @@ namespace BoxOfVegs.Web.Controllers
         // GET: Shop
        ServicesForCategories categoryService = new ServicesForCategories();
         ServicesForProducts productService = new ServicesForProducts();
+        ServicesForShop shopService = new ServicesForShop();
         public ActionResult Index(string search, int? minPrice, int? maxPrice, int? categoryID, int? sortBy, int? pageNO)
         {
             int pageSize = 12;
             // var pageSize = ConfigurationsService.Instance.ShopPageSize();
 
-            ShopProductViewModel model = new ShopProductViewModel();
-
-            model.ShopSearching = search;
-            model.ShopCategories = categoryService.AllCategories();
-            model.MaximumPrice = productService.GetMaxPrice();
+            ShopProductViewModel model = new ShopProductViewModel
+            {
+                ShopSearching = search,
+                ShopCategories = categoryService.AllCategories(),
+                MaximumPrice = productService.GetMaxPrice()
+            };
 
             pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
             model.SortBy = sortBy;
@@ -35,104 +38,99 @@ namespace BoxOfVegs.Web.Controllers
 
             return View(model);
         }
-        public ActionResult ShopProducts()
-        {
-            return View();
-        }
+        
         public ActionResult AddInCart(int productId, int qty)
         {
             //int qty = 2;
-            List<CartViewModel> li = new List<CartViewModel>();
-            var p = productService.GetProduct(productId);
-            CartViewModel c = new CartViewModel();
-            c.productid = p.ProductID;
-            c.price = (float)p.Price;
-            c.qty = /*Convert.ToInt32(qty)*/qty;
-            c.bill = c.price * c.qty;
-            c.productname = p.ProductName;
+            List<CartViewModel> list = new List<CartViewModel>();
+            var product = productService.GetProduct(productId);
+            CartViewModel crt = new CartViewModel
+            {
+                ProductID = product.ProductID,
+                Price = product.Price,
+                Quanity = qty,
+                ProductURL=product.ImageUrl
+            };
+            crt.Subtotal = crt.Price * crt.Quanity;
+            crt.ProductName = product.ProductName;
             if (Session["cart"] == null)
             {
-                li.Add(c);
-                Session["cart"] = li;
+                list.Add(crt);
+                Session["cart"] = list;
 
             }
             else
             {
-                List<CartViewModel> li2 = (List<CartViewModel>)Session["cart"]; ;
+                List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"]; ;
                 int change = 0;
-                foreach (var item in li2)
+                foreach (var item in newlist)
                 {
-                    if (item.productid==c.productid)
+                    if (item.ProductID== crt.ProductID)
                     {
-                        item.qty += c.qty;
-                        item.bill += c.bill;
+                        item.Quanity += crt.Quanity;
+                        item.Subtotal += crt.Subtotal;
                         change = 1;
 
                     }
                 }
                 if (change==0)
                 {
-                    li2.Add(c);
+                    newlist.Add(crt);
                 }
-                Session["cart"] = li2;
+                Session["cart"] = newlist;
             }
 
+            if (Session["cart"] != null)
+            {
+                Decimal x = 0;
+                List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
+                foreach (var item in newlist)
+                {
+                    x += item.Subtotal;
+
+                }
+
+                Session["total"] = x;
+            }
             
-            //List<Item> cart = new List<Item>();
-            //var product = productService.GetProduct(productId);
-            //if (Session["cart"] == null)
-            //{
+            return RedirectToAction("Checkout");
+        }
+       
+        public ActionResult DeleteFromCart(int productId)
+        {
+            List<CartViewModel> cart = (List<CartViewModel>)Session["cart"];
+            foreach (var item in cart)
+            {
+                if (item.ProductID == productId)
+                {
+                    cart.Remove(item);
+                    break;
+                }
+            }
+            Session["cart"] = cart;
+            if (Session["cart"] != null)
+            {
+                Decimal x = 0;
+                List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
+                foreach (var item in newlist)
+                {
+                    x += item.Subtotal;
 
-            //    cart.Add(new Item()
-            //    {
-            //        Product = product,
-            //        Quantity = 1
-            //    });
-            //    Session["cart"] = cart;
-            //}
-            //else
-            //{
-            //    List<Item> cart2 = (List<Item>)Session["cart"];
-            //    var product2 = productService.GetProduct(productId);
+                }
 
-            //    foreach (var item in cart2)
-            //    {
-            //        if (item.Product.ProductID==productId ) 
-            //        { 
-            //           int lastQty = item.Quantity;
-            //           cart2.Remove(item);
-            //           cart2.Add(new Item()
-            //           {
-            //               Product = product,
-            //               Quantity = lastQty+1
-            //           });
-            //            break;
-            //        }
-            //        else
-            //        {
-            //            cart2.Add(new Item()
-            //            {
-            //                Product = product,
-            //                Quantity = 1
-            //            });
-            //            break;
-            //        }
-
-            //    }
-
-            //    Session["cart"] = cart2;
-            //}
-            return RedirectToAction("Index");
+                Session["total"] = x;
+            }
+            return RedirectToAction("Checkout");
         }
         public ActionResult Checkout()
         {
             if (Session["cart"] != null)
             {
-                float x = 0;
-                List<CartViewModel> li2 = (List<CartViewModel>)Session["cart"];
-                foreach (var item in li2)
+                Decimal x = 0;
+                List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
+                foreach (var item in newlist)
                 {
-                    x += item.bill;
+                    x += item.Subtotal;
 
                 }
 
@@ -141,19 +139,38 @@ namespace BoxOfVegs.Web.Controllers
 
             return View();
         }
-        public ActionResult DeleteFromCart(int productId)
+        [HttpPost]
+        public ActionResult Checkout(Order order)
         {
-            List<CartViewModel> cart = (List<CartViewModel>)Session["cart"];
-            foreach (var item in cart)
+            if (Session["UserID"] != null)
             {
-                if (item.productid == productId)
+                if(Session["cart"] != null)
+                { 
+                List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
+                foreach (var item in newlist)
                 {
-                    cart.Remove(item);
-                    break;
+                    Order orders = new Order();
+                    orders.UserID = Convert.ToInt32(Session["UserID"].ToString());
+                    orders.ProductID = item.ProductID;
+                    orders.Quantity = item.Quanity;
+                    orders.Date = DateTime.Now;
+                    orders.UnitPrice = item.Price;
+                    orders.Subtotal = item.Subtotal;
+                    shopService.AddOrder(orders);
+                }
+                Session.Remove("total");
+                Session.Remove("cart");
+                return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
                 }
             }
-            Session["cart"] = cart;
-            return RedirectToAction("Index");
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
     }
 }

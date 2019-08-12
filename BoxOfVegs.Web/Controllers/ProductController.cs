@@ -23,9 +23,10 @@ namespace BoxOfVegs.Web.Controllers
 
         public ActionResult Products(string search, int? pageNO)
         {
-            ProductPagingModels model = new ProductPagingModels();
-
-            model.Searching = search;
+            ProductPagingModels model = new ProductPagingModels
+            {
+                Searching = search
+            };
             int pageSize = 5;
 
             pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;

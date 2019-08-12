@@ -27,6 +27,7 @@ namespace BoxOfVegs.Web.Controllers
             model.Products = services.GetNewAddedProducts(4);
             model.Categories = categoryServices.AllCategories();
             model.FeaturedCategories = categoryServices.GetFeaturedCategory();
+            model.ProductByCategoryName = services.GetProductByCatName("Boxes");
             return View(model);
             //return View(model.CreateModel(search, 4, pageNO));
 

@@ -17,6 +17,7 @@ namespace BoxOfVegs.Web.ViewModels
         public List<Product> Products { get; set; }
         public List<Category> Categories { get; set; }
         public List<Category> FeaturedCategories { get; set; }
+        public List<Product> ProductByCategoryName { get; set; }
         public string Searching { get; set; }
         public Pager Pager { get; set; }
         public Product Product { get; set; }

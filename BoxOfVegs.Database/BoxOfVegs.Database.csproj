@@ -77,6 +77,14 @@
     <Compile Include="Migrations\201908051536135_pictureaddincategory.Designer.cs">
       <DependentUpon>201908051536135_pictureaddincategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908111550299_userAdded.cs" />
+    <Compile Include="Migrations\201908111550299_userAdded.Designer.cs">
+      <DependentUpon>201908111550299_userAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908112020282_OrderAdded.cs" />
+    <Compile Include="Migrations\201908112020282_OrderAdded.Designer.cs">
+      <DependentUpon>201908112020282_OrderAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -113,6 +121,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908051536135_pictureaddincategory.resx">
       <DependentUpon>201908051536135_pictureaddincategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908111550299_userAdded.resx">
+      <DependentUpon>201908111550299_userAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908112020282_OrderAdded.resx">
+      <DependentUpon>201908112020282_OrderAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
