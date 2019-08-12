@@ -172,5 +172,24 @@ namespace BoxOfVegs.Web.Controllers
                 return RedirectToAction("Login", "User");
             }
         }
+        public ActionResult UpdateCart(FormCollection formData)
+        {
+            string[] quantities = formData.GetValues("qty");
+            List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
+            decimal x = 0;
+            for (int i = 0; i < newlist.Count; i++)
+            {
+                newlist[i].Quanity = Convert.ToInt32(quantities[i]);
+                newlist[i].Subtotal = newlist[i].Price * newlist[i].Quanity;
+                Session["cart"] = newlist;
+                x += newlist[i].Subtotal;
+
+            }
+
+
+
+            Session["total"] = x;
+            return View("Checkout");
+        }
     }
 }

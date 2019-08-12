@@ -29,6 +29,7 @@ namespace BoxOfVegs.Web.Controllers
             ServicesForAccounts services = new ServicesForAccounts();
             var HashPassword = PasswordHashing.CreateHash(register.Password);
             register.Password = HashPassword;
+            register.UserRoleID = 2;
             services.RegisterUser(register);
             ViewBag.Message = register.FirstName + " " + register.LastName + " Successfully Registered.";
             return Redirect("Login");
@@ -51,6 +52,7 @@ namespace BoxOfVegs.Web.Controllers
                     Session["UserID"] = users.UserID.ToString();
                     Session["UserName"] = users.UserName.ToString();
                     Session["FirstName"] = users.FirstName.ToString();
+                    Session["UserRoleID"] = users.UserRoleID.ToString();
                     return RedirectToAction("Checkout","Shop");
                 }
                 else

@@ -13,7 +13,7 @@ namespace BoxOfVegs.Entities
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
+        public int UserRoleID { get; set; }
         public string Email { get; set; }
     }
 }
