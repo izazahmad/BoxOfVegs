@@ -1,6 +1,7 @@
 ﻿using BoxOfVegs.Entities;
 using BoxOfVegs.Services;
 using BoxOfVegs.Web.ViewModels;
+using Rotativa.MVC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,7 +94,7 @@ namespace BoxOfVegs.Web.Controllers
                 Session["total"] = x;
             }
             
-            return RedirectToAction("Checkout");
+            return RedirectToAction("Cart");
         }
        
         public ActionResult DeleteFromCart(int productId)
@@ -120,7 +121,23 @@ namespace BoxOfVegs.Web.Controllers
 
                 Session["total"] = x;
             }
-            return RedirectToAction("Checkout");
+            return RedirectToAction("Cart");
+        }
+        public ActionResult Cart()
+        {
+            if (Session["cart"] != null)
+            {
+                Decimal x = 0;
+                List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
+                foreach (var item in newlist)
+                {
+                    x += item.Subtotal;
+
+                }
+
+                Session["total"] = x;
+            }
+            return View();
         }
         public ActionResult Checkout()
         {
@@ -140,31 +157,49 @@ namespace BoxOfVegs.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Checkout(Order order)
+        public ActionResult Checkout(Order order, FormCollection formData)
         {
             if (Session["UserID"] != null)
             {
                 if(Session["cart"] != null)
                 { 
-                List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
-                foreach (var item in newlist)
-                {
-                    Order orders = new Order();
-                    orders.UserID = Convert.ToInt32(Session["UserID"].ToString());
-                    orders.ProductID = item.ProductID;
-                    orders.Quantity = item.Quanity;
-                    orders.Date = DateTime.Now;
-                    orders.UnitPrice = item.Price;
-                    orders.Subtotal = item.Subtotal;
-                    shopService.AddOrder(orders);
-                }
-                Session.Remove("total");
-                Session.Remove("cart");
-                return RedirectToAction("Index");
+                    List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
+                    int userID = Convert.ToInt32(Session["UserID"].ToString());
+
+                    Invoice invoice = new Invoice
+                    {
+                        //string street = Convert.ToString(formData["street"]);
+                        
+                        UserID = userID/* Convert.ToInt32(Session["UserID"].ToString())*/,
+                        TotalAmount = (decimal)Session["total"],
+                        InvoiceDate = DateTime.Now,
+                        Address = Convert.ToString(formData["street"]),
+                        City = Convert.ToString(formData["city"]),
+                        PostCode = Convert.ToString(formData["postCode"]),
+                        PhoneNumber = Convert.ToString(formData["phone"])
+                    };
+                    shopService.AddInvoice(invoice);
+                    int invoiceid=invoice.InvoiceID;
+                    foreach (var item in newlist)
+                    {
+                         Order orders = new Order();
+                         //orders.UserID = Convert.ToInt32(Session["UserID"].ToString());
+                         orders.ProductID = item.ProductID;
+                         orders.InvoiceID = invoice.InvoiceID;
+                         orders.ProductName = item.ProductName;
+                         orders.Quantity = item.Quanity;
+                         orders.Date = DateTime.Now;
+                         orders.UnitPrice = item.Price;
+                         orders.Subtotal = item.Subtotal;
+                         shopService.AddOrder(orders);
+                    }
+                    Session.Remove("total");
+                    Session.Remove("cart");
+                    return RedirectToAction("CreateInvoice",new { userId = userID });
                 }
                 else
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Cart");
                 }
             }
             else
@@ -189,7 +224,42 @@ namespace BoxOfVegs.Web.Controllers
 
 
             Session["total"] = x;
-            return View("Checkout");
+            return View("Cart");
+        }
+        public ActionResult OrderComplete()
+        {
+            return View();
+        }
+        public ActionResult CreateInvoice(int userId)
+        {
+            //userId = Convert.ToInt32(Session["UserID"]);
+            //int invoiceId = shopService.GetInvoiceID(userId);
+            var invoiceDetails = shopService.GetInvoiceDetail(userId);
+            var userDetails = shopService.GetUserDetails(userId);
+            int invoiceId = invoiceDetails.InvoiceID;
+            //int invoiceId = shopService.GetInvoiceID(userId);
+            InvoiceDetailViewModel model = new InvoiceDetailViewModel();
+            model.Orders = shopService.GetOrders(invoiceId);
+            model.UserID = userId;
+            model.InvoiceDate = invoiceDetails.InvoiceDate;
+            model.InvoiceID = invoiceId;
+            model.PhoneNumber = invoiceDetails.PhoneNumber;
+            model.PostCode = invoiceDetails.PostCode;
+            model.TotalAmount = invoiceDetails.TotalAmount;
+            model.Address = invoiceDetails.Address;
+            model.City = invoiceDetails.City;
+            model.FirstName = userDetails.FirstName;
+            model.LastName = userDetails.LastName;
+
+            return View(model);
+            //return new Rotativa.ViewAsPdf("model");
+        }
+        public ActionResult PrintInvoice(int userid)
+        {
+            return new ActionAsPdf("CreateInvoice",new { userid });
+            
+            //var model = new InvoiceDetailViewModel();
+            //return new ActionAsPdf("CreateInvoice", model);
         }
     }
 }

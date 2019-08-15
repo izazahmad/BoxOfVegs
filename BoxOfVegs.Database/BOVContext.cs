@@ -20,6 +20,9 @@ namespace BoxOfVegs.Database
         public DbSet<User> Users { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+
+        
 
         ////remove the convention to pluralize table names
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)

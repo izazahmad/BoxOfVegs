@@ -89,6 +89,26 @@
     <Compile Include="Migrations\201908121151232_roleAdded.Designer.cs">
       <DependentUpon>201908121151232_roleAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908121934570_InvoiceAdded.cs" />
+    <Compile Include="Migrations\201908121934570_InvoiceAdded.Designer.cs">
+      <DependentUpon>201908121934570_InvoiceAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908131030564_InvoiceAddressAdded.cs" />
+    <Compile Include="Migrations\201908131030564_InvoiceAddressAdded.Designer.cs">
+      <DependentUpon>201908131030564_InvoiceAddressAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908131152174_InvoicPhoneAdded.cs" />
+    <Compile Include="Migrations\201908131152174_InvoicPhoneAdded.Designer.cs">
+      <DependentUpon>201908131152174_InvoicPhoneAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908131158072_InvoicPhonedatypeChngd.cs" />
+    <Compile Include="Migrations\201908131158072_InvoicPhonedatypeChngd.Designer.cs">
+      <DependentUpon>201908131158072_InvoicPhonedatypeChngd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908131237563_prdctNaminOrdrAdded.cs" />
+    <Compile Include="Migrations\201908131237563_prdctNaminOrdrAdded.Designer.cs">
+      <DependentUpon>201908131237563_prdctNaminOrdrAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -134,6 +154,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908121151232_roleAdded.resx">
       <DependentUpon>201908121151232_roleAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121934570_InvoiceAdded.resx">
+      <DependentUpon>201908121934570_InvoiceAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131030564_InvoiceAddressAdded.resx">
+      <DependentUpon>201908131030564_InvoiceAddressAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131152174_InvoicPhoneAdded.resx">
+      <DependentUpon>201908131152174_InvoicPhoneAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131158072_InvoicPhonedatypeChngd.resx">
+      <DependentUpon>201908131158072_InvoicPhonedatypeChngd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131237563_prdctNaminOrdrAdded.resx">
+      <DependentUpon>201908131237563_prdctNaminOrdrAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

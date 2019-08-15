@@ -53,7 +53,7 @@ namespace BoxOfVegs.Web.Controllers
                     Session["UserName"] = users.UserName.ToString();
                     Session["FirstName"] = users.FirstName.ToString();
                     Session["UserRoleID"] = users.UserRoleID.ToString();
-                    return RedirectToAction("Checkout","Shop");
+                    return RedirectToAction("Cart","Shop");
                 }
                 else
                 {
@@ -63,17 +63,17 @@ namespace BoxOfVegs.Web.Controllers
             return View();
 
         }
-        public ActionResult LoggedIn()
-        {
-            if (Session["UserID"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Checkout");
-            }
-        }
+        //public ActionResult LoggedIn()
+        //{
+        //    if (Session["UserID"] != null)
+        //    {
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Checkout");
+        //    }
+        //}
         public ActionResult Logout()
         {
             Session.Abandon();
