@@ -58,6 +58,7 @@ namespace BoxOfVegs.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddCategory(Category category, HttpPostedFileBase file)
         {
             string fileName = null;
@@ -69,10 +70,18 @@ namespace BoxOfVegs.Web.Controllers
                 // file is uploaded
                 file.SaveAs(path);
             }
+            if (ModelState.IsValid)
+            {
 
-            category.ImageUrl = fileName;
+                category.ImageUrl = fileName;
             services.AddCategory(category);
             return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "");
+            }
+            return View();
         }
         [HttpGet]
         public ActionResult UpdateCategory(int categoryID)
@@ -83,6 +92,8 @@ namespace BoxOfVegs.Web.Controllers
             return View(category);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public ActionResult UpdateCategory(Category category, HttpPostedFileBase file)
         {
             string fileName = null;
@@ -93,11 +104,24 @@ namespace BoxOfVegs.Web.Controllers
                 // file is uploaded
                 file.SaveAs(path);
             }
-            category.ImageUrl = file != null ? fileName : category.ImageUrl;
+            //if(category.CategoryName==null)
+            //{
+            //    ModelState.AddModelError("", "Category name is required");
+
+            //}
+            if (ModelState.IsValid)
+            {
+                category.ImageUrl = file != null ? fileName : category.ImageUrl;
 
 
-            services.UpdateCategory(category);
-            return RedirectToAction("Index");
+                services.UpdateCategory(category);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "");
+            }
+            return View();
         }
         
         [HttpPost]

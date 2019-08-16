@@ -26,14 +26,15 @@
 
                     <label for="password">Password </label>
 
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "no-round-input" } })
+
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "no-round-input", @type = "password" } })
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
 
 
 
                     <label for="password">Confirm Password </label>
 
-                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "no-round-input" } })
+                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "no-round-input", @type="password" } })
                     @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
 
                     @*@Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })*@
@@ -67,24 +68,3 @@
     </div>
 </div>
 
-@*<div class="account">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6 mx-auto">
-                <h1 class="title">Register</h1>
-                <form>
-                    <label for="user-name">Username</label>
-                    <input class="no-round-input" id="user-name" type="text">
-                    <label for="password">Password *</label>
-                    <input class="no-round-input" id="password" type="text">
-                    <label for="confirm">Comfirm password *</label>
-                    <input class="no-round-input" id="confirm" type="text">
-                    <div class="account-function">
-                        <button class="no-round-btn">Register</button><a class="create-account" href="login.html">Or login</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>*@
-<!-- End account-->

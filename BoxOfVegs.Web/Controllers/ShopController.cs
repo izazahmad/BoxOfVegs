@@ -157,6 +157,8 @@ namespace BoxOfVegs.Web.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public ActionResult Checkout(Order order, FormCollection formData)
         {
             if (Session["UserID"] != null)

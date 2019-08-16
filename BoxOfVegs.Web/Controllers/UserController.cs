@@ -24,15 +24,38 @@ namespace BoxOfVegs.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Register(User register)
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(UserRegisterViewModel register)
         {
-            ServicesForAccounts services = new ServicesForAccounts();
-            var HashPassword = PasswordHashing.CreateHash(register.Password);
-            register.Password = HashPassword;
-            register.UserRoleID = 2;
-            services.RegisterUser(register);
-            ViewBag.Message = register.FirstName + " " + register.LastName + " Successfully Registered.";
-            return Redirect("Login");
+            BOVContext context = new BOVContext();
+            if(context.Users.Any(u=>u.UserName==register.UserName))
+            {
+                ModelState.AddModelError("", "User name is already exist choose different.");
+
+            }
+            if (ModelState.IsValid)
+            {
+                ServicesForAccounts services = new ServicesForAccounts();
+                var HashPassword = PasswordHashing.CreateHash(register.Password);
+                //register.Password = HashPassword;
+                //register.UserRoleID = 2;
+                User user = new User();
+                user.UserRoleID = 2;
+                user.FirstName = register.FirstName;
+                user.LastName = register.LastName;
+                user.UserName = register.UserName;
+                user.Password = HashPassword;
+                user.Email = register.Email;
+                services.RegisterUser(user);
+                //ViewBag.Message = register.FirstName + " " + register.LastName + " Successfully Registered.";
+                return Redirect("Login");
+
+            }
+            else
+            {
+                ModelState.AddModelError("","");
+            }
+            return View();
         }
         public ActionResult Login()
         {
@@ -79,6 +102,52 @@ namespace BoxOfVegs.Web.Controllers
             Session.Abandon();
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
+        }
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(ForgotPasswordViewModel forgot)
+        {
+            BOVContext context = new BOVContext();
+            if (context.Users.Any(u => u.UserName == forgot.UserName))
+            {
+                if(context.Users.Any(u=>u.Email==forgot.Email))
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var users = context.Users.Single(x => x.UserName == forgot.UserName);
+
+                        ServicesForAccounts services = new ServicesForAccounts();
+                        var HashPassword = PasswordHashing.CreateHash(forgot.NewPassword);
+                        //User user = new User();
+                        //user.Password = HashPassword;
+                        //user.UserName=forgot.UserName;
+                        services.ResetPassword(HashPassword, users.UserID);
+                        return Redirect("Login");
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "");
+
+                    }
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Email address is not exist");
+
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "User name is not exist");
+
+            }
+            return View();
         }
 
     }

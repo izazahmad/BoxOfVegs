@@ -66,6 +66,8 @@ namespace BoxOfVegs.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public ActionResult AddProduct(Product product, HttpPostedFileBase file)
         {
             string fileName = null;
@@ -77,13 +79,20 @@ namespace BoxOfVegs.Web.Controllers
                 // file is uploaded
                 file.SaveAs(path);
             }
-
-            product.ImageUrl = fileName;
+            if (ModelState.IsValid)
+            {
+                product.ImageUrl = fileName;
             //product.CreatedDate = DateTime.Now;
             //repoWork.GetRepositoryInstance<Product>().AddRecord(product);
             services.AddProduct(product);
                 return RedirectToAction("Index");
-            
+            }
+            else
+            {
+                ModelState.AddModelError("", "");
+            }
+            return View();
+
         }
 
         public ActionResult EditProduct(int productID)
@@ -96,6 +105,8 @@ namespace BoxOfVegs.Web.Controllers
             return View(product);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public ActionResult EditProduct(Product product, HttpPostedFileBase file)
         {
             string fileName = null;
@@ -106,12 +117,20 @@ namespace BoxOfVegs.Web.Controllers
                 // file is uploaded
                 file.SaveAs(path);
             }
-            product.ImageUrl = file != null ? fileName : product.ImageUrl;
+            if (ModelState.IsValid)
+            {
+                product.ImageUrl = file != null ? fileName : product.ImageUrl;
             //tbl.ModifiedDate = DateTime.Now;
            // repoWork.GetRepositoryInstance<Product>().Update(product);
             services.UpdateProduct(product);
             return RedirectToAction("Index");
         }
+            else
+            {
+                ModelState.AddModelError("", "");
+            }
+            return View();
+}
 
         
         

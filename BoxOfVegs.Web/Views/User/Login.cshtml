@@ -16,26 +16,30 @@
                     @using (Html.BeginForm())
                     {
                         @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                         <label for="user-name">Username</label>
                         @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "no-round-input" } })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
 
                         <label for="password">Password </label>
-                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "no-round-input" } })
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "no-round-input", @type = "password" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
 
 
                         <div class="account-method">
                             <div class="account-forgot">
-                                <a href="#">Forget your Password</a>
+                                <a href="@Url.Action("ForgotPassword", "User")">Forget your Password</a>
                             </div>
                         </div>
 
-                            <div class="account-function">
-                                <button class="no-round-btn">Sign in</button>
+                        <div class="account-function">
+                            <button class="no-round-btn">Sign in</button>
 
-                                <a class="create-account" href="@Url.Action("Register", "User")">Or create an account</a>
-                            </div>
-                            }
+                            <a class="create-account" href="@Url.Action("Register", "User")">Or create an account</a>
                         </div>
+                    }
+                </div>
                     </div>
         </div>
     </div>

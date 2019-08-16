@@ -11,19 +11,18 @@ namespace BoxOfVegs.Entities
     {
         public int ProductID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Product name is required")]
         [MinLength(3), MaxLength(50)]
         public string ProductName { get; set; }
-
+        [Required(ErrorMessage ="Price is required for the product")]
         [Range(1,100000)]
         public decimal Price { get; set; }
+        [Required(ErrorMessage = "Category is required")]
 
         public int CategoryID { get; set; }
 
         public string ImageUrl{ get; set; }
-
-        public bool isFeatured { get; set; }
-
+  
         [Range(1,500)]
         public int Quantity { get; set; }
 

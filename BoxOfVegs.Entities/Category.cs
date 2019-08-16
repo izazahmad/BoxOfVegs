@@ -12,7 +12,7 @@ namespace BoxOfVegs.Entities
     {
         public int CategoryID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Category Name is required")]
         [MinLength(3), MaxLength(50)]
         public string CategoryName { get; set; }
 
@@ -20,8 +20,6 @@ namespace BoxOfVegs.Entities
         public string Description { get; set; }
 
         public string ImageUrl { get; set; }
-
-        public bool isFeatured { get; set; }
 
         public List<Product> Products { get; set; }
         

@@ -29,7 +29,7 @@
 					<tr>
 						<th>Sr. No.</th>
 						<th>Product Name</th>
-						<th>isFeatured?</th>
+						<th>Category Name</th>
 						<th>Quantity</th>
 						<th>Price</th>
 						<th>Action</th>
@@ -45,7 +45,7 @@
 							<tr>
 								<td>@((Model.Products.IndexOf(item) + 1) + ((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize))</td>
 								<td>@item.ProductName</td>
-								<td>@item.isFeatured</td>
+								<td>@item.Category.CategoryName</td>
 								<td>@item.Quantity</td>
 								<td>@item.Price</td>
 								<td>

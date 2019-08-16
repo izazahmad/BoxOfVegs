@@ -238,7 +238,6 @@
     <Compile Include="ViewModels\CategoryViewModels.cs" />
     <Compile Include="ViewModels\HomeViewModels.cs" />
     <Compile Include="ViewModels\InvoiceViewModels.cs" />
-    <Compile Include="ViewModels\Item.cs" />
     <Compile Include="ViewModels\ProductViewModels.cs" />
     <Compile Include="ViewModels\SharedViewModels.cs" />
     <Compile Include="ViewModels\ShopViewModels.cs" />
@@ -2432,6 +2431,7 @@
     <Content Include="Views\Shop\Cart.cshtml" />
     <Content Include="Views\Shop\OrderComplete.cshtml" />
     <Content Include="Views\Shop\CreateInvoice.cshtml" />
+    <Content Include="Views\User\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
