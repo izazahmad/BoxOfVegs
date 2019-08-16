@@ -17,13 +17,20 @@ namespace BoxOfVegs.Web.Controllers
         // GET: Product
         public ActionResult Index()
         {
+            if(Convert.ToInt32(Session["UserRoleID"]) == 1)
+            { 
             return View();
+            }
+            return RedirectToAction("Login", "User");
         }
 
 
         public ActionResult Products(string search, int? pageNO)
         {
-            ProductPagingModels model = new ProductPagingModels
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+
+                ProductPagingModels model = new ProductPagingModels
             {
                 Searching = search
             };
@@ -42,6 +49,8 @@ namespace BoxOfVegs.Web.Controllers
             {
                 return HttpNotFound();
             }
+            }
+            return RedirectToAction("Login", "User");
 
         }
 
@@ -61,8 +70,12 @@ namespace BoxOfVegs.Web.Controllers
         [HttpGet]
         public ActionResult AddProduct()
         {
-            ViewBag.CategoryList = GetCategories();
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+                ViewBag.CategoryList = GetCategories();
             return View();
+            }
+            return RedirectToAction("Login", "User");
         }
 
         [HttpPost]
@@ -70,7 +83,11 @@ namespace BoxOfVegs.Web.Controllers
 
         public ActionResult AddProduct(Product product, HttpPostedFileBase file)
         {
-            string fileName = null;
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+                if (ModelState.IsValid)
+            {
+                string fileName = null;
             if (file != null)
             {
                  fileName = System.IO.Path.GetFileName(file.FileName);
@@ -79,8 +96,7 @@ namespace BoxOfVegs.Web.Controllers
                 // file is uploaded
                 file.SaveAs(path);
             }
-            if (ModelState.IsValid)
-            {
+            
                 product.ImageUrl = fileName;
             //product.CreatedDate = DateTime.Now;
             //repoWork.GetRepositoryInstance<Product>().AddRecord(product);
@@ -92,24 +108,34 @@ namespace BoxOfVegs.Web.Controllers
                 ModelState.AddModelError("", "");
             }
             return View();
-
-        }
+            }
+            return RedirectToAction("Login", "User");
+        
+    }
 
         public ActionResult EditProduct(int productID)
         {
-            
-            ViewBag.CategoryList = GetCategories();
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+
+                ViewBag.CategoryList = GetCategories();
            // var product = repoWork.GetRepositoryInstance<Product>().GetRecord(productID);
             var product = services.GetProduct(productID);
             product.ImageUrl = product.ImageUrl;
             return View(product);
+            }
+            return RedirectToAction("Login", "User");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
 
         public ActionResult EditProduct(Product product, HttpPostedFileBase file)
         {
-            string fileName = null;
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+                if (ModelState.IsValid)
+            {
+                string fileName = null;
             if (file != null)
             {
                 fileName = System.IO.Path.GetFileName(file.FileName);
@@ -117,34 +143,39 @@ namespace BoxOfVegs.Web.Controllers
                 // file is uploaded
                 file.SaveAs(path);
             }
-            if (ModelState.IsValid)
-            {
+            
                 product.ImageUrl = file != null ? fileName : product.ImageUrl;
             //tbl.ModifiedDate = DateTime.Now;
            // repoWork.GetRepositoryInstance<Product>().Update(product);
             services.UpdateProduct(product);
             return RedirectToAction("Index");
-        }
+             }
             else
             {
                 ModelState.AddModelError("", "");
             }
             return View();
-}
+            }
+            return RedirectToAction("Login", "User");
+        }
 
         
         
         [HttpPost]
         public ActionResult DeleteProduct(int productID)
         {
-
-            //repoWork.GetRepositoryInstance<Product>().Remove(product);
-            services.RemoveProduct(productID);
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+                //repoWork.GetRepositoryInstance<Product>().Remove(product);
+                services.RemoveProduct(productID);
             return RedirectToAction("Products");
+            }
+            return RedirectToAction("Login", "User");
         }
         [HttpGet]
         public ActionResult ProductDetails(int productId)
         {
+
             HomeViewModels model = new HomeViewModels();
 
             model.Product = services.GetProduct(productId);

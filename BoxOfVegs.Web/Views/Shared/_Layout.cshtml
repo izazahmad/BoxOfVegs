@@ -38,33 +38,47 @@
                             <div class="header-right d-flex flex-column flex-md-row justify-content-md-end justify-content-center align-items-center">
                                 @if (Session["UserID"] == null)
                                 {
-                                    <div class="login d-flex"><a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>Login</a></div>
-                                }
-                                else /*if (Session["UserRoleID"]==2)*/
-                                {
 
+                                    <div class="login d-flex"><a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>Login</a></div>
+
+                                }
+                                else
+                                {
+                                    if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+                                    {
                                     <div class="login d-flex">
-                                        <a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>@Session["FirstName"] </a>
+                                        <a href="#"><i class="fas fa-user"></i>@Session["FirstName"] </a>
                                         &nbsp &nbsp
+                                        <a href="@Url.Action("Index", "Category")">Admin Panel</a>
+                                        &nbsp &nbsp
+
                                         <a class="text-danger" href="@Url.Action("Logout", "User")">Logout</a>
                                     </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="login d-flex">
+                                            <a href="#"><i class="fas fa-user"></i>@Session["FirstName"] </a>
+                                            &nbsp &nbsp
+                                            <a class="text-danger" href="@Url.Action("Logout", "User")">Logout</a>
+                                        </div>
 
-
+                                    }
                                 }
                                 @*else
-                                {
-                                    <div class="login d-flex">
-                                        <a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>@Session["FirstName"] </a>
-                                        &nbsp &nbsp
-                                        <a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>Admin Panel </a>
+        {
+            <div class="login d-flex">
+                <a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>@Session["FirstName"] </a>
+                &nbsp &nbsp
+                <a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>Admin Panel </a>
 
-                                        &nbsp &nbsp
-                                        <a class="text-danger" href="@Url.Action("Logout", "User")">Logout</a>
+                &nbsp &nbsp
+                <a class="text-danger" href="@Url.Action("Logout", "User")">Logout</a>
 
 
-                                    </div>
+            </div>
 
-                                }*@
+        }*@
 
                             </div>
                         </div>

@@ -1,16 +1,16 @@
 ﻿@model InvoiceDetailViewModel
-@{
+@*@{
     ViewBag.Title = "CreateInvoice";
     //Layout = null;
-}
+}*@
 
 
 <div class="container">
-    <div style="text-align:right">@Html.ActionLink("Print Invoice", "PrintInvoice", new { userid = Model.UserID })</div>
+    @*<div style="text-align:right">@Html.ActionLink("Print Invoice", "PrintInvoice", new { userid = Model.UserID })</div>*@
     <div>
         @*<div class="col-xs-12">*@
         @*<div >*@
-        <h2>Invoice</h2>
+        <h2 style="text-align:center">Invoice</h2>
         <br />
 
 
@@ -81,9 +81,28 @@
             </div>*@
         @*<div class="panel-body">*@
         @*<div class="table-responsive">*@
+        <style>
 
 
-        <table class="table ">
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            table, td, th {
+                border: 1px solid black;
+            }
+            th {
+                height: 50px;
+            }
+            th, td {
+                padding: 15px;
+                text-align: center;
+            }
+        </style>
+        
+
+        <table class="table" >
             <thead>
 
                 <tr>
@@ -124,9 +143,9 @@
                         <td class="no-line text-right">$15</td>
                     </tr>*@
                 <tr>
-                    <td class="no-line"></td>
-                    <td class="no-line"></td>
-                    <td class="no-line"></td>
+                    @*<td class="no-line"></td>
+                    <td class="no-line"></td>*@
+                    <td class="no-line" colspan="3"></td>
                     <td class="no-line "><strong>Total</strong></td>
                     <td class="no-line">@Model.TotalAmount</td>
                 </tr>

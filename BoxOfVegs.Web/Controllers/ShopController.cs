@@ -39,7 +39,6 @@ namespace BoxOfVegs.Web.Controllers
 
             return View(model);
         }
-        
         public ActionResult AddInCart(int productId, int qty)
         {
             //int qty = 2;
@@ -125,7 +124,9 @@ namespace BoxOfVegs.Web.Controllers
         }
         public ActionResult Cart()
         {
-            if (Session["cart"] != null)
+            if (Session["UserID"] != null)
+            {
+                if (Session["cart"] != null)
             {
                 Decimal x = 0;
                 List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
@@ -138,6 +139,11 @@ namespace BoxOfVegs.Web.Controllers
                 Session["total"] = x;
             }
             return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
         public ActionResult Checkout()
         {
@@ -157,15 +163,16 @@ namespace BoxOfVegs.Web.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-
+        
         public ActionResult Checkout(Order order, FormCollection formData)
         {
-            if (Session["UserID"] != null)
-            {
-                if(Session["cart"] != null)
-                { 
-                    List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
+            
+                if (Session["UserID"] != null)
+                {
+                  if(Session["cart"] != null)
+                  {
+                   
+                        List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
                     int userID = Convert.ToInt32(Session["UserID"].ToString());
 
                     Invoice invoice = new Invoice
@@ -197,7 +204,8 @@ namespace BoxOfVegs.Web.Controllers
                     }
                     Session.Remove("total");
                     Session.Remove("cart");
-                    return RedirectToAction("CreateInvoice",new { userId = userID });
+                    return RedirectToAction("Invoice", new { userId = userID });
+                   
                 }
                 else
                 {
@@ -228,7 +236,7 @@ namespace BoxOfVegs.Web.Controllers
             Session["total"] = x;
             return View("Cart");
         }
-        public ActionResult OrderComplete()
+        public ActionResult Invoice()
         {
             return View();
         }
@@ -253,14 +261,14 @@ namespace BoxOfVegs.Web.Controllers
             model.FirstName = userDetails.FirstName;
             model.LastName = userDetails.LastName;
 
-            return View(model);
+            return PartialView("CreateInvoice", model);
             //return new Rotativa.ViewAsPdf("model");
         }
         public ActionResult PrintInvoice(int userid)
         {
-            return new ActionAsPdf("CreateInvoice",new { userid });
-            
-            //var model = new InvoiceDetailViewModel();
+            return new ActionAsPdf("CreateInvoice", new { userid });
+
+            //var model = new InvoiceDetailViewModel();ActionAsPdf
             //return new ActionAsPdf("CreateInvoice", model);
         }
     }

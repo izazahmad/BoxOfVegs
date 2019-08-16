@@ -2432,6 +2432,7 @@
     <Content Include="Views\Shop\OrderComplete.cshtml" />
     <Content Include="Views\Shop\CreateInvoice.cshtml" />
     <Content Include="Views\User\ForgotPassword.cshtml" />
+    <Content Include="Views\Shop\Invoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

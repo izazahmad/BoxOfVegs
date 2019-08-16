@@ -14,7 +14,7 @@
     </div>
 </div>
 <!-- End breadcrumb-->
-<div class="order-step">
+@*<div class="order-step">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -46,14 +46,14 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <!-- End order step-->
 <div class="shop-checkout">
     <div class="container">
         <form action="" method="post">
             <div class="row">
                 <div class="col-12 col-lg-8">
-                    <h2 class="form-title">Billing details</h2>
+                    <h2 class="form-title">Shipping details</h2>
                     @*<div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputFirstName">First Name*</label>
@@ -91,7 +91,8 @@
                     </div>
                     <div class="form-group">
                         <label for="inputPhone">Phone*</label>
-                        <input class="no-round-input-bg" id="inputPhone" type="text" required name="phone">
+                        <input class="no-round-input-bg" id="inputPhone" type="tel" pattern="[0-9]{11}" name="phone" required>
+                        <span>Format: 07123456789</span>
                     </div>
                     
                 </div>

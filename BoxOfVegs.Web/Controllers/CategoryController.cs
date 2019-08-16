@@ -22,14 +22,20 @@ namespace BoxOfVegs.Web.Controllers
         ServicesForCategories services = new ServicesForCategories();
         public ActionResult Index()
         {
-            return View();
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+                return View();
+            }
+            return RedirectToAction("Login", "User");
         }
 
        
 
         public ActionResult Categories(string search, int? pageNO)
         {
-            CategoryPagingModels model = new CategoryPagingModels();
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+                CategoryPagingModels model = new CategoryPagingModels();
 
             model.Searching = search;
             int pageSize = 5;
@@ -47,21 +53,31 @@ namespace BoxOfVegs.Web.Controllers
             {
                 return HttpNotFound();
             }
+            }
+            return RedirectToAction("Login", "User");
         }
 
        
         [HttpGet]
         public ActionResult AddCategory()
         {
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
 
-            return View();
+                return View();
+            }
+            return RedirectToAction("Login", "User");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddCategory(Category category, HttpPostedFileBase file)
         {
-            string fileName = null;
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+                if (ModelState.IsValid)
+            {
+                string fileName = null;
             if (file != null)
             {
                 fileName = System.IO.Path.GetFileName(file.FileName);
@@ -70,8 +86,7 @@ namespace BoxOfVegs.Web.Controllers
                 // file is uploaded
                 file.SaveAs(path);
             }
-            if (ModelState.IsValid)
-            {
+            
 
                 category.ImageUrl = fileName;
             services.AddCategory(category);
@@ -82,21 +97,29 @@ namespace BoxOfVegs.Web.Controllers
                 ModelState.AddModelError("", "");
             }
             return View();
+            }
+            return RedirectToAction("Login", "User");
         }
         [HttpGet]
         public ActionResult UpdateCategory(int categoryID)
         {
-           
-           var category= services.GetCategory(categoryID);
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+
+                var category= services.GetCategory(categoryID);
             category.ImageUrl = category.ImageUrl;
             return View(category);
+            }
+            return RedirectToAction("Login", "User");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
 
         public ActionResult UpdateCategory(Category category, HttpPostedFileBase file)
         {
-            string fileName = null;
+            if (ModelState.IsValid)
+            {
+                string fileName = null;
             if (file != null)
             {
                 fileName = System.IO.Path.GetFileName(file.FileName);
@@ -109,8 +132,7 @@ namespace BoxOfVegs.Web.Controllers
             //    ModelState.AddModelError("", "Category name is required");
 
             //}
-            if (ModelState.IsValid)
-            {
+            
                 category.ImageUrl = file != null ? fileName : category.ImageUrl;
 
 
@@ -127,11 +149,14 @@ namespace BoxOfVegs.Web.Controllers
         [HttpPost]
         public ActionResult DeleteCategory(int categoryID)
         {
-            
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
 
-            services.DeleteCategoryWithRange(categoryID);
+                services.DeleteCategoryWithRange(categoryID);
 
             return RedirectToAction("Categories");
+            }
+            return RedirectToAction("Login", "User");
         }
 
     }
