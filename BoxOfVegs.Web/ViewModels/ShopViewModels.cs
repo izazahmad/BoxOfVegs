@@ -23,7 +23,7 @@ namespace BoxOfVegs.Web.ViewModels
         public int ProductID { get; set; }
         public string ProductName { get; set; }
         public string ProductURL { get; set; }
-
+        public int TotalQuantity { get; set; }
         public Decimal Price { get; set; }
         public int Quanity { get; set; }
         public Decimal Subtotal { get; set; }

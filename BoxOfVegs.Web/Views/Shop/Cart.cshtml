@@ -11,9 +11,9 @@
 <div class="ogami-breadcrumb">
     <div class="container">
         <ul>
-            <li> <a class="breadcrumb-link" href="index.html"> <i class="fas fa-home"></i>Home</a></li>
-            <li> <a class="breadcrumb-link" href="index.html">Shop</a></li>
-            <li> <a class="breadcrumb-link active" href="index.html">Shoping cart</a></li>
+            <li> <a class="breadcrumb-link" href="#"> <i class="fas fa-home"></i>Home</a></li>
+            <li> <a class="breadcrumb-link" href="#">Shop</a></li>
+            <li> <a class="breadcrumb-link active" href="#">Shoping cart</a></li>
         </ul>
     </div>
 </div>
@@ -96,7 +96,7 @@
                                             <td class="product-name">@item.ProductName</td>
                                             <td class="product-price">£ @item.Price</td>
                                             <td class="product-quantity">
-                                                <input class="quantity no-round-input" type="number" min="1" value="@item.Quanity" name="qty">
+                                                <input class="quantity no-round-input" type="number" min="1" max="@item.TotalQuantity" value="@item.Quanity" name="qty">
                                             </td>
                                             <td class="product-total">£@item.Subtotal</td>
                                             <td class="product-clear">

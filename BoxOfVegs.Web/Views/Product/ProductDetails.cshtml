@@ -39,14 +39,15 @@
                                             <h3 class="product-price">
                                                 £ @Model.Product.Price
                                             </h3>
-                                            <h5 class="product-rated"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i><span>(15)</span></h5>
+                                            <div id="avarageRating"></div><span>(@Model.UserCount)</span>
+                                            @*<h5 class="product-rated"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i><span>(15)</span></h5>*@
                                         </div>
 
                                         @using (Html.BeginForm("AddInCart", "Shop", new { productId = Model.Product.ProductID }, FormMethod.Post))
                                         {
                                             <div class="quantity-select">
                                                 <label for="quantity">Quantity:</label>
-                                                <input class="no-round-input" id="quantity" type="number" min="0" value="1" name="qty">
+                                                <input class="no-round-input" id="quantity" type="number" min="0" max="@Model.Product.Quantity" value="1" name="qty">
                                             </div>
                                             <div class="product-select">
 
@@ -59,80 +60,126 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
+                                   
                                     <div class="shop-detail_more-info">
-                                        <div id="tab-so3">
-                                            <ul class="mb-0">
-                                                <li class="active" > <a href="#tab">Customer Reviews </a></li>
-                                            </ul>
-                                           
-                                            <div id="tab">
-                                                <div class="customer-reviews_block">
-                                                    <div class="customer-review">
-                                                        <div class="row">
-                                                            <div class="col-12 col-sm-3 col-lg-2">
-                                                                <div class="customer-review_left">
-                                                                    <div class="customer-review_img text-center"><img class="img-fluid" src="assets/images/shop/reviewer_01.png" alt="customer image"></div>
-                                                                    <div class="customer-rate"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-sm-9 col-lg-10">
-                                                                <div class="customer-comment">
-                                                                    <h5 class="comment-date">27 Aug 2016</h5>
-                                                                    <h3 class="customer-name">Jenney Kelley</h3>
-                                                                    <p class="customer-commented">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna alation uidem dolore eu fugiat nulla pariatur. </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="customer-review">
-                                                        <div class="row">
-                                                            <div class="col-12 col-sm-3 col-lg-2">
-                                                                <div class="customer-review_left">
-                                                                    <div class="customer-review_img text-center"><img class="img-fluid" src="assets/images/shop/reviewer_02.png" alt="customer image"></div>
-                                                                    <div class="customer-rate"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-sm-9 col-lg-10">
-                                                                <div class="customer-comment">
-                                                                    <h5 class="comment-date">27 Aug 2016</h5>
-                                                                    <h3 class="customer-name">Jenney Kelley</h3>
-                                                                    <p class="customer-commented">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna alation uidem dolore eu fugiat nulla pariatur. </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="add-review">
-                                                        <div class="add-review_top">
-                                                            <h2>Add Review</h2>
-                                                        </div>
-                                                        <div class="add-review_bottom">
-                                                            <form action="" method="post">
+                                       
+                                            <div id="tab-so3">
+                                                <ul class="mb-0">
+                                                    <li class="active"> <a href="#tab">Customer Reviews </a></li>
+                                                </ul>
+
+                                                <div id="tab">
+                                                    <div class="customer-reviews_block">
+                                                        @{int i = 1;}
+                                                        @foreach (var item in Model.Reviews)
+                                                        {
+                                                            <div class="customer-review">
+
                                                                 <div class="row">
-                                                                    <div class="col-12 col-md-6">
-                                                                        <input class="no-round-input" type="text" placeholder="Name*">
-                                                                    </div>
-                                                                    <div class="col-12 col-md-6">
-                                                                        <input class="no-round-input" type="text" placeholder="Email*">
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        <div class="rating">
-                                                                            <h5>Your rating:</h5><span><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></span>
+
+                                                                    @*<div class="col-12 col-sm-3 col-lg-2">
+                                                                        <div class="customer-review_left">*@
+
+
+
+                                                                            @*<div class="customer-review_img text-center"><img class="img-fluid" src="assets/images/shop/reviewer_01.png" alt="customer image"></div>*@
+
+                                                                       @*</div>
+                                                                    </div>*@
+                                                                    <script>
+                                                                                $(function () {
+                                                                                    $('#@("rating"+i)').rateYo({
+                                                                                        rating: @item.Rating,
+                                                                                        starWidth:"15px",
+                                                                                        readOnly: true
+                                                                                    });
+                                                                                });
+                                                                    </script>
+                                                                    <div class="col-12 col-sm-9 col-lg-10">
+                                                                        <div class="customer-comment">
+
+                                                                            <h5 class="comment-date">@item.PostDate.ToShortDateString()</h5>
+                                                                            <h3 class="customer-name">@item.User.UserName</h3>
+                                                                            <div class="customer-rate" id="@("rating"+i)"></div>
+                                                                            <p class="customer-commented">@item.Review </p>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-12">
-                                                                        <textarea class="textarea-form" id="review" name="" cols="30" rows="4" placeholder="Message"></textarea>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        <button class="normal-btn">Submit Review</button>
-                                                                    </div>
+
                                                                 </div>
-                                                            </form>
+
+                                                            </div>
+                                                            i++;
+                                                        }
+                                                        @*<div class="customer-review">
+            <div class="row">
+                <div class="col-12 col-sm-3 col-lg-2">
+                    <div class="customer-review_left">
+                        <div class="customer-review_img text-center"><img class="img-fluid" src="assets/images/shop/reviewer_02.png" alt="customer image"></div>
+                        <div class="customer-rate"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-9 col-lg-10">
+                    <div class="customer-comment">
+                        <h5 class="comment-date">27 Aug 2016</h5>
+                        <h3 class="customer-name">Jenney Kelley</h3>
+                        <p class="customer-commented">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna alation uidem dolore eu fugiat nulla pariatur. </p>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+                                                        <div class="add-review">
+                                                            <div class="add-review_top">
+                                                                <h2>Add Review</h2>
+                                                            </div>
+                                                            <div class="add-review_bottom">
+                                                                @if (Session["UserID"] != null)
+                                                                {
+                                                                    @*<form action="" method="post">*@
+                                                                    using (Html.BeginForm("AddReview", "Product", FormMethod.Post))
+                                                                    {
+                                                                        <div class="row">
+                                                                            @*<div class="col-12 col-md-6">
+                                <input class="no-round-input" type="text" placeholder="Name*">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <input class="no-round-input" type="text" placeholder="Email*">
+                            </div>*@
+                                                                            <div class="col-12">
+                                                                                <div class="rating">
+                                                                                    <h5>Your rating:</h5>@*<span><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></span>*@
+                                                                                    <input type="hidden" id="rating" name="rating" />
+                                                                                    &nbsp;
+                                                                                    <div id="rateYo"></div>
+
+                                                                                </div>
+
+                                                                                @*</div>*@
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                @*<textarea class="textarea-form" id="review" name="" cols="30" rows="4" placeholder="Message"></textarea>*@
+                                                                                @Html.TextAreaFor(model => model.Review, new {  @class="textarea-form" @*cols = 20, rows = 5*@ })
+                                                                            </div>
+
+                                                                            <div class="col-12">
+                                                                                <button class="normal-btn" type="submit">Submit Review</button>
+                                                                                @Html.HiddenFor(model => model.Product.ProductID)
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                    @*</form>*@
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="@Url.Action("Login","User")">Login For Rating and Add Review</a>
+                                                                }
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        
                                     </div>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -142,4 +189,26 @@
         </div>
     </div>
 }
+<script>
+    $(function () {
+        $("#rateYo").rateYo({
+            rating: 0,
+            numStars: 5,
+            maxValue: 5,
+            halfStar: true,
+            onChange: function (rating, rateYoInstance) {
+                $('#rating').val(rating);
+            }
+        });
+    });
+    
+        $(function () {
+            $("#avarageRating").rateYo({
+                rating: @Model.AverageRating,
+                starWidth:"15px",
+                readOnly: true
+            });
+        });
+
+</script>
 

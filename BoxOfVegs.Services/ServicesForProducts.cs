@@ -174,7 +174,7 @@ namespace BoxOfVegs.Services
                 return context.Products.Where(x => x.Category.CategoryName== categoryName).ToList();
             }
         }
-        public List<Product> ShopProducts(string search, int? minPrice, int? maxPrice, int? categoryID, int? sortBy, int pageNo, int pageSize)
+        public List<Product> ShopProducts(string search, int? minPrice, int? maxPrice, int? categoryID, int? sortBy/*, int pageNo, int pageSize*/)
         {
             using (var context = new BOVContext())
             {
@@ -221,7 +221,56 @@ namespace BoxOfVegs.Services
                     
                 }
 
-                return products.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+                return products/*.Skip((pageNo - 1) * pageSize).Take(pageSize)*/.ToList();
+            }
+        }
+        public void AddReview(UserReview review)
+        {
+            using (var context = new BOVContext())
+            {
+                context.UserReviews.Add(review);
+                context.SaveChanges();
+            }
+        }
+        public List<UserReview> GetProductReview(int productId)
+        {
+            using (var context = new BOVContext())
+            { 
+                var review = context.UserReviews.Where(x => x.ProductID == productId).Include(x=>x.User).ToList();
+                return review;
+            }
+
+        }
+        public float GetAverageRating(int? productId)
+        {
+            using(var context=new BOVContext())
+            {
+
+                return context.UserReviews.Where(x => x.ProductID == productId).Average(x => x.Rating);
+            }
+        }
+        public int GetCountUserReview(int productId)
+        {
+            using(var context=new BOVContext())
+            {
+                return context.UserReviews.Where(x => x.ProductID == productId).Count();
+            }
+        }
+        public void UpdateQuantity(int productId,int quantity)
+        {
+            //Product product = new Product();
+            //product.ProductID = productId;
+            //product.Quantity = quantity;
+            using (var context = new BOVContext())
+            {
+                Product product = context.Products.FirstOrDefault(x => x.ProductID == productId);
+                context.Configuration.ValidateOnSaveEnabled = false;
+                product.Quantity = quantity;
+                //context.Products.Attach(product);
+                //context.Entry(product).Property(x => x.Quantity).IsModified = true;
+                context.SaveChanges();
+                //context.Entry(product).Property(x => x.Quantity) = Modified;
+                //context.SaveChanges();
             }
         }
     }

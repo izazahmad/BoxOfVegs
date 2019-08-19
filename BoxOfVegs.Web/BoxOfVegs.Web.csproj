@@ -2046,6 +2046,11 @@
     <Content Include="Content\js\slick.min.js" />
     <Content Include="Content\js\vanilla-tilt.min.js" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\RateYo\jquery.min.js" />
+    <Content Include="Content\RateYo\jquery.rateyo.css" />
+    <Content Include="Content\RateYo\jquery.rateyo.js" />
+    <Content Include="Content\RateYo\jquery.rateyo.min.css" />
+    <Content Include="Content\RateYo\jquery.rateyo.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\fonts\Cera Pro Black Italic.otf" />
@@ -2314,6 +2319,9 @@
     <Content Include="InvoiceDataSet.xsc">
       <DependentUpon>InvoiceDataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="Content\RateYo\jquery.rateyo.less" />
+    <Content Include="Content\RateYo\jquery.rateyo.min.css.map" />
+    <Content Include="Content\RateYo\jquery.rateyo.min.js.map" />
     <None Include="InvoiceDataSet.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>

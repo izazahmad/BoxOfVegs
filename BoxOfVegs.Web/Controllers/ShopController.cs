@@ -16,9 +16,9 @@ namespace BoxOfVegs.Web.Controllers
        ServicesForCategories categoryService = new ServicesForCategories();
         ServicesForProducts productService = new ServicesForProducts();
         ServicesForShop shopService = new ServicesForShop();
-        public ActionResult Index(string search, int? minPrice, int? maxPrice, int? categoryID, int? sortBy, int? pageNO)
+        public ActionResult Index(string search, int? minPrice, int? maxPrice, int? categoryID, int? sortBy/*, int? pageNO*/)
         {
-            int pageSize = 12;
+            //int pageSize = 12;
             // var pageSize = ConfigurationsService.Instance.ShopPageSize();
 
             ShopProductViewModel model = new ShopProductViewModel
@@ -28,14 +28,14 @@ namespace BoxOfVegs.Web.Controllers
                 MaximumPrice = productService.GetMaxPrice()
             };
 
-            pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
+            //pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
             model.SortBy = sortBy;
             model.CategoryID = categoryID;
 
-            int totalCount = productService.ShopProductsCount(search, minPrice, maxPrice, categoryID, sortBy);
-            model.ShopProducts = productService.ShopProducts(search, minPrice, maxPrice, categoryID, sortBy, pageNO.Value, pageSize);
+            //int totalCount = productService.ShopProductsCount(search, minPrice, maxPrice, categoryID, sortBy);
+            model.ShopProducts = productService.ShopProducts(search, minPrice, maxPrice, categoryID, sortBy/*, pageNO.Value, pageSize*/);
 
-            model.ShopPager = new Pager(totalCount, pageNO, pageSize);
+            //model.ShopPager = new Pager(totalCount, pageNO, pageSize);
 
             return View(model);
         }
@@ -49,6 +49,7 @@ namespace BoxOfVegs.Web.Controllers
                 ProductID = product.ProductID,
                 Price = product.Price,
                 Quanity = qty,
+                TotalQuantity=product.Quantity,
                 ProductURL=product.ImageUrl
             };
             crt.Subtotal = crt.Price * crt.Quanity;
@@ -164,7 +165,7 @@ namespace BoxOfVegs.Web.Controllers
         }
         [HttpPost]
         
-        public ActionResult Checkout(Order order, FormCollection formData)
+        public ActionResult Checkout(/*Order order,*/ FormCollection formData)
         {
             
                 if (Session["UserID"] != null)
@@ -188,7 +189,7 @@ namespace BoxOfVegs.Web.Controllers
                         PhoneNumber = Convert.ToString(formData["phone"])
                     };
                     shopService.AddInvoice(invoice);
-                    int invoiceid=invoice.InvoiceID;
+                    //int invoiceid=invoice.InvoiceID;
                     foreach (var item in newlist)
                     {
                          Order orders = new Order();
@@ -200,7 +201,9 @@ namespace BoxOfVegs.Web.Controllers
                          orders.Date = DateTime.Now;
                          orders.UnitPrice = item.Price;
                          orders.Subtotal = item.Subtotal;
+                         int newQuantity = (item.TotalQuantity - item.Quanity);
                          shopService.AddOrder(orders);
+                        productService.UpdateQuantity(item.ProductID,newQuantity);
                     }
                     Session.Remove("total");
                     Session.Remove("cart");

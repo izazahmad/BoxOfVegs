@@ -80,7 +80,7 @@ namespace BoxOfVegs.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Usrname or Password is wrong.");
+                    ModelState.AddModelError("", "Username or Password is wrong.");
                 }
             }
             return View();

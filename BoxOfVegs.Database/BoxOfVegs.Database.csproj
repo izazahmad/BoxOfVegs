@@ -113,6 +113,18 @@
     <Compile Include="Migrations\201908151508542_validationaddedagain.Designer.cs">
       <DependentUpon>201908151508542_validationaddedagain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908181814112_reviewAdded.cs" />
+    <Compile Include="Migrations\201908181814112_reviewAdded.Designer.cs">
+      <DependentUpon>201908181814112_reviewAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908182039209_ratingDTypeChanged.cs" />
+    <Compile Include="Migrations\201908182039209_ratingDTypeChanged.Designer.cs">
+      <DependentUpon>201908182039209_ratingDTypeChanged.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908182345487_userAddedinreviw.cs" />
+    <Compile Include="Migrations\201908182345487_userAddedinreviw.Designer.cs">
+      <DependentUpon>201908182345487_userAddedinreviw.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -176,6 +188,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908151508542_validationaddedagain.resx">
       <DependentUpon>201908151508542_validationaddedagain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908181814112_reviewAdded.resx">
+      <DependentUpon>201908181814112_reviewAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908182039209_ratingDTypeChanged.resx">
+      <DependentUpon>201908182039209_ratingDTypeChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908182345487_userAddedinreviw.resx">
+      <DependentUpon>201908182345487_userAddedinreviw.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

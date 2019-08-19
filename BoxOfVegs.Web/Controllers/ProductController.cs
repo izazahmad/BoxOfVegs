@@ -1,4 +1,5 @@
-﻿using BoxOfVegs.Entities;
+﻿using BoxOfVegs.Database;
+using BoxOfVegs.Entities;
 using BoxOfVegs.Services;
 using BoxOfVegs.Web.ViewModels;
 using System;
@@ -111,7 +112,7 @@ namespace BoxOfVegs.Web.Controllers
             }
             return RedirectToAction("Login", "User");
         
-    }
+        }
 
         public ActionResult EditProduct(int productID)
         {
@@ -175,11 +176,24 @@ namespace BoxOfVegs.Web.Controllers
         [HttpGet]
         public ActionResult ProductDetails(int productId)
         {
-
+            BOVContext context = new BOVContext();
             HomeViewModels model = new HomeViewModels();
 
             model.Product = services.GetProduct(productId);
             model.Product.ImageUrl = model.Product.ImageUrl;
+            model.Reviews = services.GetProductReview(productId);
+            //float? average= services.GetAverageRating(productId);
+            if (context.UserReviews.Any(u => u.ProductID == productId))
+            {
+                model.AverageRating = services.GetAverageRating(productId); ;
+            }
+            else
+            {
+                model.AverageRating = 0;
+            }
+            //model.AverageRating = services.GetAverageRating(productId);
+            model.UserCount = services.GetCountUserReview(productId);
+            //model.UserName = from u in context.Users where u.UserID == model.Reviews.UserID select u.UserName;
 
             if (model.Product == null)
             {
@@ -190,6 +204,33 @@ namespace BoxOfVegs.Web.Controllers
 
             return View(model);
             }
+        }
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+
+        public ActionResult AddReview(HomeViewModels model,float rating)
+        {
+            UserReview review = new UserReview();
+
+            if (Session["UserRoleID"] != null)
+            {
+                //if (ModelState.IsValid)
+                //{
+                    review.UserID = Convert.ToInt32(Session["UserID"]);
+                    review.ProductID = model.Product.ProductID;
+                    review.PostDate = DateTime.Now;
+                    review.Review = model.Review;
+                    review.Rating = rating;
+                    services.AddReview(review);
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("", "");
+                //}
+                return RedirectToAction("ProductDetails", "Product",new { productId = model.Product.ProductID });
+            }
+            return RedirectToAction("Login", "User");
+
         }
     }
 }
