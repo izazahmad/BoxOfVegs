@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-xl-3">
                 <div class="shop-sidebar">
-                    <button class="no-round-btn" id="filter-sidebar--closebtn">Close sidebar</button>
+                    @*<button class="no-round-btn" id="filter-sidebar--closebtn">Close sidebar</button>*@
                     <div class="shop-sidebar_department">
                         <div class="department_top mini-tab-title underline">
                             <h2 class="title">Departments</h2>
@@ -62,12 +62,12 @@
                                 <div class="col-6 col-xl-4">
                                     <h2 class="title">Shop</h2>
                                 </div>
-                                <div class="col-6 text-right">
+                                @*<div class="col-6 text-right">
                                     <div id="show-filter-sidebar">
                                         <h5> <i class="fas fa-bars"></i>Show sidebar</h5>
                                     </div>
-                                </div>
-                                <div class="col-12 col-xl-8">
+                                </div>*@
+                                @*<div class="col-12 col-xl-8">
                                     <div class="product-option">
                                         <div class="product-filter">
                                             <select class="select-form" id="sort" name="">
@@ -87,7 +87,7 @@
                                             <p id="list-view"><i class="fas fa-list"></i></p>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
                             </div>
                             <!--Using column-->
                         </div>
@@ -101,7 +101,7 @@
                                         <div class="product">
                                             <div class="product-img_block">
                                                 <a class="product-img" href="@Url.Action("ProductDetails", "Product", new { productId = item.ProductID })"><img src="~/Content/images/product/@imageUrl" alt=""></a>
-                                                <button class="quickview no-round-btn smooth">Quick view</button>
+                                                @*<button class="quickview no-round-btn smooth">Quick view</button>*@
                                             </div>
                                             <div class="product-info_block">
                                                 <h5 class="product-type">@item.Category.CategoryName</h5>
@@ -115,10 +115,10 @@
                                                 <button class="add-to-wishlist button-borderless"><i class="icon_heart_alt"></i></button>
                                             </div>
                                             <div class="product-select">
-                                                <button class="add-to-wishlist round-icon-btn"> <i class="icon_heart_alt"></i></button>
+                                                @*<button class="add-to-wishlist round-icon-btn"> <i class="icon_heart_alt"></i></button>*@
                                                 <button class="add-to-cart round-icon-btn">  <i class="icon_bag_alt"></i></button>
-                                                <button class="add-to-compare round-icon-btn"> <i class="fas fa-random"></i></button>
-                                                <button class="quickview round-icon-btn"> <i class="far fa-eye"></i></button>
+                                                @*<button class="add-to-compare round-icon-btn"> <i class="fas fa-random"></i></button>*@
+                                                @*<button class="quickview round-icon-btn"> <i class="far fa-eye"></i></button>*@
                                             </div>
                                             @*<div class="product-select_list">
                                                     <p class="delivery-status">Free delivery</p>
@@ -134,7 +134,7 @@
 
                             </div>
                         </div>
-                        <div class="shop-pagination">
+                        @*<div class="shop-pagination">
                             <ul>
                                 <li>
                                     <button class="no-round-btn smooth active">1</button>
@@ -149,7 +149,7 @@
                                     <button class="no-round-btn smooth"> <i class="arrow_carrot-2right"></i></button>
                                 </li>
                             </ul>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>

@@ -42,6 +42,7 @@
     </div>
 </div>
 
+
 <div class="feature-products">
     <div class="container">
         <div class="row">
@@ -61,7 +62,7 @@
                                 <div class="product">
                                     <a class="product-img" href="@Url.Action("ProductDetails", "Product", new { productId = item.ProductID })"><img src="~/Content/images/product/@imageUrl" alt=""></a>
 
-                                    <h5 class="product-more">Boxes</h5>
+                                    <h5 class="product-more">@item.Category.CategoryName</h5>
 
                                     <h3 class="product-name">@item.ProductName</h3>
                                     <h3 class="product-price">

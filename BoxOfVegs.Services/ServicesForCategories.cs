@@ -25,6 +25,9 @@ namespace BoxOfVegs.Services
             using (var context = new BOVContext())
             {
                 return context.Categories.Find(categoryId);
+                //var category = context.Categories.Where(x => x.CategoryID == categoryId).Include(x => x.Products).FirstOrDefault();
+                //return category;
+
             }
         }
         public List<Category> AllCategories()
@@ -97,14 +100,14 @@ namespace BoxOfVegs.Services
                 context.SaveChanges();
             }
         }
-        public void DeleteCategoryWithRange(int categoryId)
+        public void DeleteCategoryWithRange(Category category)
         {
             using (var context = new BOVContext())
             {
-                var category = context.Categories.Where(x => x.CategoryID == categoryId).Include(x => x.Products).FirstOrDefault();
+                var Category = context.Categories.Where(x => x.CategoryID == category.CategoryID).Include(x => x.Products).FirstOrDefault();
 
-                context.Products.RemoveRange(category.Products); //first delete products of this category
-                context.Categories.Remove(category);
+                context.Products.RemoveRange(Category.Products); //first delete products of this category
+                context.Categories.Remove(Category);
                 context.SaveChanges();
             }
         }

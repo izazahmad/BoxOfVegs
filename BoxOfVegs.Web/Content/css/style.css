@@ -2545,10 +2545,10 @@ header .navigation {
         header .navigation .navgition-menu ul .toggleable .menu-item:hover {
           color: #88c74a;
           text-decoration: none; }
-        header .navigation .navgition-menu ul .toggleable .menu-item:after {
-          /*content: "\33";*/
+        /*header .navigation .navgition-menu ul .toggleable .menu-item:after {
+          content: "\33";
           font-family: 'ElegantIcons';
-          margin-left: 10px; }
+          margin-left: 10px; }*/
         header .navigation .navgition-menu ul .toggleable .menu-item.active {
           color: #88c74a; }
       header .navigation .navgition-menu ul .toggleable .sub-menu {

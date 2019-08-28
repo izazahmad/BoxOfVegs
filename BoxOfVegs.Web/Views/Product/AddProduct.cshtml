@@ -11,8 +11,8 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         
-        <li class="breadcrumb-item">Products</li>
-        <li class="breadcrumb-item ">Add Product</li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index","Product")">Products</a></li>
+        <li class="breadcrumb-item active ">Add Product</li>
     </ol>
 
     <div class="card mb-3">
@@ -97,11 +97,10 @@
 
                     <div class="row">
                         <div class="col-auto">
-                            <input type="submit" value="Save" class="btn btn-outline-primary" />
+                            <button type="button" onclick="location.href='@Url.Action("Index","Product")'">Cancel</button>
                         </div>
-                        <div class="col-auto">
-                            <a onclick="window.history.back();" class="btn btn-outline-primary">Cancel</a>
-
+                        <div class="col-auto ">
+                            <button type="submit">Save</button>
                         </div>
                     </div>
 

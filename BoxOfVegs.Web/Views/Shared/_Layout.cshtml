@@ -34,7 +34,7 @@
                         <div class="col-12 col-md-6">
                             <div class="header-left d-flex flex-column flex-md-row align-items-center">
                                 <p class="d-flex align-items-center"><i class="fas fa-envelope"></i>shekhizaz@gmail.com</p>
-                                <p class="d-flex align-items-center"><i class="fas fa-phone"></i>+447440422215</p>
+                                <p class="d-flex align-items-center"><i class="fas fa-phone"></i>+447305897349</p>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -107,9 +107,9 @@
                                     </li>
 
 
-                                    <li class="toggleable">
+                                    @*<li class="toggleable">
                                     <a class="menu-item" href="@Url.Action("Cart", "Shop")">Checkout</a>
-                                    </li>
+                                    </li>*@
                                 </ul>
                             </div>
                         </div>
@@ -161,15 +161,17 @@
 
 
 
-                            <div class="col-12 col-md-8 col-lg-8 col-xl-9 order-1 order-md-2">
-                                <div class="website-search">
-                                    <div class="row no-gutters">
+                            @*<div class="col-12 col-md-8 col-lg-8 col-xl-9 order-1 order-md-2">*@
+                                @*<div class="website-search">*@
+                                    @*<div class="row no-gutters">*@
 
 
-                                        <div class="col-8 col-md-8 col-lg-5 col-xl-7">
-                                            <div class="search-input">
-                                                <input id="mainSearchTxt" class="no-round-input no-border" type="text" placeholder="What do you need" name="search">
-                                            </div>
+                                <div class="col-8 col-md-8 col-lg-5 col-xl-7">
+                                    @*<div class="search-input">*@
+                                    <input id="mainSearchTxt" class="no-round-input " type="text" placeholder="enter search text" name="search">@*no-border*@
+                                    @*<button class="no-round-btn" id="mainSearchBtn">Search</button>*@
+
+                                @*</div>*@
                                         </div>
                                         <div class="col-4 col-md-4 col-lg-3 col-xl-2">
                                             <button class="no-round-btn" id="mainSearchBtn">Search</button>
@@ -177,9 +179,9 @@
 
 
 
-                                    </div>
-                                </div>
-                            </div>
+                                    @*</div>*@
+                                @*</div>*@
+                            @*</div>*@
 
 
 
@@ -215,7 +217,7 @@
 
                             <div class="col-12 col-sm-4 text-sm-center text-md-left">
                                 <div class="footer-quicklink">
-                                    <h5>My Account</h5><a href="#">My Account</a><a href="#">Shopping cart</a><a href="@Url.Action("Index", "Shop")">Shop</a>
+                                    @*<h5>My Account</h5><a href="#">My Account</a>*@<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><a href="#">Shopping cart</a><a href="@Url.Action("Index", "Shop")">Shop</a>
                                 </div>
                             </div>
 
@@ -226,8 +228,8 @@
 
             <div class="footer-credit">
                 <div class="container">
-                    <div class="footer-creadit_block d-flex flex-column flex-md-row justify-content-start justify-content-md-between align-items-baseline align-items-md-center">
-                        <p class="author">Copyright © 2019  - All Rights Reserved.</p>
+                    <div @*class="footer-creadit_block d-flex flex-column flex-md-row justify-content-start justify-content-md-between align-items-baseline align-items-md-center"*@>
+                        <p class="author" style="text-align:center">Copyright © 2019  - All Rights Reserved.</p>
                     </div>
                 </div>
             </div>
@@ -236,22 +238,22 @@
 
     </div>
 
-    <script src="~/Content/js/jquery-ui.min.js"></script>
-    <script src="~/Content/js/jquery.countdown.min.js"></script>
+    @*<script src="~/Content/js/jquery-ui.min.js"></script>*@
+    @*<script src="~/Content/js/jquery.countdown.min.js"></script>*@
     <script src="~/Content/js/slick.min.js"></script>
     <script src="~/Content/js/jquery.easing.js"></script>
     <script src="~/Content/js/jquery.scrollUp.min.js"></script>
-    <script src="~/Content/js/jquery.zoom.min.js"></script>
-    <script src="~/Content/js/parallax.js"></script>
-    <script src="~/Content/js/jquery.fancybox.js"></script>
-    <script src="~/Content/js/numscroller-1.0.js"></script>
-    <script src="~/Content/js/vanilla-tilt.min.js"></script>
+    @*<script src="~/Content/js/jquery.zoom.min.js"></script>*@
+    @*<script src="~/Content/js/parallax.js"></script>*@
+    @*<script src="~/Content/js/jquery.fancybox.js"></script>*@
+    @*<script src="~/Content/js/numscroller-1.0.js"></script>*@
+    @*<script src="~/Content/js/vanilla-tilt.min.js"></script>*@
     <script src="~/Content/js/main.js"></script>
-    <script>
+    @*<script>
         var sence = document.getElementById('img-block')
         var parallaxInstance = new Parallax(sence, {
             hoverOnly: true,
-        });</script>
+        });</script>*@
    
 
     <a id="scrollUp" href="#top" style="position: fixed; z-index: 105;"><i class="arrow_carrot-up"></i></a>

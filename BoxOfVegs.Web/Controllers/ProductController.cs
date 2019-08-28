@@ -91,9 +91,12 @@ namespace BoxOfVegs.Web.Controllers
                 string fileName = null;
             if (file != null)
             {
-                 fileName = System.IO.Path.GetFileName(file.FileName);
-                
-                string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/product/"), fileName);
+                        string extension = System.IO.Path.GetExtension(file.FileName);
+                        string newName = Guid.NewGuid().ToString();
+                        //fileName = System.IO.Path.GetFileName(file.FileName);
+                        fileName = newName + extension;
+
+                        string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/product/"), fileName);
                 // file is uploaded
                 file.SaveAs(path);
             }
@@ -139,8 +142,11 @@ namespace BoxOfVegs.Web.Controllers
                 string fileName = null;
             if (file != null)
             {
-                fileName = System.IO.Path.GetFileName(file.FileName);
-                string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/product/"), fileName);
+                        string extension = System.IO.Path.GetExtension(file.FileName);
+                        string newName = Guid.NewGuid().ToString();
+                        //fileName = System.IO.Path.GetFileName(file.FileName);
+                        fileName = newName + extension;
+                        string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/product/"), fileName);
                 // file is uploaded
                 file.SaveAs(path);
             }
@@ -160,16 +166,25 @@ namespace BoxOfVegs.Web.Controllers
             return RedirectToAction("Login", "User");
         }
 
-        
-        
-        [HttpPost]
         public ActionResult DeleteProduct(int productID)
         {
             if (Convert.ToInt32(Session["UserRoleID"]) == 1)
             {
                 //repoWork.GetRepositoryInstance<Product>().Remove(product);
-                services.RemoveProduct(productID);
-            return RedirectToAction("Products");
+                var product=services.GetProduct(productID);
+                return View(product);
+            }
+            return RedirectToAction("Login", "User");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteProduct(Product product)
+        {
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+                //repoWork.GetRepositoryInstance<Product>().Remove(product);
+                services.RemoveProduct(product);
+            return RedirectToAction("Index");
             }
             return RedirectToAction("Login", "User");
         }

@@ -10,17 +10,17 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         
-        <li class="breadcrumb-item active">Categories</li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index","Category")">Categories</a></li>
         <li class="breadcrumb-item active">Add Category</li>
     </ol>
 
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fas fa-table"></i>
+            @*<i class="fas fa-table"></i>*@
             Add Category
         </div>
         <div class="card-body">
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("AddCategory", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -41,7 +41,7 @@
                     @Html.Label("Image", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
 
-                        <input type="file" name="file" id="file" style="width: 50%" />
+                        <input type="file" name="file" id="file" style="width: 100%;" />
                         @*@Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })*@
                     </div>
                 </div>
@@ -69,10 +69,12 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-auto ">
-                            <a onclick="window.history.back();" class="btn btn-outline-primary">Cancel</a>
+                            <button type="button" onclick="location.href='@Url.Action("Index","Category")'">Cancel</button>
+                            @*<a onclick="window.history.back();" class="btn btn-outline-primary">Cancel</a>*@
                         </div>
                         <div class="col-auto ">
-                            <input type="submit" value="Save" class="btn btn-outline-primary" id="SaveBtn" />
+                            <button type="submit">Save</button>
+                            @*<input type="submit" value="Save" class="btn btn-outline-primary" id="SaveBtn" />*@
                         </div>
                     </div>
                     

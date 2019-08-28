@@ -42,20 +42,27 @@
                                             <div id="avarageRating"></div><span>(@Model.UserCount)</span>
                                             @*<h5 class="product-rated"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i><span>(15)</span></h5>*@
                                         </div>
-
-                                        @using (Html.BeginForm("AddInCart", "Shop", new { productId = Model.Product.ProductID }, FormMethod.Post))
+                                        @if (Model.Product.Quantity > 0)
                                         {
-                                            <div class="quantity-select">
-                                                <label for="quantity">Quantity:</label>
-                                                <input class="no-round-input" id="quantity" type="number" min="0" max="@Model.Product.Quantity" value="1" name="qty">
-                                            </div>
-                                            <div class="product-select">
+                                            using (Html.BeginForm("AddInCart", "Shop", new { productId = Model.Product.ProductID }, FormMethod.Post))
+                                            {
+                                                <div class="quantity-select">
+
+                                                    <label for="quantity">Quantity:</label>
+                                                    <input class="no-round-input" id="quantity" type="number" min="1" max="@Model.Product.Quantity" value="1" name="qty">
+                                                </div>
+                                                <div class="product-select">
 
 
-                                                <button class="add-to-cart normal-btn outline">Add to Cart</button>
+                                                    <button class="add-to-cart normal-btn outline">Add to Cart</button>
 
 
-                                            </div>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p>Product not available</p>
                                         }
                                     </div>
                                 </div>

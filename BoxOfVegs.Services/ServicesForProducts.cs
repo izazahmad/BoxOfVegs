@@ -95,13 +95,13 @@ namespace BoxOfVegs.Services
                 context.SaveChanges();
             }
         }
-        public void RemoveProduct(int productID)
+        public void RemoveProduct(Product product)
         {
             using (var context = new BOVContext())
             {
-                var product = context.Products.Find(productID);
+                var Product = context.Products.Find(product.ProductID);
 
-                context.Products.Remove(product);
+                context.Products.Remove(Product);
                 context.SaveChanges();
             }
         }
@@ -171,7 +171,9 @@ namespace BoxOfVegs.Services
         {
             using (var context = new BOVContext())
             {
-                return context.Products.Where(x => x.Category.CategoryName== categoryName).ToList();
+                //return context.Products.Where(x => x.Category.CategoryName== categoryName).ToList();
+                return context.Products.Where(x => x.ProductName.ToLower().Contains(categoryName.ToLower())).Include(x => x.Category).ToList();
+
             }
         }
         public List<Product> ShopProducts(string search, int? minPrice, int? maxPrice, int? categoryID, int? sortBy/*, int pageNo, int pageSize*/)

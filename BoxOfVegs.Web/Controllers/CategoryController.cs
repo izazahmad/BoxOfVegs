@@ -80,15 +80,17 @@ namespace BoxOfVegs.Web.Controllers
                 string fileName = null;
             if (file != null)
             {
-                fileName = System.IO.Path.GetFileName(file.FileName);
-
+                string extension = System.IO.Path.GetExtension(file.FileName);
+                string newName = Guid.NewGuid().ToString();
+                        //fileName = System.IO.Path.GetFileName(file.FileName);
+                fileName = newName + extension;
                 string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/category/"), fileName);
                 // file is uploaded
                 file.SaveAs(path);
             }
             
 
-                category.ImageUrl = fileName;
+            category.ImageUrl = fileName;
             services.AddCategory(category);
             return RedirectToAction("Index");
             }
@@ -122,8 +124,11 @@ namespace BoxOfVegs.Web.Controllers
                 string fileName = null;
             if (file != null)
             {
-                fileName = System.IO.Path.GetFileName(file.FileName);
-                string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/category/"), fileName);
+                    string extension = System.IO.Path.GetExtension(file.FileName);
+                    string newName = Guid.NewGuid().ToString();
+                    //fileName = System.IO.Path.GetFileName(file.FileName);
+                    fileName = newName + extension;
+                    string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/category/"), fileName);
                 // file is uploaded
                 file.SaveAs(path);
             }
@@ -145,16 +150,26 @@ namespace BoxOfVegs.Web.Controllers
             }
             return View();
         }
-        
-        [HttpPost]
         public ActionResult DeleteCategory(int categoryID)
         {
             if (Convert.ToInt32(Session["UserRoleID"]) == 1)
             {
+                var category = services.GetCategory(categoryID);
 
-                services.DeleteCategoryWithRange(categoryID);
+                return View(category);
+            }
+            return RedirectToAction("Login", "User");
+        }
 
-            return RedirectToAction("Categories");
+        [HttpPost]
+        public ActionResult DeleteCategory(Category category)
+        {
+            if (Convert.ToInt32(Session["UserRoleID"]) == 1)
+            {
+
+                services.DeleteCategoryWithRange(category);
+
+            return RedirectToAction("Index");
             }
             return RedirectToAction("Login", "User");
         }
