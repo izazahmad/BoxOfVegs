@@ -125,6 +125,10 @@
     <Compile Include="Migrations\201908182345487_userAddedinreviw.Designer.cs">
       <DependentUpon>201908182345487_userAddedinreviw.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908302319089_clearProcedure.cs" />
+    <Compile Include="Migrations\201908302319089_clearProcedure.Designer.cs">
+      <DependentUpon>201908302319089_clearProcedure.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -197,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908182345487_userAddedinreviw.resx">
       <DependentUpon>201908182345487_userAddedinreviw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908302319089_clearProcedure.resx">
+      <DependentUpon>201908302319089_clearProcedure.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

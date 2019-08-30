@@ -48,11 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoriesService.cs" />
-    <Compile Include="Repository.cs" />
-    <Compile Include="RepositoryWork.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicesForAccounts.cs" />
     <Compile Include="ServicesForCategories.cs" />

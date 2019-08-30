@@ -23,20 +23,5 @@ namespace BoxOfVegs.Database
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<UserReview> UserReviews{ get; set; }
 
-        
-
-
-
-        ////remove the convention to pluralize table names
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        //    base.OnModelCreating(modelBuilder);
-        //}
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Product>().MapToStoredProcedures();
-            base.OnModelCreating(modelBuilder);
-        }
     }
 }
