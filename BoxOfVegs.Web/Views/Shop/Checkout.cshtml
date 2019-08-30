@@ -7,9 +7,10 @@
 <div class="ogami-breadcrumb">
     <div class="container">
         <ul>
-            <li> <a class="breadcrumb-link" href="index.html"> <i class="fas fa-home"></i>Home</a></li>
-            <li> <a class="breadcrumb-link" href="index.html">Shop</a></li>
-            <li> <a class="breadcrumb-link active" href="index.html">Shoping cart</a></li>
+            <li> <a class="breadcrumb-link" href="@Url.Action("Index", "Home")">Home</a></li>
+            <li> <a class="breadcrumb-link" href="@Url.Action("Index", "Shop")">Shop</a></li>
+            <li> <a class="breadcrumb-link" href="@Url.Action("Cart", "Shop")">Cart</a></li>
+            <li><a class="breadcrumb-link active">Checkout</a></li>
         </ul>
     </div>
 </div>
