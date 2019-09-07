@@ -33,5 +33,12 @@ namespace BoxOfVegs.Services
                 context.SaveChanges();
             }
         }
+        public User GetUserDetail(string username)
+        {
+            using (var context = new BOVContext())
+            {
+                return context.Users.Where(x => x.UserName == username).FirstOrDefault();
+            }
+        }
     }
 }

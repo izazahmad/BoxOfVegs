@@ -79,13 +79,7 @@ namespace BoxOfVegs.Services
             }
         }
 
-        //public List<Product> GetFeaturedProducts()
-        //{
-        //    using (var context = new BOVContext())
-        //    {
-        //        return context.Products.Where(x => x.isFeatured /*&& x.ImageURL != null*/).ToList();
-        //    }
-        //}
+        
 
         public void UpdateProduct(Product product)
         {

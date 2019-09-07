@@ -64,25 +64,32 @@ namespace BoxOfVegs.Web.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            using(BOVContext context=new BOVContext())
-            {
-                
-                var users = context.Users.Single(x => x.UserName==user.UserName );
-                bool validateUser = PasswordHashing.ValidatePassword( user.Password, users.Password);
-                
-                if( validateUser==true)
-                {
-                    Session["UserID"] = users.UserID.ToString();
-                    Session["UserName"] = users.UserName.ToString();
-                    Session["FirstName"] = users.FirstName.ToString();
-                    Session["UserRoleID"] = users.UserRoleID.ToString();
-                    return RedirectToAction("Cart","Shop");
-                }
-                else
+            //BOVContext context = new BOVContext();
+            ServicesForAccounts services = new ServicesForAccounts();
+            var users = services.GetUserDetail(user.UserName);
+                //var users = context.Users.Where(x => x.UserName == user.UserName).FirstOrDefault();
+                if (users == null)
                 {
                     ModelState.AddModelError("", "Username or Password is wrong.");
                 }
-            }
+                else
+                {
+                    bool validateUser = PasswordHashing.ValidatePassword(user.Password, users.Password);
+
+                    if (validateUser == true)
+                    {
+                        Session["UserID"] = users.UserID.ToString();
+                        Session["UserName"] = users.UserName.ToString();
+                        Session["FirstName"] = users.FirstName.ToString();
+                        Session["UserRoleID"] = users.UserRoleID.ToString();
+                        return RedirectToAction("Cart", "Shop");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Username or Password is wrong.");
+                    }
+                }
+            
             return View();
 
         }
@@ -111,21 +118,24 @@ namespace BoxOfVegs.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ForgotPassword(ForgotPasswordViewModel forgot)
         {
-            BOVContext context = new BOVContext();
-            if (context.Users.Any(u => u.UserName == forgot.UserName))
+            //BOVContext context = new BOVContext();
+            ServicesForAccounts services = new ServicesForAccounts();
+            var user = services.GetUserDetail(forgot.UserName);
+            //var user = context.Users.Where(x => x.UserName == forgot.UserName).FirstOrDefault();
+
+            if (/*context.Users.Any(u => u.UserName == forgot.UserName)*/user != null && user.UserName == forgot.UserName)
             {
-                if(context.Users.Any(u=>u.Email==forgot.Email))
+                if(/*context.Users.Any(u=>u.Email==forgot.Email)*/user.Email == forgot.Email)
                 {
                     if (ModelState.IsValid)
                     {
-                        var users = context.Users.Single(x => x.UserName == forgot.UserName);
+                        //var users = context.Users.Single(x => x.UserName == forgot.UserName);
 
-                        ServicesForAccounts services = new ServicesForAccounts();
                         var HashPassword = PasswordHashing.CreateHash(forgot.NewPassword);
                         //User user = new User();
                         //user.Password = HashPassword;
                         //user.UserName=forgot.UserName;
-                        services.ResetPassword(HashPassword, users.UserID);
+                        services.ResetPassword(HashPassword, user.UserID);
                         return Redirect("Login");
 
                     }
@@ -138,13 +148,13 @@ namespace BoxOfVegs.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Email address is not exist");
+                    ModelState.AddModelError("", "Email address is not existed");
 
                 }
             }
             else
             {
-                ModelState.AddModelError("", "User name is not exist");
+                ModelState.AddModelError("", "User name is not existed");
 
             }
             return View();

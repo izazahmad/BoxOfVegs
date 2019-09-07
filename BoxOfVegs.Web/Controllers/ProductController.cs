@@ -138,10 +138,10 @@ namespace BoxOfVegs.Web.Controllers
             if (Convert.ToInt32(Session["UserRoleID"]) == 1)
             {
                 if (ModelState.IsValid)
-            {
+                {
                 string fileName = null;
-            if (file != null)
-            {
+                if (file != null)
+                {
                         string extension = System.IO.Path.GetExtension(file.FileName);
                         string newName = Guid.NewGuid().ToString();
                         //fileName = System.IO.Path.GetFileName(file.FileName);
@@ -149,9 +149,15 @@ namespace BoxOfVegs.Web.Controllers
                         string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/product/"), fileName);
                 // file is uploaded
                 file.SaveAs(path);
-            }
-            
-                product.ImageUrl = file != null ? fileName : product.ImageUrl;
+                        product.ImageUrl = fileName;
+                }
+                else
+                {
+                        var products = services.GetProduct(product.ProductID);
+                        product.ImageUrl = products.ImageUrl;
+                }
+                
+                //product.ImageUrl = file != null ? fileName : product.ImageUrl;
             //tbl.ModifiedDate = DateTime.Now;
            // repoWork.GetRepositoryInstance<Product>().Update(product);
             services.UpdateProduct(product);

@@ -131,17 +131,24 @@ namespace BoxOfVegs.Web.Controllers
                     string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/category/"), fileName);
                 // file is uploaded
                 file.SaveAs(path);
+            
+                category.ImageUrl = fileName;
+            }
+            else
+            {
+                var categories = services.GetCategory(category.CategoryID);
+                category.ImageUrl = categories.ImageUrl;
             }
             //if(category.CategoryName==null)
             //{
             //    ModelState.AddModelError("", "Category name is required");
 
             //}
-            
-                category.ImageUrl = file != null ? fileName : category.ImageUrl;
+
+            //category.ImageUrl = file != null ? fileName : category.ImageUrl;
 
 
-                services.UpdateCategory(category);
+            services.UpdateCategory(category);
                 return RedirectToAction("Index");
             }
             else
