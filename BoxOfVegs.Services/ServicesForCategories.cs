@@ -25,8 +25,7 @@ namespace BoxOfVegs.Services
             using (var context = new BOVContext())
             {
                 return context.Categories.Find(categoryId);
-                //var category = context.Categories.Where(x => x.CategoryID == categoryId).Include(x => x.Products).FirstOrDefault();
-                //return category;
+                
 
             }
         }
@@ -82,13 +81,7 @@ namespace BoxOfVegs.Services
             }
         }
 
-        //public List<Category> GetFeaturedCategory()
-        //{
-        //    using (var context = new BOVContext())
-        //    {
-        //        return context.Categories.Where(x => x.isFeatured /*&& x.ImageURL != null*/).Include(x => x.Products).ToList();
-        //    }
-        //}
+       
 
         
 

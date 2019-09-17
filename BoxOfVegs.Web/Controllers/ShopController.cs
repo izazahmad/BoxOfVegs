@@ -13,13 +13,12 @@ namespace BoxOfVegs.Web.Controllers
     public class ShopController : Controller
     {
         // GET: Shop
-       ServicesForCategories categoryService = new ServicesForCategories();
+        ServicesForCategories categoryService = new ServicesForCategories();
         ServicesForProducts productService = new ServicesForProducts();
         ServicesForShop shopService = new ServicesForShop();
-        public ActionResult Index(string search, int? minPrice, int? maxPrice, int? categoryID, int? sortBy/*, int? pageNO*/)
+        public ActionResult Index(string search, int? minPrice, int? maxPrice, int? categoryID, int? sortBy)
         {
-            //int pageSize = 12;
-            // var pageSize = ConfigurationsService.Instance.ShopPageSize();
+           
 
             ShopProductViewModel model = new ShopProductViewModel
             {
@@ -28,20 +27,16 @@ namespace BoxOfVegs.Web.Controllers
                 MaximumPrice = productService.GetMaxPrice()
             };
 
-            //pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
             model.SortBy = sortBy;
             model.CategoryID = categoryID;
 
-            //int totalCount = productService.ShopProductsCount(search, minPrice, maxPrice, categoryID, sortBy);
-            model.ShopProducts = productService.ShopProducts(search, minPrice, maxPrice, categoryID, sortBy/*, pageNO.Value, pageSize*/);
+            model.ShopProducts = productService.ShopProducts(search, minPrice, maxPrice, categoryID, sortBy);
 
-            //model.ShopPager = new Pager(totalCount, pageNO, pageSize);
 
             return View(model);
         }
         public ActionResult AddInCart(int productId, int qty)
         {
-            //int qty = 2;
             List<CartViewModel> list = new List<CartViewModel>();
             var product = productService.GetProduct(productId);
             CartViewModel crt = new CartViewModel
@@ -128,7 +123,7 @@ namespace BoxOfVegs.Web.Controllers
             if (Session["UserID"] != null)
             {
                 if (Session["cart"] != null)
-            {
+                {
                 Decimal x = 0;
                 List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
                 foreach (var item in newlist)
@@ -138,8 +133,8 @@ namespace BoxOfVegs.Web.Controllers
                 }
 
                 Session["total"] = x;
-            }
-            return View();
+                }
+                 return View();
             }
             else
             {
@@ -165,7 +160,7 @@ namespace BoxOfVegs.Web.Controllers
         }
         [HttpPost]
         
-        public ActionResult Checkout(/*Order order,*/ FormCollection formData)
+        public ActionResult Checkout( FormCollection formData)
         {
             
                 if (Session["UserID"] != null)
@@ -178,9 +173,8 @@ namespace BoxOfVegs.Web.Controllers
 
                     Invoice invoice = new Invoice
                     {
-                        //string street = Convert.ToString(formData["street"]);
                         
-                        UserID = userID/* Convert.ToInt32(Session["UserID"].ToString())*/,
+                        UserID = userID,
                         TotalAmount = (decimal)Session["total"],
                         InvoiceDate = DateTime.Now,
                         Address = Convert.ToString(formData["street"]),
@@ -189,19 +183,19 @@ namespace BoxOfVegs.Web.Controllers
                         PhoneNumber = Convert.ToString(formData["phone"])
                     };
                     shopService.AddInvoice(invoice);
-                    //int invoiceid=invoice.InvoiceID;
                     foreach (var item in newlist)
                     {
-                         Order orders = new Order();
-                         //orders.UserID = Convert.ToInt32(Session["UserID"].ToString());
-                         orders.ProductID = item.ProductID;
-                         orders.InvoiceID = invoice.InvoiceID;
-                         orders.ProductName = item.ProductName;
-                         orders.Quantity = item.Quanity;
-                         orders.Date = DateTime.Now;
-                         orders.UnitPrice = item.Price;
-                         orders.Subtotal = item.Subtotal;
-                         int newQuantity = (item.TotalQuantity - item.Quanity);
+                        Order orders = new Order
+                        {
+                            ProductID = item.ProductID,
+                            InvoiceID = invoice.InvoiceID,
+                            ProductName = item.ProductName,
+                            Quantity = item.Quanity,
+                            Date = DateTime.Now,
+                            UnitPrice = item.Price,
+                            Subtotal = item.Subtotal
+                        };
+                        int newQuantity = (item.TotalQuantity - item.Quanity);
                          shopService.AddOrder(orders);
                         productService.UpdateQuantity(item.ProductID,newQuantity);
                     }
@@ -245,34 +239,31 @@ namespace BoxOfVegs.Web.Controllers
         }
         public ActionResult CreateInvoice(int userId)
         {
-            //userId = Convert.ToInt32(Session["UserID"]);
-            //int invoiceId = shopService.GetInvoiceID(userId);
+            
             var invoiceDetails = shopService.GetInvoiceDetail(userId);
             var userDetails = shopService.GetUserDetails(userId);
             int invoiceId = invoiceDetails.InvoiceID;
-            //int invoiceId = shopService.GetInvoiceID(userId);
-            InvoiceDetailViewModel model = new InvoiceDetailViewModel();
-            model.Orders = shopService.GetOrders(invoiceId);
-            model.UserID = userId;
-            model.InvoiceDate = invoiceDetails.InvoiceDate;
-            model.InvoiceID = invoiceId;
-            model.PhoneNumber = invoiceDetails.PhoneNumber;
-            model.PostCode = invoiceDetails.PostCode;
-            model.TotalAmount = invoiceDetails.TotalAmount;
-            model.Address = invoiceDetails.Address;
-            model.City = invoiceDetails.City;
-            model.FirstName = userDetails.FirstName;
-            model.LastName = userDetails.LastName;
+            InvoiceDetailViewModel model = new InvoiceDetailViewModel
+            {
+                Orders = shopService.GetOrders(invoiceId),
+                UserID = userId,
+                InvoiceDate = invoiceDetails.InvoiceDate,
+                InvoiceID = invoiceId,
+                PhoneNumber = invoiceDetails.PhoneNumber,
+                PostCode = invoiceDetails.PostCode,
+                TotalAmount = invoiceDetails.TotalAmount,
+                Address = invoiceDetails.Address,
+                City = invoiceDetails.City,
+                FirstName = userDetails.FirstName,
+                LastName = userDetails.LastName
+            };
 
             return PartialView("CreateInvoice", model);
-            //return new Rotativa.ViewAsPdf("model");
         }
         public ActionResult PrintInvoice(int userid)
         {
             return new ActionAsPdf("CreateInvoice", new { userid });
 
-            //var model = new InvoiceDetailViewModel();ActionAsPdf
-            //return new ActionAsPdf("CreateInvoice", model);
         }
     }
 }

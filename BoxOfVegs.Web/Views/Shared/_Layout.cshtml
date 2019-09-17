@@ -5,7 +5,7 @@
     <title>Index</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-   
+
     <link rel="stylesheet" href="~/Content/css/style.css">
     <link rel="stylesheet" href="~/Content/css/custom_bootstrap.css">
     <link rel="stylesheet" href="~/Content/css/normalize.css">
@@ -14,15 +14,15 @@
     <link rel="stylesheet" href="~/Content/css/animate.css">
     <link rel="stylesheet" href="~/Content/css/slick.css">
     <link rel="stylesheet" href="~/Content/css/scroll.css">
-    <link rel="stylesheet" href="~/Content/css/icomoon.css">
-    <link rel="stylesheet" href="~/Content/css/jquery.fancybox.min.css">
     <link href="~/Content/RateYo/jquery.rateyo.min.css" rel="stylesheet" />
-    <link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="favicon.ico">
     <script src="~/Content/RateYo/jquery.min.js"></script>
     <script src="~/Content/RateYo/jquery.rateyo.min.js"></script>
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
- 
+    <script src="~/Content/js/slick.min.js"></script>
+    <script src="~/Content/js/jquery.easing.js"></script>
+    <script src="~/Content/js/jquery.scrollUp.min.js"></script>
+    <script src="~/Content/js/main.js"></script>
+
 
 </head>
 <body>
@@ -42,7 +42,7 @@
                                 @if (Session["UserID"] == null)
                                 {
 
-                                    <div class="login d-flex"><a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>Login</a></div>
+                                    <div class="login d-flex"><a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>Login or Register</a></div>
 
                                 }
                                 else
@@ -68,20 +68,7 @@
 
                                     }
                                 }
-                                @*else
-        {
-            <div class="login d-flex">
-                <a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>@Session["FirstName"] </a>
-                &nbsp &nbsp
-                <a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>Admin Panel </a>
-
-                &nbsp &nbsp
-                <a class="text-danger" href="@Url.Action("Logout", "User")">Logout</a>
-
-
-            </div>
-
-        }*@
+        
 
                             </div>
                         </div>
@@ -105,11 +92,7 @@
                                         <a class="menu-item" href="@Url.Action("Index", "Shop")">Shop</a>
 
                                     </li>
-
-
-                                    @*<li class="toggleable">
-                                    <a class="menu-item" href="@Url.Action("Cart", "Shop")">Checkout</a>
-                                    </li>*@
+                                   
                                 </ul>
                             </div>
                         </div>
@@ -158,32 +141,13 @@
                         <div class="row">
 
 
-
-
-
-                            @*<div class="col-12 col-md-8 col-lg-8 col-xl-9 order-1 order-md-2">*@
-                                @*<div class="website-search">*@
-                                    @*<div class="row no-gutters">*@
-
-
                                 <div class="col-8 col-md-8 col-lg-5 col-xl-7">
-                                    @*<div class="search-input">*@
-                                    <input id="mainSearchTxt" class="no-round-input " type="text" placeholder="enter search text" name="search">@*no-border*@
-                                    @*<button class="no-round-btn" id="mainSearchBtn">Search</button>*@
+                                    <input id="mainSearchTxt" class="no-round-input " type="text" placeholder="enter search text" name="search">
 
-                                @*</div>*@
                                         </div>
                                         <div class="col-4 col-md-4 col-lg-3 col-xl-2">
                                             <button class="no-round-btn" id="mainSearchBtn">Search</button>
                                         </div>
-
-
-
-                                    @*</div>*@
-                                @*</div>*@
-                            @*</div>*@
-
-
 
                         </div>
                     </div>
@@ -217,7 +181,7 @@
 
                             <div class="col-12 col-sm-4 text-sm-center text-md-left">
                                 <div class="footer-quicklink">
-                                    @*<h5>My Account</h5><a href="#">My Account</a>*@<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><a href="#">Shopping cart</a><a href="@Url.Action("Index", "Shop")">Shop</a>
+                                  <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><a href="#">Shopping cart</a><a href="@Url.Action("Index", "Shop")">Shop</a>
                                 </div>
                             </div>
 
@@ -228,7 +192,7 @@
 
             <div class="footer-credit">
                 <div class="container">
-                    <div @*class="footer-creadit_block d-flex flex-column flex-md-row justify-content-start justify-content-md-between align-items-baseline align-items-md-center"*@>
+                    <div>
                         <p class="author" style="text-align:center">Copyright © 2019  - All Rights Reserved.</p>
                     </div>
                 </div>
@@ -237,24 +201,6 @@
         <!-- End footer-->
 
     </div>
-
-    @*<script src="~/Content/js/jquery-ui.min.js"></script>*@
-    @*<script src="~/Content/js/jquery.countdown.min.js"></script>*@
-    <script src="~/Content/js/slick.min.js"></script>
-    <script src="~/Content/js/jquery.easing.js"></script>
-    <script src="~/Content/js/jquery.scrollUp.min.js"></script>
-    @*<script src="~/Content/js/jquery.zoom.min.js"></script>*@
-    @*<script src="~/Content/js/parallax.js"></script>*@
-    @*<script src="~/Content/js/jquery.fancybox.js"></script>*@
-    @*<script src="~/Content/js/numscroller-1.0.js"></script>*@
-    @*<script src="~/Content/js/vanilla-tilt.min.js"></script>*@
-    <script src="~/Content/js/main.js"></script>
-    @*<script>
-        var sence = document.getElementById('img-block')
-        var parallaxInstance = new Parallax(sence, {
-            hoverOnly: true,
-        });</script>*@
-   
 
     <a id="scrollUp" href="#top" style="position: fixed; z-index: 105;"><i class="arrow_carrot-up"></i></a>
 

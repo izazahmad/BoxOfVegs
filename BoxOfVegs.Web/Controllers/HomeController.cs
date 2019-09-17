@@ -14,72 +14,24 @@ namespace BoxOfVegs.Web.Controllers
 {
     public class HomeController : Controller
     {
-
-        //public RepositoryWork repoWork = new RepositoryWork();
-        //BOVContext context = new BOVContext();
-        //CategoriesService categoryService = new CategoriesService();
+        //create object instance of the ServicesForProducts service class for products
         ServicesForProducts services = new ServicesForProducts();
+        //create object instance of the ServicesForCategories Service class for categories
         ServicesForCategories categoryServices = new ServicesForCategories();
         public ActionResult Index()
         {
-            
-            HomeViewModels model = new HomeViewModels();
-            model.Products = services.GetNewAddedProducts(4);
-            model.Categories = categoryServices.AllCategories();
-            //model.FeaturedCategories = categoryServices.GetFeaturedCategory();
-            model.ProductByCategoryName = services.GetProductByCatName("Box");
-            return View(model);
-            //return View(model.CreateModel(search, 4, pageNO));
-
-            //HomeViewModels model = new HomeViewModels();
-
-            // model.Searching = search;
-            //    int pageSize = 5;
-
-            //    pageNO = pageNO.HasValue ? pageNO.Value > 0 ? pageNO.Value : 1 : 1;
-            //    var totalRec = services.GetCountOfProducts(search);
-            //    model.Products = services.GetProductsList(search, pageNO.Value);
-            //    if (model.Products != null)
-            //    {
-            //        model.Pager = new Pager(totalRec, pageNO, pageSize);
-
-            //        return PartialView("Products", model);
-            //    }
-            //    else
-            //    {
-            //        return HttpNotFound();
-            //    }
-
-            //}
-        }
-
-
-        //public ActionResult AddInCart(int productId)
-        //{
-        //    if (Session["cart"] == null)
-        //    {
-        //        List<Item> cart = new List<Item>();
-        //        var product = context.Products.Find(productId);
-        //        cart.Add(new Item()
-        //        {
-        //            Product = product,
-        //            Quantity = 1
-        //        });
-        //        Session["cart"] = cart;
-        //    }
-        //    else
-        //    {
-        //        List<Item> cart = (List<Item>)Session["cart"];
-        //        var product = context.Products.Find(productId);
-        //        cart.Add(new Item()
-        //        {
-        //            Product = product,
-        //            Quantity = 1
-        //        });
-        //        Session["cart"] = cart;
-        //    }
-        //    return Redirect("Index");
-        //}
-
+            //object instance for the HomeViewModels class
+            HomeViewModels model = new HomeViewModels
+            {
+                //call service class and get 4 top most new added product from the database and store in list<product>
+                Products = services.GetNewAddedProducts(4),
+                //call service class to get all categories from the database and store in list<Category>
+                Categories = categoryServices.AllCategories(),
+                //call service class to get product which is belong to box category from the database
+                ProductByCategoryName = services.GetProductByCatName("Box")
+            };
+            // return to index view page with all the data which is in model object
+            return View(model);        
+        }       
     }
 }

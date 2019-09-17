@@ -6,15 +6,7 @@
 }
 @{ var imageURL = "placeholder-image.png"; }
 
-@*<div id="shopproducts">
 
-        @{
-            Html.RenderAction("ShopProducts");
-        }
-
-    </div>*@
-
-<!-- End breadcrumb-->
 <div class="ogami-breadcrumb">
     <div class="container">
         <ul>
@@ -29,7 +21,6 @@
             <div class="col-xl-3">
 
                 <div class="shop-sidebar">
-                    @*<button class="no-round-btn" id="filter-sidebar--closebtn">Close sidebar</button>*@
 
                     <div class="shop-sidebar_department">
 
@@ -77,34 +68,8 @@
                                 <div class="col-6 col-xl-4">
                                     <h2 class="title">Shop</h2>
                                 </div>
-                                @*<div class="col-6 text-right">
-                                    <div id="show-filter-sidebar">
-                                        <h5> <i class="fas fa-bars"></i>Show sidebar</h5>
-                                    </div>
-                                </div>*@
-                                @*<div class="col-12 col-xl-8">
-                                    <div class="product-option">
-                                        <div class="product-filter">
-                                            <select class="select-form" id="sort" name="">
-                                                <option value="A-Z">A to Z</option>
-                                                <option value="Z-A">Z to A</option>
-                                                <option value="High to low price">High to low price</option>
-                                                <option value="Low to height price">Low to height</option>
-                                            </select>
-                                            <select class="select-form" id="sort" name="">
-                                                <option value="A-Z">Show 10</option>
-                                                <option value="Z-A">Show 20</option>
-                                                <option value="High to low price">Show 30</option>
-                                            </select>
-                                        </div>
-                                        <div class="view-method">
-                                            <p class="active" id="grid-view"><i class="fas fa-th-large"></i></p>
-                                            <p id="list-view"><i class="fas fa-list"></i></p>
-                                        </div>
-                                    </div>
-                                </div>*@
+                               
                             </div>
-                            <!--Using column-->
                         </div>
                         <div class="shop-products_bottom" id="shopproducts">
                             <div class="row no-gutters-sm">
@@ -116,7 +81,6 @@
                                         <div class="product">
                                             <div class="product-img_block">
                                                 <a class="product-img" href="@Url.Action("ProductDetails", "Product", new { productId = item.ProductID })"><img src="~/Content/images/product/@imageUrl" alt=""></a>
-                                                @*<button class="quickview no-round-btn smooth">Quick view</button>*@
                                             </div>
                                             <div class="product-info_block">
                                                 <h5 class="product-type">@item.Category.CategoryName</h5>
@@ -124,13 +88,9 @@
                                                 <h3 class="product-price">
                                                     £ @item.Price
                                                 </h3>
-                                                @*<h5 class="product-rated"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i><span>(5)</span></h5>*@
-                                                @*<p class="product-describe">@item.Description</p>*@
                                                 <h5 class="product-avaiable"><span>@item.Quantity In stock</span></h5>
-                                                @*<button class="add-to-wishlist button-borderless"><i class="icon_heart_alt"></i></button>*@
                                             </div>
                                             <div class="product-select">
-                                                @*<button class="add-to-wishlist round-icon-btn"> <i class="icon_heart_alt"></i></button>*@
                                                 @if(item.Quantity>0)
                                                 { 
                                                   using (Html.BeginForm("AddInCart", "Shop", new {qty=1, productId = item.ProductID }, FormMethod.Post))
@@ -142,8 +102,6 @@
                                                 {
                                                     <p>Product not available</p>
                                                 }
-                                                @*<button class="add-to-compare round-icon-btn"> <i class="fas fa-random"></i></button>
-                                                <button class="quickview round-icon-btn"> <i class="far fa-eye"></i></button>*@
                                             </div>
                                            
                                         </div>
@@ -152,22 +110,7 @@
 
                             </div>
                         </div>
-                        @*<div class="shop-pagination">
-                            <ul>
-                                <li>
-                                    <button class="no-round-btn smooth active">1</button>
-                                </li>
-                                <li>
-                                    <button class="no-round-btn smooth">2</button>
-                                </li>
-                                <li>
-                                    <button class="no-round-btn smooth">3</button>
-                                </li>
-                                <li>
-                                    <button class="no-round-btn smooth"> <i class="arrow_carrot-2right"></i></button>
-                                </li>
-                            </ul>
-                        </div>*@
+                       
                     </div>
                 </div>
             </div>

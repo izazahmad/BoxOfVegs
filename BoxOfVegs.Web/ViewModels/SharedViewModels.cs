@@ -5,10 +5,7 @@ using System.Web;
 
 namespace BoxOfVegs.Web.ViewModels
 {
-    public class BaseListingViewModel
-    {
-
-    }
+    
 
     public class Pager
     {

@@ -12,8 +12,7 @@ namespace BoxOfVegs.Web.Controllers
 {
     public class ProductController : Controller
     {
-      // public RepositoryWork repoWork = new RepositoryWork();
-       // ProductService services = new ProductService();
+      
         ServicesForProducts services = new ServicesForProducts();
         // GET: Product
         public ActionResult Index()
@@ -59,7 +58,6 @@ namespace BoxOfVegs.Web.Controllers
         {
             ServicesForCategories categoryService = new ServicesForCategories();
             List<SelectListItem> list = new List<SelectListItem>();
-            //var categories = repoWork.GetRepositoryInstance<Category>().GetAllRecords();
             var categories = categoryService.AllCategories();
             foreach (var item in categories)
             {
@@ -93,7 +91,6 @@ namespace BoxOfVegs.Web.Controllers
             {
                         string extension = System.IO.Path.GetExtension(file.FileName);
                         string newName = Guid.NewGuid().ToString();
-                        //fileName = System.IO.Path.GetFileName(file.FileName);
                         fileName = newName + extension;
 
                         string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/product/"), fileName);
@@ -102,8 +99,6 @@ namespace BoxOfVegs.Web.Controllers
             }
             
                 product.ImageUrl = fileName;
-            //product.CreatedDate = DateTime.Now;
-            //repoWork.GetRepositoryInstance<Product>().AddRecord(product);
             services.AddProduct(product);
                 return RedirectToAction("Index");
             }
@@ -123,7 +118,6 @@ namespace BoxOfVegs.Web.Controllers
             {
 
                 ViewBag.CategoryList = GetCategories();
-           // var product = repoWork.GetRepositoryInstance<Product>().GetRecord(productID);
             var product = services.GetProduct(productID);
             product.ImageUrl = product.ImageUrl;
             return View(product);
@@ -144,7 +138,6 @@ namespace BoxOfVegs.Web.Controllers
                 {
                         string extension = System.IO.Path.GetExtension(file.FileName);
                         string newName = Guid.NewGuid().ToString();
-                        //fileName = System.IO.Path.GetFileName(file.FileName);
                         fileName = newName + extension;
                         string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/product/"), fileName);
                 // file is uploaded
@@ -157,9 +150,7 @@ namespace BoxOfVegs.Web.Controllers
                         product.ImageUrl = products.ImageUrl;
                 }
                 
-                //product.ImageUrl = file != null ? fileName : product.ImageUrl;
-            //tbl.ModifiedDate = DateTime.Now;
-           // repoWork.GetRepositoryInstance<Product>().Update(product);
+             
             services.UpdateProduct(product);
             return RedirectToAction("Index");
              }
@@ -176,7 +167,6 @@ namespace BoxOfVegs.Web.Controllers
         {
             if (Convert.ToInt32(Session["UserRoleID"]) == 1)
             {
-                //repoWork.GetRepositoryInstance<Product>().Remove(product);
                 var product=services.GetProduct(productID);
                 return View(product);
             }
@@ -188,7 +178,6 @@ namespace BoxOfVegs.Web.Controllers
         {
             if (Convert.ToInt32(Session["UserRoleID"]) == 1)
             {
-                //repoWork.GetRepositoryInstance<Product>().Remove(product);
                 services.RemoveProduct(product);
             return RedirectToAction("Index");
             }
@@ -203,7 +192,6 @@ namespace BoxOfVegs.Web.Controllers
             model.Product = services.GetProduct(productId);
             model.Product.ImageUrl = model.Product.ImageUrl;
             model.Reviews = services.GetProductReview(productId);
-            //float? average= services.GetAverageRating(productId);
             if (context.UserReviews.Any(u => u.ProductID == productId))
             {
                 model.AverageRating = services.GetAverageRating(productId); ;
@@ -212,9 +200,7 @@ namespace BoxOfVegs.Web.Controllers
             {
                 model.AverageRating = 0;
             }
-            //model.AverageRating = services.GetAverageRating(productId);
             model.UserCount = services.GetCountUserReview(productId);
-            //model.UserName = from u in context.Users where u.UserID == model.Reviews.UserID select u.UserName;
 
             if (model.Product == null)
             {
@@ -227,27 +213,20 @@ namespace BoxOfVegs.Web.Controllers
             }
         }
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
         public ActionResult AddReview(HomeViewModels model,float rating)
         {
             UserReview review = new UserReview();
 
             if (Session["UserRoleID"] != null)
             {
-                //if (ModelState.IsValid)
-                //{
+                
                     review.UserID = Convert.ToInt32(Session["UserID"]);
                     review.ProductID = model.Product.ProductID;
                     review.PostDate = DateTime.Now;
                     review.Review = model.Review;
                     review.Rating = rating;
                     services.AddReview(review);
-                //}
-                //else
-                //{
-                //    ModelState.AddModelError("", "");
-                //}
+               
                 return RedirectToAction("ProductDetails", "Product",new { productId = model.Product.ProductID });
             }
             return RedirectToAction("Login", "User");
