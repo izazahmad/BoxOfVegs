@@ -9,7 +9,6 @@
 
 <div class="container-fluid">
 
-    <!-- Breadcrumbs-->
     <ol class="breadcrumb">
 
         <li class="breadcrumb-item"><a href="@Url.Action("Index","Category")">Categories</a></li>
@@ -33,8 +32,6 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.CategoryID)
-                @*<form method="post">*@
-                @*<input type="hidden" name="CategoryID" value="@Model.CategoryID" />*@
                 <div class="row">
 
 
@@ -48,8 +45,7 @@
                     </div>
                 </div>
             }
-            @*</form>*@
-            @*<a href="/Index">Cancel</a>*@
+          
         </div>
     </div>
 </div>

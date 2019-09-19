@@ -76,18 +76,13 @@
                     </div>
                 </div>
                 <div class="col-12 col-sm-8">
-                    @*<div class="coupon">*@
                     <input class="no-round-btn smooth" type='button' value='Back To Shoping' onclick='window.location = "@Url.Action("Index", "Shop")";' />
-                    @*<button class="no-round-btn smooth" onclick="..Shop/Index">Back To Shoping</button>*@
-
-                    @*</div>*@
                 </div>
-                @*@using (Html.BeginForm("AddInCart", "Shop", new { productId = Model.Product.ProductID }, FormMethod.Post))
-                    {*@
+                   
                 <div class="col-12 col-sm-4 text-right">
                     <button class="no-round-btn black cart-update" type="submit">Upadate cart</button>
                 </div>
-                @*}*@
+            
             </div>
         }
         <div class="row justify-content-end">
@@ -119,12 +114,11 @@
                     </table>
                     @if (Session["cart"] != null)
                     {
-                        //using (Html.BeginForm())
-                        //{
+                        
                             <div class="checkout-method">
                                 <button class="normal-btn" onclick='window.location = "@Url.Action("Checkout", "Shop")";'>Proceed to Checkout</button>
                             </div>
-                            //}
+                           
                         }
 
                 </div>
@@ -132,4 +126,3 @@
         </div>
     </div>
 </div>
-<!-- End shopping cart-->

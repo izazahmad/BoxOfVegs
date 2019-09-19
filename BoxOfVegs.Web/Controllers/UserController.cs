@@ -37,17 +37,17 @@ namespace BoxOfVegs.Web.Controllers
             {
                 ServicesForAccounts services = new ServicesForAccounts();
                 var HashPassword = PasswordHashing.CreateHash(register.Password);
-                //register.Password = HashPassword;
-                //register.UserRoleID = 2;
-                User user = new User();
-                user.UserRoleID = 2;
-                user.FirstName = register.FirstName;
-                user.LastName = register.LastName;
-                user.UserName = register.UserName;
-                user.Password = HashPassword;
-                user.Email = register.Email;
+
+                User user = new User
+                {
+                    UserRoleID = 2,
+                    FirstName = register.FirstName,
+                    LastName = register.LastName,
+                    UserName = register.UserName,
+                    Password = HashPassword,
+                    Email = register.Email
+                };
                 services.RegisterUser(user);
-                //ViewBag.Message = register.FirstName + " " + register.LastName + " Successfully Registered.";
                 return Redirect("Login");
 
             }
@@ -64,10 +64,8 @@ namespace BoxOfVegs.Web.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            //BOVContext context = new BOVContext();
             ServicesForAccounts services = new ServicesForAccounts();
             var users = services.GetUserDetail(user.UserName);
-                //var users = context.Users.Where(x => x.UserName == user.UserName).FirstOrDefault();
                 if (users == null)
                 {
                     ModelState.AddModelError("", "Username or Password is wrong.");
@@ -93,17 +91,7 @@ namespace BoxOfVegs.Web.Controllers
             return View();
 
         }
-        //public ActionResult LoggedIn()
-        //{
-        //    if (Session["UserID"] != null)
-        //    {
-        //        return View();
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Checkout");
-        //    }
-        //}
+      
         public ActionResult Logout()
         {
             Session.Abandon();
@@ -118,23 +106,18 @@ namespace BoxOfVegs.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ForgotPassword(ForgotPasswordViewModel forgot)
         {
-            //BOVContext context = new BOVContext();
             ServicesForAccounts services = new ServicesForAccounts();
             var user = services.GetUserDetail(forgot.UserName);
-            //var user = context.Users.Where(x => x.UserName == forgot.UserName).FirstOrDefault();
 
-            if (/*context.Users.Any(u => u.UserName == forgot.UserName)*/user != null && user.UserName == forgot.UserName)
+            if (user != null && user.UserName == forgot.UserName)
             {
-                if(/*context.Users.Any(u=>u.Email==forgot.Email)*/user.Email == forgot.Email)
+                if(user.Email == forgot.Email)
                 {
                     if (ModelState.IsValid)
                     {
-                        //var users = context.Users.Single(x => x.UserName == forgot.UserName);
 
                         var HashPassword = PasswordHashing.CreateHash(forgot.NewPassword);
-                        //User user = new User();
-                        //user.Password = HashPassword;
-                        //user.UserName=forgot.UserName;
+                     
                         services.ResetPassword(HashPassword, user.UserID);
                         return Redirect("Login");
 

@@ -14,69 +14,17 @@
         </ul>
     </div>
 </div>
-<!-- End breadcrumb-->
-@*<div class="order-step">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="order-step_block">
-                    <div class="row no-gutters">
-                        <div class="col-12 col-md-4">
-                            <div class="step-block step-block--1">
-                                <div class="step">
-                                    <h2>Shopping Cart</h2><span>01</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="step-block active">
-                                <div class="step">
-                                    <h2>Check Out</h2><span>02</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="step-block">
-                                <div class="step">
-                                    <h2>Order Completed</h2><span>03</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@
-<!-- End order step-->
+
 <div class="shop-checkout">
     <div class="container">
         <form action="" method="post">
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <h2 class="form-title">Shipping details</h2>
-                    @*<div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputFirstName">First Name*</label>
-                            <input class="no-round-input-bg" id="inputFirstName" type="text" required name="firstName">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputLastName">Last Name*</label>
-                            <input class="no-round-input-bg" id="inputLastName" type="text" required name="lastName">
-                        </div>
-                    </div>*@
                     
                     <div class="form-group">
                         <label for="inputCountry">Country*</label>
                         <input class="no-round-input-bg" type="text" required value="United Kingdom" name="country">
-                        @*<select class="no-round-input-bg" id="inputContry">
-            <option value="1">Vietnam</option>
-            <option value="2">USA</option>
-            <option value="3">Italy</option>
-            <option value="4">China</option>
-            <option value="5">Japan</option>
-            <option value="6">Russia</option>
-        </select>*@
                     </div>
                     <div class="form-group">
                         <label for="inputStreet">Street address*</label>
@@ -138,7 +86,7 @@
                         </div>
                         @using (Html.BeginForm())
                         {
-                        <button class="normal-btn submit-btn" type="submit" @*onclick='window.location = "@Url.Action("PrintInvoice", "Shop")";'*@ @*onclick='window.open("../InvoiceReport.aspx","_blank");'*@>Place order</button>
+                        <button class="normal-btn submit-btn" type="submit">Place order</button>
                         }
                     </div>
                 </div>

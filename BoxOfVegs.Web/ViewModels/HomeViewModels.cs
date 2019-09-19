@@ -16,21 +16,12 @@ namespace BoxOfVegs.Web.ViewModels
 
         public List<Product> Products { get; set; }
         public List<Category> Categories { get; set; }
-        //public List<Category> FeaturedCategories { get; set; }
         public List<Product> ProductByCategoryName { get; set; }
-        public List<UserReview> Reviews { get; set; }
-        //public string Searching { get; set; }
-        //public Pager Pager { get; set; }
+        public List<UserReview> Reviews { get; set; }        
         public Product Product { get; set; }
-        //public int UserReviewID { get; set; }
-        //public int ProductID { get; set; }
-        //public int UserID { get; set; }
-        //public string UserName { get; set; }
-
         public string Review { get; set; }
         public float? AverageRating { get; set; }
         public int? UserCount { get; set; }
-        //public DateTime PostDate { get; set; }
     }
     
 }

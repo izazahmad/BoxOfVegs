@@ -82,7 +82,6 @@ namespace BoxOfVegs.Web.Controllers
             {
                 string extension = System.IO.Path.GetExtension(file.FileName);
                 string newName = Guid.NewGuid().ToString();
-                        //fileName = System.IO.Path.GetFileName(file.FileName);
                 fileName = newName + extension;
                 string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/category/"), fileName);
                 // file is uploaded
@@ -126,7 +125,6 @@ namespace BoxOfVegs.Web.Controllers
             {
                     string extension = System.IO.Path.GetExtension(file.FileName);
                     string newName = Guid.NewGuid().ToString();
-                    //fileName = System.IO.Path.GetFileName(file.FileName);
                     fileName = newName + extension;
                     string path = System.IO.Path.Combine(Server.MapPath("~/Content/images/category/"), fileName);
                 // file is uploaded
@@ -139,14 +137,7 @@ namespace BoxOfVegs.Web.Controllers
                 var categories = services.GetCategory(category.CategoryID);
                 category.ImageUrl = categories.ImageUrl;
             }
-            //if(category.CategoryName==null)
-            //{
-            //    ModelState.AddModelError("", "Category name is required");
-
-            //}
-
-            //category.ImageUrl = file != null ? fileName : category.ImageUrl;
-
+           
 
             services.UpdateCategory(category);
                 return RedirectToAction("Index");

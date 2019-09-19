@@ -37,7 +37,6 @@
                     @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "no-round-input", @type="password" } })
                     @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
 
-                    @*@Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <label>First Name</label>
 
                     @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "no-round-input" } })
@@ -47,12 +46,10 @@
 
                     <label>Last Name</label>
 
-                    @*@Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })*@
 
                     @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "no-round-input" } })
                     @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
 
-                    @*@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <label>Email</label>
 
                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "no-round-input" } })

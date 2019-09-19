@@ -11,15 +11,7 @@ namespace BoxOfVegs.Services
 {
     public class ServicesForShop
     {
-        //public int ShopPageSize()
-        //{
-        //    using (var context = new BOVContext())
-        //    {
-        //        var pageSizeConfig = context.Configurations.Find("ShopPageSize");
-
-        //        return pageSizeConfig != null ? int.Parse(pageSizeConfig.Value) : 6;
-        //    }
-        //}
+        
         public void AddOrder(Order order)
         {
             using (var context = new BOVContext())
@@ -36,18 +28,7 @@ namespace BoxOfVegs.Services
                 context.SaveChanges();
             }
         }
-        //public List<User> GetInvoiceSqlprocedure(int userId)
-        //{
-        //    using (var context = new BOVContext())
-        //    {
-        //        int invoiceId =Convert.ToInt32(context.Invoices.OrderByDescending(u => u.UserID == userId).FirstOrDefault());
-        //        SqlParameter param = new SqlParameter("@InvoiceID", invoiceId);
-        //        return context.Database.SqlQuery<User>("InvoiceDetails",param).ToList();
-                
-                    
-                
-        //    }
-        //}
+       
         public List<Order> GetOrders(int invoiceId)
         {
             using (var context = new BOVContext())
@@ -56,15 +37,7 @@ namespace BoxOfVegs.Services
                 return context.Orders.Where(i=>i.InvoiceID==invoiceId).ToList();
             }
         }
-        //public List<int> GetInvoiceID(int userId)
-        //{
-        //    using (var context = new BOVContext())
-        //    {
-        //        var invoiceid = context.Invoices.Where(i=>i.UserID==userId).Select(i => i.InvoiceID).Distinct().ToList();
-        //        //int invoice = Convert.ToInt32(invoiceid);
-        //        return invoiceid;
-        //    }
-        //}
+       
         public Invoice GetInvoiceDetail(int userId)
         {
             using (var context = new BOVContext())
