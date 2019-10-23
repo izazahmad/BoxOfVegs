@@ -1,0 +1,161 @@
+﻿@model CategoryPagingModels
+
+	<div>
+
+
+
+		<div class="card-header">
+			<i class="fas fa-table"></i>
+			Category Details
+
+		</div>
+		<form method="post">
+			<input type="text" name="search" value="@Model.Searching" id="searchTxt" placeholder="Enter Your Text here to search" size="50" />
+			<button type="button" id="searchBtn">Search</button>
+			<button type="button" id="resetBtn">Reset</button>
+		</form>
+		<button type="button" onclick="location.href='@Url.Action("AddCategory")'">Add New</button>
+
+		<div>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Sr. No.</th>
+						<th>Category Name</th>
+						<th>Products</th>
+						<th>Action</th>
+
+					</tr>
+				</thead>
+
+				<tbody>
+					@if (Model.category != null && Model.category.Count > 0)
+					{
+
+						foreach (var item in Model.category)
+						{
+							<tr>
+								<td>@((Model.category.IndexOf(item) + 1) + ((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize))</td>
+								<td>@item.CategoryName</td>
+
+								<td>
+									@item.Products.Count
+								</td>
+
+								<td>
+									<div class="row">
+										<div class="col-auto ">
+											<input type="button" value="Edit" onclick="location.href='@Url.Action("UpdateCategory", new { categoryID = item.CategoryID })'" />
+
+										</div>
+										<div class="col-auto">
+											<input type="button" value="Delete" onclick="location.href='@Url.Action("DeleteCategory", new { categoryID = item.CategoryID })'" />
+
+
+
+
+										</div>
+									</div>
+								</td>
+
+
+							</tr>
+
+						}
+					}
+					else
+					{
+
+
+						<tr><td colspan="3" class="text-danger">No Categories found.</td></tr>
+					}
+
+				</tbody>
+			</table>
+		</div>
+
+
+
+
+
+		<div>
+			@if (Model.Pager != null && Model.Pager.TotalPages > 1)
+			{
+
+				if (Model.Pager.CurrentPage > 1)
+				{
+					<button class="pageButtons" data-pageno="1">First</button>
+					<button class="pageButtons" data-pageno="@(Model.Pager.CurrentPage - 1)">Previous</button>
+				}
+
+				for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+				{
+					string activeClass = Model.Pager.CurrentPage == page ? "active bg-info" : string.Empty;
+
+					<button class="@activeClass pageButtons" data-pageno="@page">@page</button>
+				}
+
+				if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+				{
+					<button class="pageButtons" data-pageno="@(Model.Pager.CurrentPage + 1)">Next</button>
+					<button class="pageButtons" data-pageno="@Model.Pager.EndPage">Last</button>
+				}
+			}
+		</div>
+		<div><span>Total Entry = @(Model.Pager.TotalItems)</span></div>
+	</div>
+
+
+<script>
+	$(".pageButtons").click(function () {
+		$.ajax({
+			url: '@Url.Action("Categories", "Category")',
+			data: {
+				pageNo: $(this).attr("data-pageNo"),
+				search: '@Model.Searching'
+			}
+		})
+		.done(function (response) {
+			$("#pagination").html(response);
+		})
+		.fail(function (XMLHttpRequest, textStatus, errorThrown) {
+			alert("FAIL");
+		});
+	});
+
+	$("#searchBtn").click(function () {
+		var searchValue = $("#searchTxt").val();
+
+		$.ajax({
+			url: '@Url.Action("Categories", "Category")',
+			data: {
+				search: searchValue
+			}
+		})
+		.done(function (response) {
+			$("#pagination").html(response);
+		})
+		.fail(function (XMLHttpRequest, textStatus, errorThrown) {
+			alert("FAIL");
+		});
+	});
+
+	 $("#resetBtn").click(function () {
+		var searchValue = '';
+
+		$.ajax({
+			url: '@Url.Action("Categories", "Category")',
+			data: {
+				search: searchValue
+			}
+		})
+		.done(function (response) {
+			$("#pagination").html(response);
+		})
+		.fail(function (XMLHttpRequest, textStatus, errorThrown) {
+			alert("FAIL");
+		});
+	});
+
+</script>
+

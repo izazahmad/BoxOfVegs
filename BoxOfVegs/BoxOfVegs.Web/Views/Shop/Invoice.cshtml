@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Invoice";
+}
+
+<div class="container-fluid">
+
+
+    <ol class="breadcrumb">
+
+        <li class="breadcrumb-item active">Invoice</li>
+    </ol>
+    <div style="text-align:right">@Html.ActionLink("Print Invoice", "PrintInvoice", new { userid = Convert.ToInt32(Session["UserID"]) })</div>
+
+    <div id="Invoice">
+        @{
+            Html.RenderAction("CreateInvoice");
+        }
+    </div>
+</div>
+

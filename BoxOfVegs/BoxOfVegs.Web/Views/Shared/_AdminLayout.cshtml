@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    
+    <link href="~/Content/css/admin.css" rel="stylesheet" />
+    <script src="~/Content/RateYo/jquery.min.js"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-dark bg-dark">
+
+        <h4 class="navbar-brand" >BoxOfVegs</h4>             
+        <a href="@Url.Action("Index", "Home")" style="text-align:center"><span style="color:white">Back to Customer Panel</span></a>
+        
+        <a href="@Url.Action("Logout", "User")" style="text-align:right" ><span style="color:red">Logout</span></a>
+
+            
+    </nav>
+
+    <div id="wrapper">
+
+        <ul class="sidebar ">
+           
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Category")">
+                    <i class="fas fa-fw"></i>
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Product")">
+                    <i class="fas fa-fw"></i>
+                    <span>Products</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <div id="content-wrapper">
+
+
+
+            @RenderBody()
+            
+
+           
+
+        </div>
+        
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright © 2019 - All Rights Reserved.</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    
+
+
+</body>
+
+</html>
+

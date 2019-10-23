@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1AA43E1F-B7F8-4337-971C-23DA10E4DB48}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BoxOfVegs.Database</RootNamespace>
+    <AssemblyName>BoxOfVegs.Database</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BOVContext.cs" />
+    <Compile Include="Migrations\201907232049275_Initial.cs" />
+    <Compile Include="Migrations\201907232049275_Initial.Designer.cs">
+      <DependentUpon>201907232049275_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907232058599_bitchangedProduct.cs" />
+    <Compile Include="Migrations\201907232058599_bitchangedProduct.Designer.cs">
+      <DependentUpon>201907232058599_bitchangedProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907251007247_bitchang.cs" />
+    <Compile Include="Migrations\201907251007247_bitchang.Designer.cs">
+      <DependentUpon>201907251007247_bitchang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907251351198_imageurl.cs" />
+    <Compile Include="Migrations\201907251351198_imageurl.Designer.cs">
+      <DependentUpon>201907251351198_imageurl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907262149452_procedureadded.cs" />
+    <Compile Include="Migrations\201907262149452_procedureadded.Designer.cs">
+      <DependentUpon>201907262149452_procedureadded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907282329252_test.cs" />
+    <Compile Include="Migrations\201907282329252_test.Designer.cs">
+      <DependentUpon>201907282329252_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908051536135_pictureaddincategory.cs" />
+    <Compile Include="Migrations\201908051536135_pictureaddincategory.Designer.cs">
+      <DependentUpon>201908051536135_pictureaddincategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908111550299_userAdded.cs" />
+    <Compile Include="Migrations\201908111550299_userAdded.Designer.cs">
+      <DependentUpon>201908111550299_userAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908112020282_OrderAdded.cs" />
+    <Compile Include="Migrations\201908112020282_OrderAdded.Designer.cs">
+      <DependentUpon>201908112020282_OrderAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908121151232_roleAdded.cs" />
+    <Compile Include="Migrations\201908121151232_roleAdded.Designer.cs">
+      <DependentUpon>201908121151232_roleAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908121934570_InvoiceAdded.cs" />
+    <Compile Include="Migrations\201908121934570_InvoiceAdded.Designer.cs">
+      <DependentUpon>201908121934570_InvoiceAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908131030564_InvoiceAddressAdded.cs" />
+    <Compile Include="Migrations\201908131030564_InvoiceAddressAdded.Designer.cs">
+      <DependentUpon>201908131030564_InvoiceAddressAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908131152174_InvoicPhoneAdded.cs" />
+    <Compile Include="Migrations\201908131152174_InvoicPhoneAdded.Designer.cs">
+      <DependentUpon>201908131152174_InvoicPhoneAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908131158072_InvoicPhonedatypeChngd.cs" />
+    <Compile Include="Migrations\201908131158072_InvoicPhonedatypeChngd.Designer.cs">
+      <DependentUpon>201908131158072_InvoicPhonedatypeChngd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908131237563_prdctNaminOrdrAdded.cs" />
+    <Compile Include="Migrations\201908131237563_prdctNaminOrdrAdded.Designer.cs">
+      <DependentUpon>201908131237563_prdctNaminOrdrAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908151508542_validationaddedagain.cs" />
+    <Compile Include="Migrations\201908151508542_validationaddedagain.Designer.cs">
+      <DependentUpon>201908151508542_validationaddedagain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908181814112_reviewAdded.cs" />
+    <Compile Include="Migrations\201908181814112_reviewAdded.Designer.cs">
+      <DependentUpon>201908181814112_reviewAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908182039209_ratingDTypeChanged.cs" />
+    <Compile Include="Migrations\201908182039209_ratingDTypeChanged.Designer.cs">
+      <DependentUpon>201908182039209_ratingDTypeChanged.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908182345487_userAddedinreviw.cs" />
+    <Compile Include="Migrations\201908182345487_userAddedinreviw.Designer.cs">
+      <DependentUpon>201908182345487_userAddedinreviw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908302319089_clearProcedure.cs" />
+    <Compile Include="Migrations\201908302319089_clearProcedure.Designer.cs">
+      <DependentUpon>201908302319089_clearProcedure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BoxOfVegs.Entities\BoxOfVegs.Entities.csproj">
+      <Project>{de7a3c72-6f95-47e8-a7d7-8707e6f6314e}</Project>
+      <Name>BoxOfVegs.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201907232049275_Initial.resx">
+      <DependentUpon>201907232049275_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907232058599_bitchangedProduct.resx">
+      <DependentUpon>201907232058599_bitchangedProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907251007247_bitchang.resx">
+      <DependentUpon>201907251007247_bitchang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907251351198_imageurl.resx">
+      <DependentUpon>201907251351198_imageurl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907262149452_procedureadded.resx">
+      <DependentUpon>201907262149452_procedureadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907282329252_test.resx">
+      <DependentUpon>201907282329252_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908051536135_pictureaddincategory.resx">
+      <DependentUpon>201908051536135_pictureaddincategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908111550299_userAdded.resx">
+      <DependentUpon>201908111550299_userAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908112020282_OrderAdded.resx">
+      <DependentUpon>201908112020282_OrderAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121151232_roleAdded.resx">
+      <DependentUpon>201908121151232_roleAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121934570_InvoiceAdded.resx">
+      <DependentUpon>201908121934570_InvoiceAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131030564_InvoiceAddressAdded.resx">
+      <DependentUpon>201908131030564_InvoiceAddressAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131152174_InvoicPhoneAdded.resx">
+      <DependentUpon>201908131152174_InvoicPhoneAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131158072_InvoicPhonedatypeChngd.resx">
+      <DependentUpon>201908131158072_InvoicPhonedatypeChngd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908131237563_prdctNaminOrdrAdded.resx">
+      <DependentUpon>201908131237563_prdctNaminOrdrAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908151508542_validationaddedagain.resx">
+      <DependentUpon>201908151508542_validationaddedagain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908181814112_reviewAdded.resx">
+      <DependentUpon>201908181814112_reviewAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908182039209_ratingDTypeChanged.resx">
+      <DependentUpon>201908182039209_ratingDTypeChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908182345487_userAddedinreviw.resx">
+      <DependentUpon>201908182345487_userAddedinreviw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908302319089_clearProcedure.resx">
+      <DependentUpon>201908302319089_clearProcedure.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

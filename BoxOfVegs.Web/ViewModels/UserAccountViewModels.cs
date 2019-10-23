@@ -48,4 +48,17 @@ namespace BoxOfVegs.Web.ViewModels
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Enter Valid Email address")]
         public string Email { get; set; }
     }
+    public class ChangePasswordViewModel
+    {
+        [Required(ErrorMessage = "Password is required")]
+        public string OldPassword { get; set; }
+
+        [Required(ErrorMessage = "Password is required")]
+        public string NewPassword { get; set; }
+
+        [Required(ErrorMessage = "Confirm Password is required")]
+        [Compare("NewPassword", ErrorMessage = "password not match with the confirm password")]
+        public string NewConfirmPassword { get; set; }
+    }
+
 }

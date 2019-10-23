@@ -62,6 +62,7 @@ namespace BoxOfVegs.Web.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(User user)
         {
             ServicesForAccounts services = new ServicesForAccounts();
@@ -70,6 +71,7 @@ namespace BoxOfVegs.Web.Controllers
                 {
                     ModelState.AddModelError("", "Username or Password is wrong.");
                 }
+              
                 else
                 {
                     bool validateUser = PasswordHashing.ValidatePassword(user.Password, users.Password);
@@ -80,8 +82,15 @@ namespace BoxOfVegs.Web.Controllers
                         Session["UserName"] = users.UserName.ToString();
                         Session["FirstName"] = users.FirstName.ToString();
                         Session["UserRoleID"] = users.UserRoleID.ToString();
-                        return RedirectToAction("Cart", "Shop");
-                    }
+                        if(Convert.ToInt32(Session["UserRoleID"])==1)
+                        {
+                           return RedirectToAction("Index", "Category");
+                        }
+                        else
+                        { 
+                           return RedirectToAction("Cart", "Shop");
+                        }
+                }
                     else
                     {
                         ModelState.AddModelError("", "Username or Password is wrong.");
@@ -141,6 +150,123 @@ namespace BoxOfVegs.Web.Controllers
 
             }
             return View();
+        }
+        public ActionResult ChangePassword()
+        {
+            if(Session["UserName"]==null)
+            {
+                return Redirect("Login");
+            }
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePasswordViewModel change)
+        {
+           
+
+            if (Session["UserName"] != null)
+            {
+                ServicesForAccounts services = new ServicesForAccounts();
+                var user = services.GetUserDetail(Session["UserName"].ToString());
+                if (user != null && change.OldPassword != null && change.NewPassword != null)
+                {
+                    bool ValidatePassword = PasswordHashing.ValidatePassword(change.OldPassword, user.Password);
+                    if (ValidatePassword == true)
+                    {
+                        
+                            var HashPassword = PasswordHashing.CreateHash(change.NewPassword);
+
+                            services.ResetPassword(HashPassword, user.UserID);
+                            ModelState.Clear();
+                            ViewBag.message = "Password has been successfully changed";
+                            return View("ChangePassword");
+
+                       
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Old password is wrong");
+
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Old password is wrong");
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+        public ActionResult ProFile(string username)
+        {
+            if (Session["UserRoleID"] == null)
+            {
+
+                return RedirectToAction("Login", "User");
+
+
+            }
+            else {
+                ServicesForAccounts services = new ServicesForAccounts();
+                username = Session["UserName"].ToString();
+                var user = services.GetUserDetail(username);
+                return View(user);
+            }
+            
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ProFile(User user)
+        {
+            if(Session["UserRoleID"]==null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                ServicesForAccounts services = new ServicesForAccounts();
+                user.UserName = Session["UserName"].ToString();
+                services.UpdateProfile(user);
+                return View(user);
+            }
+
+        }
+        public ActionResult RemoveAccount()
+        {
+            if (Session["UserName"] == null)
+            {
+                return Redirect("Login");
+            }
+            else
+            {
+                ServicesForAccounts services = new ServicesForAccounts();
+                var user = services.GetUserDetail(Session["UserName"].ToString());
+                return View(user);
+
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveAccount(User user)
+        {
+            if(Session["UserName"] == null)
+            {
+                return Redirect("Login");
+            }
+            else
+            {
+                ServicesForAccounts services = new ServicesForAccounts();
+                services.RemoveAccount(user);
+                Session.Abandon();
+                FormsAuthentication.SignOut();
+                return Redirect("Login");
+            }
         }
 
     }

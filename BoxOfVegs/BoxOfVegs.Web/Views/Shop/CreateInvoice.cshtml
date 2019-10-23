@@ -1,0 +1,124 @@
+﻿@model InvoiceDetailViewModel
+
+<div class="container">
+    <div>
+        <h2 style="text-align:center">Invoice</h2>
+        <br />
+
+    </div>
+
+    <hr />
+    <div>
+        <label><b>Invoice No: </b></label><p>@Model.InvoiceID</p>
+        <br />
+
+    </div>
+    <div>
+        <hr />
+        <strong>Company Details:</strong>
+        <br />
+        <hr />
+        <label><b> Name: </b></label><p>Box of veggies and fruits</p>
+        <br />
+        <label><b> Address: </b></label><p>Leicester</p>
+        <br />
+        <label><b>Contact No: </b></label><p>07305897349</p>
+        <br />
+        <label><b>Email: </b></label><p>shekhizaz@gmail.com</p>
+        <br />
+
+    </div>
+    <div>
+
+
+        <hr />
+        <strong>Customer Details:</strong>
+        <br />
+        <hr />
+        <label><b>Name:</b></label><p> @Model.FirstName @Model.LastName</p>
+        <br />
+        <lable><b>Address:</b></lable><p> @Model.Address, @Model.City<br />@Model.PostCode</p>
+        <br />
+        <label><b>Contact No:</b></label><p>@Model.PhoneNumber</p>
+
+    </div>
+    <div>
+       
+        <hr />
+        <br />
+
+        <lable><b>Order Date: </b></lable><p>@Model.InvoiceDate</p>
+
+
+        <br />
+    </div>
+
+    <div>
+        <hr />
+        <h3><strong>Order Details:</strong></h3>
+        <br />
+     
+        <style>
+
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            table, td, th {
+                border: 1px solid black;
+            }
+
+            th {
+                height: 50px;
+            }
+
+            th, td {
+                padding: 15px;
+                text-align: center;
+            }
+        </style>
+
+
+        <table class="table">
+            <thead>
+
+                <tr>
+
+                    <td><strong>Order ID</strong></td>
+                    <td><strong>Product Name</strong></td>
+                    <td><strong>Quantity</strong></td>
+                    <td><strong>Unit Price</strong></td>
+                    <td><strong>Subtotal</strong></td>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Orders)
+                {
+                    <tr>
+
+                        <td>@item.OrderID</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitPrice</td>
+                        <td>@item.Subtotal</td>
+
+                    </tr>
+
+
+                }
+               
+                <tr>
+                   
+                    <td class="no-line" colspan="3"></td>
+                    <td class="no-line "><strong>Total</strong></td>
+                    <td class="no-line">@Model.TotalAmount</td>
+                </tr>
+            </tbody>
+        </table>
+      
+    </div>
+
+</div>

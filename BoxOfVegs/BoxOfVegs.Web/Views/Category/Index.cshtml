@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="container-fluid">
+
+    <ol class="breadcrumb">
+        
+        <li class="breadcrumb-item active">Categories</li>
+    </ol>
+
+    <div id="pagination">
+        @{
+            Html.RenderAction("Categories");
+        }
+    </div>
+
+
+
+
+
+    </div>
+

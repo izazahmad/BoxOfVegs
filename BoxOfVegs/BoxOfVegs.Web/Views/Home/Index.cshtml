@@ -1,0 +1,182 @@
+﻿
+@model BoxOfVegs.Web.ViewModels.HomeViewModels
+
+@{
+    ViewBag.Title = "Home Page";
+}
+@{
+    var imageURL = "placeholder-image.png";
+}
+<div class="slider">
+    <div class="full-fluid">
+        <div class="slider_wrapper">
+            @foreach (var item in Model.Categories)
+            {
+                var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? imageURL : item.ImageUrl;
+                <div class="slider-block" style="background-image: url('/Content/images/cat_back.jpg')">
+                    <div class="slider-content">
+                        <div class="container">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="col-12 col-md-5 col-xl-6">
+                                    <div class="slider-text d-flex flex-column align-items-center align-items-md-start">
+                                       
+                                        <h1 data-animation="fadeInUp" data-delay=".3s">@item.CategoryName</h1>
+                                        <a class="normal-btn" href="@Url.Action("Index", "Shop", new { categoryId = item.CategoryID })" data-animation="fadeInUp" data-delay=".4s">Shop now</a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="slider-img" data-animation="zoomIn" data-delay=".1s">
+                                        <img src="~/Content/images/category/@imageUrl" alt="">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+        </div>
+        
+    </div>
+</div>
+
+
+<div class="feature-products">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="title mx-auto">Vegetable & Fruit Boxes</h1>
+            </div>
+            <div class="col-12">
+                <div id="tab">
+
+                    <div class="row no-gutters-sm">
+                        @foreach (var item in Model.ProductByCategoryName)
+                        {
+
+                            var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? imageURL : item.ImageUrl;
+
+                            <div class="col-6 col-md-4 col-lg-3">
+                                <div class="product">
+                                    <a class="product-img" href="@Url.Action("ProductDetails", "Product", new { productId = item.ProductID })"><img src="~/Content/images/product/@imageUrl" alt=""></a>
+
+                                    <h5 class="product-more">@item.Category.CategoryName</h5>
+
+                                    <h3 class="product-name">@item.ProductName</h3>
+                                    <h3 class="product-price">
+                                        £ @item.Price
+
+                                    </h3>
+
+
+                                    @if (item.Quantity > 0)
+                                    {
+
+                                        <h3 class="product-availability">
+                                            Available
+                                        </h3>
+                                    }
+                                    else
+                                    {
+                                        <h3 class="product-availability">
+                                            Not Available
+                                        </h3>
+                                    }
+
+                                        <div class="product-select">
+                                            @if (item.Quantity > 0)
+                                            {
+                                                using (Html.BeginForm("AddInCart", "Shop", new { qty = 1, productId = item.ProductID }, FormMethod.Post))
+                                                {
+                                                        <button class="add-to-cart round-icon-btn" type="submit">Add To Cart</button>
+
+                                                                                }
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>Product not available</p>
+                                                        }
+                                        </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="feature-products">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="title mx-auto">New Added</h1>
+            </div>
+            <div class="col-12">
+                <div id="tab">
+                 
+                        <div class="row no-gutters-sm">
+                            @foreach (var item in Model.Products)
+                            {
+
+                                var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? imageURL : item.ImageUrl;
+
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="product">
+                                        <a class="product-img" href="@Url.Action("ProductDetails", "Product", new { productId = item.ProductID })"><img src="~/Content/images/product/@imageUrl" alt=""></a>
+        
+                                        <h5 class="product-more">@item.Category.CategoryName</h5>
+          
+                                        <h3 class="product-name">@item.ProductName</h3>
+                                        <h3 class="product-price">
+                                            £ @item.Price
+                                           
+                                        </h3>
+
+                                      
+                                        @if (item.Quantity > 0)
+                                        {
+            
+                                            <h3 class="product-availability">
+                                                Available
+                                            </h3>
+                                        }
+                                        else
+                                        {
+                                            <h3 class="product-availability">
+                                                Not Available
+                                            </h3>
+                                        }
+
+                                    <div class="product-select">
+                                        @if (item.Quantity > 0)
+                                        {
+                                            using (Html.BeginForm("AddInCart", "Shop", new { qty = 1, productId = item.ProductID }, FormMethod.Post))
+                                            {
+                                                <button class="add-to-cart round-icon-btn" type="submit">Add To Cart</button>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p>Product not available</p>
+                                        }
+                                    </div>
+                                    </div>
+                                </div>
+                                
+                            }
+
+                        </div>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

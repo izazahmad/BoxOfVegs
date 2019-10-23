@@ -57,11 +57,11 @@ namespace BoxOfVegs.Web.Controllers
             }
             else
             {
-                List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"]; ;
+                List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
                 int change = 0;
                 foreach (var item in newlist)
                 {
-                    if (item.ProductID== crt.ProductID)
+                    if (item.ProductID == crt.ProductID)
                     {
                         item.Quanity += crt.Quanity;
                         item.Subtotal += crt.Subtotal;
@@ -158,8 +158,7 @@ namespace BoxOfVegs.Web.Controllers
 
             return View();
         }
-        [HttpPost]
-        
+        [HttpPost]      
         public ActionResult Checkout( FormCollection formData)
         {
             
@@ -168,7 +167,7 @@ namespace BoxOfVegs.Web.Controllers
                   if(Session["cart"] != null)
                   {
                    
-                        List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
+                       List<CartViewModel> newlist = (List<CartViewModel>)Session["cart"];
                     int userID = Convert.ToInt32(Session["UserID"].ToString());
 
                     Invoice invoice = new Invoice
@@ -264,6 +263,10 @@ namespace BoxOfVegs.Web.Controllers
         {
             return new ActionAsPdf("CreateInvoice", new { userid });
 
+        }
+        public ActionResult YourOrder()
+        {
+            return View();
         }
     }
 }

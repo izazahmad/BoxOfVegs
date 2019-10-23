@@ -40,5 +40,23 @@ namespace BoxOfVegs.Services
                 return context.Users.Where(x => x.UserName == username).FirstOrDefault();
             }
         }
+        public void UpdateProfile(User user)
+        {
+            using (var context = new BOVContext())
+            {
+                context.Configuration.ValidateOnSaveEnabled = false;
+                context.Entry(user).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+        public void RemoveAccount(User user)
+        {
+            using (var context = new BOVContext())
+            {
+                var User = context.Users.Find(user.UserID);
+                context.Users.Remove(User);
+                context.SaveChanges();
+            }
+        }
     }
 }

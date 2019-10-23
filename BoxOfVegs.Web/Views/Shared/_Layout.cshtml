@@ -23,52 +23,86 @@
     <script src="~/Content/js/jquery.scrollUp.min.js"></script>
     <script src="~/Content/js/main.js"></script>
 
+   
+    <link rel="stylesheet" href="~/Content/css/icomoon.css">
+    <link rel="stylesheet" href="~/Content/css/jquery.fancybox.min.css">
+    <link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+
 
 </head>
 <body>
     <div id="main">
         <header>
-            <div class="header-block d-flex align-items-center">
+            <div class="header-block d-flex align-items-center navigation">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-6">
                             <div class="header-left d-flex flex-column flex-md-row align-items-center">
-                                <p class="d-flex align-items-center"><i class="fas fa-envelope"></i>shekhizaz@gmail.com</p>
-                                <p class="d-flex align-items-center"><i class="fas fa-phone"></i>+447305897349</p>
+                                <p class="d-flex align-items-center justify-content-center"><i class="fas fa-envelope"></i>shekhizaz@gmail.com</p>
+                                <p class="d-flex align-items-center justify-content-center"><i class="fas fa-phone"></i>+447305897349</p>
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <div class="header-right d-flex flex-column flex-md-row justify-content-md-end justify-content-center align-items-center">
+                            <div class="navgition-menu header-right d-flex flex-column flex-md-row justify-content-md-end justify-content-center align-items-center">
                                 @if (Session["UserID"] == null)
                                 {
 
-                                    <div class="login d-flex"><a href="@Url.Action("Login", "User")"><i class="fas fa-user"></i>Login or Register</a></div>
+                                    <div class="login d-flex"><i class="fas fa-user"></i> &nbsp;<a href="@Url.Action("Login", "User")">Login or Register</a></div>
+
 
                                 }
                                 else
                                 {
                                     if (Convert.ToInt32(Session["UserRoleID"]) == 1)
                                     {
-                                    <div class="login d-flex">
-                                        <a href="#"><i class="fas fa-user"></i>@Session["FirstName"] </a>
-                                        &nbsp &nbsp
-                                        <a href="@Url.Action("Index", "Category")">Admin Panel</a>
-                                        &nbsp &nbsp
 
-                                        <a class="text-danger" href="@Url.Action("Logout", "User")">Logout</a>
-                                    </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="login d-flex">
-                                            <a href="#"><i class="fas fa-user"></i>@Session["FirstName"] </a>
-                                            &nbsp &nbsp
-                                            <a class="text-danger" href="@Url.Action("Logout", "User")">Logout</a>
-                                        </div>
+                                        <ul class="mb-0 login d-flex">
 
+                                            <li class="toggleable fas fa-user">
+                                                <a>@Session["FirstName"] </a>
+                                                @*&nbsp &nbsp*@
+                                                <ul class="sub-menu">
+                                                    <li>
+                                                        <a href="@Url.Action("ProFile", "User")">My Profile</a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="@Url.Action("Index", "Category")">Admin Panel</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="@Url.Action("YourOrder", "Shop")">Your Order</a>
+                                                    </li>
+                                                    @*&nbsp &nbsp*@
+
+                                                    <li>
+                                                        <a class="text-danger" href="@Url.Action("Logout", "User")">Logout</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     }
+                                     else
+                                     {
+                                        <ul class=" mb-0 login d-flex">
+                                            <li class="toggleable fas fa-user">
+                                                <a>@Session["FirstName"] </a>
+                                                <ul class="sub-menu">
+
+                                                    <li>
+                                                        <a href="@Url.Action("ProFile", "User")">My Profile</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="@Url.Action("YourOrder", "Shop")">Your Order</a>
+                                                    </li>
+                                                    <li> <a class="text-danger" href="@Url.Action("Logout", "User")">Logout</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                      }
                                 }
-        
+
 
                             </div>
                         </div>
@@ -92,7 +126,7 @@
                                         <a class="menu-item" href="@Url.Action("Index", "Shop")">Shop</a>
 
                                     </li>
-                                   
+
                                 </ul>
                             </div>
                         </div>
@@ -117,7 +151,7 @@
                                                 <li><a href="@Url.Action("Cart", "Shop")">Total: £ @Session["total"]</a></li>
 
                                             }
-                                            
+
 
 
 
@@ -133,7 +167,7 @@
             </nav>
 
 
-           
+
             @using (Html.BeginForm("Index", "Shop", FormMethod.Post))
             {
                 <div class="navigation-filter">
@@ -141,19 +175,19 @@
                         <div class="row">
 
 
-                                <div class="col-8 col-md-8 col-lg-5 col-xl-7">
-                                    <input id="mainSearchTxt" class="no-round-input " type="text" placeholder="enter search text" name="search">
+                            <div class="col-8 col-md-8 col-lg-5 col-xl-7">
+                                <input id="mainSearchTxt" class="no-round-input " type="text" placeholder="enter search text" name="search">
 
-                                        </div>
-                                        <div class="col-4 col-md-4 col-lg-3 col-xl-2">
-                                            <button class="no-round-btn" id="mainSearchBtn">Search</button>
-                                        </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-3 col-xl-2">
+                                <button class="no-round-btn" id="mainSearchBtn">Search</button>
+                            </div>
 
                         </div>
                     </div>
                 </div>
             }
-           
+
             <br />
             <br />
         </header>
@@ -181,7 +215,7 @@
 
                             <div class="col-12 col-sm-4 text-sm-center text-md-left">
                                 <div class="footer-quicklink">
-                                  <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><a href="#">Shopping cart</a><a href="@Url.Action("Index", "Shop")">Shop</a>
+                                    <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><a href="#">Shopping cart</a><a href="@Url.Action("Index", "Shop")">Shop</a>
                                 </div>
                             </div>
 
@@ -201,6 +235,19 @@
         <!-- End footer-->
 
     </div>
+
+    <script src="~/Content/js/jquery-ui.min.js"></script>
+    <script src="~/Content/js/jquery.countdown.min.js"></script>
+    <script src="~/Content/js/jquery.zoom.min.js"></script>
+    <script src="~/Content/js/parallax.js"></script>
+    <script src="~/Content/js/jquery.fancybox.js"></script>
+    <script src="~/Content/js/numscroller-1.0.js"></script>
+    <script src="~/Content/js/vanilla-tilt.min.js"></script>
+    @*<script>
+        var sence = document.getElementById('img-block')
+        var parallaxInstance = new Parallax(sence, {
+            hoverOnly: true,
+        });</script>*@
 
     <a id="scrollUp" href="#top" style="position: fixed; z-index: 105;"><i class="arrow_carrot-up"></i></a>
 

@@ -1,0 +1,128 @@
+﻿@model  ShopProductViewModel
+
+@{
+    ViewBag.Title = "Index";
+
+}
+@{ var imageURL = "placeholder-image.png"; }
+
+
+<div class="ogami-breadcrumb">
+    <div class="container">
+        <ul>
+            <li> <a class="breadcrumb-link" href="@Url.Action("Index", "Home")">Home</a></li>
+            <li> <a class="breadcrumb-link active">Shop</a></li>
+        </ul>
+    </div>
+</div>
+<div class="shop-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3">
+
+                <div class="shop-sidebar">
+
+                    <div class="shop-sidebar_department">
+
+                        <div class="department_top mini-tab-title underline">
+                            <h2 class="title">Departments</h2>
+
+                        </div>
+                        <div class="department_bottom">
+                            @foreach (var item in Model.ShopCategories)
+                            {
+
+                                <a class="department-link filterLink @(Model.CategoryID.HasValue && Model.CategoryID.Value == item.CategoryID ? "active" : string.Empty)" href="@Url.Action("Index", "Shop", new { categoryID = item.CategoryID, sortBy = Model.SortBy })">@item.CategoryName</a>
+                                <br />
+
+                            }
+                        </div>
+                    </div>
+                    <div class="shop-sidebar_department">
+                        <div class="price-filter_top mini-tab-title underline">
+                            <h2 class="title">Filter By</h2>
+                        </div>
+                        <div class="department_bottom">
+
+
+                            <a href="@Url.Action("Index", "Shop", new { sortBy=1, categoryID = Model.CategoryID })" class=" department-link filterLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 1 ? "active" : string.Empty : string.Empty)">Newest First</a>
+                            <br />
+                            <a href="@Url.Action("Index", "Shop", new { sortBy=2, categoryID = Model.CategoryID })" class=" department-link filterLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 2 ? "active" : string.Empty : string.Empty)">Price: low to high</a>
+                            <br />
+                            <a href="@Url.Action("Index", "Shop", new { sortBy=3, categoryID = Model.CategoryID  })" class="department-link filterLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 3  ? "active" : string.Empty : string.Empty)">Price: high to low</a>
+                            <br />
+                        </div>
+                        <br />
+                        <h4><a href="@Url.Action("Index", "Shop")">Reset Filter & Search</a></h4>
+                       
+                    </div>
+
+                </div>
+                <div class="filter-sidebar--background" style="display: none"></div>
+            </div>
+            <div class="col-xl-9">
+                <div class="shop-grid-list">
+                    <div class="shop-products">
+                        <div class="shop-products_top mini-tab-title underline">
+                            <div class="row align-items-center">
+                                <div class="col-6 col-xl-4">
+                                    <h2 class="title">Shop</h2>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="shop-products_bottom" id="shopproducts">
+                            <div class="row no-gutters-sm">
+                                @foreach (var item in Model.ShopProducts)
+                                {
+                                    var imageUrl = string.IsNullOrEmpty(item.ImageUrl) ? imageURL : item.ImageUrl;
+
+                                    <div class="col-6 col-md-4">
+                                        <div class="product">
+                                            <div class="product-img_block">
+                                                <a class="product-img" href="@Url.Action("ProductDetails", "Product", new { productId = item.ProductID })"><img src="~/Content/images/product/@imageUrl" alt=""></a>
+                                            </div>
+                                            <div class="product-info_block">
+                                                <h5 class="product-type">@item.Category.CategoryName</h5>
+                                                <a class="product-name">@item.ProductName</a>
+                                                <h3 class="product-price">
+                                                    £ @item.Price
+                                                </h3>
+                                                <h5 class="product-avaiable"><span>@item.Quantity In stock</span></h5>
+                                            </div>
+                                            <div class="product-select">
+                                                @if(item.Quantity>0)
+                                                { 
+                                                  using (Html.BeginForm("AddInCart", "Shop", new {qty=1, productId = item.ProductID }, FormMethod.Post))
+                                                  {
+                                                    <button class="add-to-cart round-icon-btn" type="submit">Add To Cart</button>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <p>Product not available</p>
+                                                }
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".filterLink").click(function () {
+        var url = $(this).attr("data-href");
+
+        if (url != "" || url != undefined) {
+            GetData(url);
+        }
+    });
+</script>

@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+}
+
+
+<div class="ogami-breadcrumb">
+    <div class="container">
+        <ul>
+            <li> <a class="breadcrumb-link" href="@Url.Action("Index", "Home")">Home</a></li>
+            <li> <a class="breadcrumb-link" href="@Url.Action("Index", "Shop")">Shop</a></li>
+            <li> <a class="breadcrumb-link" href="@Url.Action("Cart", "Shop")">Cart</a></li>
+            <li><a class="breadcrumb-link active">Checkout</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="shop-checkout">
+    <div class="container">
+        <form action="" method="post">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <h2 class="form-title">Shipping details</h2>
+                    
+                    <div class="form-group">
+                        <label for="inputCountry">Country*</label>
+                        <input class="no-round-input-bg" type="text" required value="United Kingdom" name="country">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStreet">Street address*</label>
+                        <input class="no-round-input-bg" id="inputStreet" type="text" required name="street">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputZip">Postcode / ZIP*</label>
+                        <input class="no-round-input-bg" id="inputZip" type="text" name="postCode">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputCity">Town / City*</label>
+                        <input class="no-round-input-bg" id="inputCity" type="text" required value="Leicester" name="city">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPhone">Phone*</label>
+                        <input class="no-round-input-bg" id="inputPhone" type="tel" pattern="[0-9]{11}" name="phone" required>
+                        <span>Format: 07123456789</span>
+                    </div>
+                    
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <h2 class="form-title">Your order</h2>
+                    <div class="shopping-cart">
+                        <div class="cart-total_block">
+                            <table class="table">
+                                <colgroup>
+                                    <col span="1" style="width: 50%">
+                                    <col span="1" style="width: 50%">
+                                </colgroup>
+                                <tbody>
+                                    @if (Session["cart"] != null)
+                                    {
+
+                                        foreach (var item in (List<CartViewModel>)Session["cart"])
+                                        {
+                                            <tr>
+                                                <th class="name">@item.ProductName × <span>@item.Quanity</span></th>
+                                                <td class="price black" style="border-top: 0">£@item.Subtotal</td>
+                                            </tr>
+                                        }
+                                    }
+                                    <tr>
+                                        <th>SUBTOTAL</th>
+                                        <td class="price">£@Session["total"]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>SHIPPING</th>
+                                        <td>
+                                            <p>Free shipping</p>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>TOTAL</th>
+                                        <td class="total">£@Session["total"]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        @using (Html.BeginForm())
+                        {
+                        <button class="normal-btn submit-btn" type="submit">Place order</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
