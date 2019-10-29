@@ -29,5 +29,23 @@ namespace BoxOfVegs.Web.ViewModels
         public Decimal Subtotal { get; set; }
         
     }
-       
+    public class OrdersVeiwModel
+    {
+        public int OrderID { get; set; }
+        public int ProductID { get; set; }
+        public string ProductName { get; set; }
+        public int Quantity { get; set; }
+        public Product Product { get; set; }
+        public Decimal Subtotal { get; set; }
+        public Decimal UnitPrice { get; set; }
+        public Invoice Invoice { get; set; }
+        public DateTime InvoiceDate { get; set; }
+        public int UserID { get; set; }
+        public User User { get; set; }
+        public string PostCode { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+
+    }
+
 }

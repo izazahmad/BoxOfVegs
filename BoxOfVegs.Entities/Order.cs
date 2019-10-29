@@ -16,5 +16,7 @@ namespace BoxOfVegs.Entities
         public int Quantity { get; set; }
         public decimal Subtotal { get; set; }
         public decimal UnitPrice { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual Invoice Invoice { get; set; }
     }
 }

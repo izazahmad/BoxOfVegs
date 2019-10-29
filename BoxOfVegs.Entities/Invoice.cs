@@ -22,5 +22,6 @@ namespace BoxOfVegs.Entities
         public string PhoneNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
         public decimal TotalAmount { get; set; }
+        public virtual User User { get; set; }
     }
 }

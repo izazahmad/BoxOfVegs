@@ -1,4 +1,4 @@
-﻿
+﻿@model List<OrdersVeiwModel>
 @{
     ViewBag.Title = "YourOrder";
 }
@@ -13,39 +13,43 @@
         <ul>
             <li> <a class="breadcrumb-link" href="@Url.Action("Index", "Home")">Home</a></li>
             <li> <a class="breadcrumb-link" href="@Url.Action("Index", "Shop")">Shop</a></li>
-            <li> <a class="breadcrumb-link active">Shoping cart</a></li>
+            <li> <a class="breadcrumb-link active">Your orders</a></li>
         </ul>
     </div>
 </div>
 
 <div class="shopping-cart">
-    <div class="container">
-        @using (Html.BeginForm("UpdateCart", "Shop", FormMethod.Post))
+    <div class="container ">
+        @using (Html.BeginForm("YourOrder", "Shop", FormMethod.Post))
         {
 
             <div class="col-12">
 
                 <div class="shop-detail_more-info">
 
-                    <div id="tab-so3">
+                    <div id="tab">
                         <ul class="mb-0">
-                            <li class="active"> <a href="#tab">Customer Reviews </a></li>
+                            <li>Your Orders</li>
                         </ul>
+                        @*<div class="mb-1 color"><p>Your Orders</p></div>*@
                         <div class="row">
                             <div class="col-12">
                                 <div class="product-table">
                                     <table class="table table-responsive">
-                                        <colgroup>
+                                        @*<colgroup>
                                             <col span="1" style="width: 15%">
                                             <col span="1" style="width: 30%">
                                             <col span="1" style="width: 15%">
                                             <col span="1" style="width: 15%">
                                             <col span="1" style="width: 15%">
                                             <col span="1" style="width: 10%">
-                                        </colgroup>
+                                        </colgroup>*@
 
                                         <thead>
                                             <tr>
+                                                <th class="product-item" scope="col">OrderId</th>
+                                                <th class="product-item" scope="col">InvoiceId</th>
+                                                <th class="product-item" scope="col">Order Date</th>
                                                 <th class="product-iamge" scope="col">Image</th>
                                                 <th class="product-name" scope="col">Product name</th>
                                                 <th class="product-price" scope="col">Price</th>
@@ -55,27 +59,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (Session["cart"] != null)
-                                            {
+                                           
 
-                                                foreach (var item in (List<CartViewModel>)Session["cart"])
+                                                @foreach (var item in Model)
                                                 {
-                                                    var imageUrl = string.IsNullOrEmpty(item.ProductURL) ? imageURL : item.ProductURL;
+                                                    var imageUrl = string.IsNullOrEmpty(item.Product.ImageUrl) ? imageURL : item.Product.ImageUrl;
 
                                                     <tr>
+                                                        <td>@item.OrderID</td>
+                                                        <td>@item.Invoice.InvoiceID</td>
+                                                        <td>@item.Invoice.InvoiceDate</td>
                                                         <td class="product-iamge">
                                                             <div class="img-wrapper"><img src="~/Content/images/product/@imageUrl" alt="product image"></div>
                                                         </td>
-                                                        <td class="product-name">@item.ProductName</td>
-                                                        <td class="product-price">£ @item.Price</td>
-                                                        <td class="product-quantity">
-                                                            <input class="quantity no-round-input" type="number" min="1" max="@item.TotalQuantity" value="@item.Quanity" name="qty">
-                                                        </td>
+                                                        <td class="product-name">@item.Product.ProductName</td>
+                                                        <td class="product-price">£ @item.Product.Price</td>
+                                                        <td class="product-quantity">@item.Quantity</td>
                                                         <td class="product-total">£@item.Subtotal</td>
-                                                       
+
                                                     </tr>
                                                 }
-                                            }
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -84,78 +88,79 @@
 
                         </div>
 
-                        <div id="tab">
+                        @*<div id="tab">
                             <div class="customer-reviews_block">
-                                @*@{int i = 1;}
-                @foreach (var item in Model.Reviews)
-                {*@
-                                <div class="customer-review">
+                                @{int i = 1;}
+        @foreach (var item in Model.Reviews)
+        {
+                        <div class="customer-review">
 
-                                    <div class="row">
-                                        @*<script>
-                          $(function () {
-                              $('#@("rating"+i)').rateYo({
-                                  rating: @item.Rating,
-                                  starWidth:"15px",
-                                  readOnly: true
-                                });
-                            });
-                        </script>*@
-                                        <div class="col-12 col-sm-9 col-lg-10">
-                                            @*<div class="customer-comment">
+                            <div class="row">
+                                <script>
+                  $(function () {
+                      $('#@("rating"+i)').rateYo({
+                          rating: @item.Rating,
+                          starWidth:"15px",
+                          readOnly: true
+                        });
+                    });
+                </script>
+                                <div class="col-12 col-sm-9 col-lg-10">
+                                    <div class="customer-comment">
 
-                                <h5 class="comment-date">@item.PostDate.ToShortDateString()</h5>
-                                <h3 class="customer-name">@item.User.UserName</h3>
-                                <div class="customer-rate" id="@("rating"+i)"></div>
-                                <p class="customer-commented">@item.Review </p>
-                            </div>*@
-                                        </div>
-
-                                    </div>
-
+                        <h5 class="comment-date">@item.PostDate.ToShortDateString()</h5>
+                        <h3 class="customer-name">@item.User.UserName</h3>
+                        <div class="customer-rate" id="@("rating"+i)"></div>
+                        <p class="customer-commented">@item.Review </p>
+                    </div>
                                 </div>
-                                @*i++;
-                }*@
 
-                                <div class="add-review">
-                                    @*<div class="add-review_top">
-                                        <h2>Add Review</h2>
-                                    </div>*@
-                                    <div class="add-review_bottom">
-                                        @*@if (Session["UserID"] != null)
-                                        {
-                                            using (Html.BeginForm("AddReview", "Product", FormMethod.Post))
-                                            {
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="rating">
-                                                            <h5>Your rating:</h5>
-                                                            <input type="hidden" id="rating" name="rating" />
-
-                                                            <div id="rateYo"></div>
-
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-12">
-                                                        @Html.TextAreaFor(model => model.Review, new { @class = "textarea-form" })
-                                                    </div>
-
-                                                    <div class="col-12">
-                                                        <button class="normal-btn" type="submit">Submit Review</button>
-                                                        @Html.HiddenFor(model => model.Product.ProductID)
-                                                    </div>
-                                                </div>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <a href="@Url.Action("Login","User")">Login For Rating and Add Review</a>
-                                        }*@
-                                    </div>
-                                </div>
                             </div>
+
                         </div>
+                        @*i++;
+        }
+
+                        <div class="add-review">
+                                    <div class="add-review_top">
+            <h2>Add Review</h2>
+        </div>
+                        <div class="add-review_bottom">
+                                        @if (Session["UserID"] != null)
+            {
+                using (Html.BeginForm("AddReview", "Product", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="rating">
+                                <h5>Your rating:</h5>
+                                <input type="hidden" id="rating" name="rating" />
+
+                                <div id="rateYo"></div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-12">
+                            @Html.TextAreaFor(model => model.Review, new { @class = "textarea-form" })
+                        </div>
+
+                        <div class="col-12">
+                            <button class="normal-btn" type="submit">Submit Review</button>
+                            @Html.HiddenFor(model => model.Product.ProductID)
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <a href="@Url.Action("Login","User")">Login For Rating and Add Review</a>
+            }
+        </div>
+                            </div>
+                    </div>
+                        </div>*@
+                        
                     </div>
 
                 </div>

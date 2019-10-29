@@ -1,4 +1,5 @@
-﻿using BoxOfVegs.Entities;
+﻿using BoxOfVegs.Database;
+using BoxOfVegs.Entities;
 using BoxOfVegs.Services;
 using BoxOfVegs.Web.ViewModels;
 using Rotativa.MVC;
@@ -16,6 +17,8 @@ namespace BoxOfVegs.Web.Controllers
         ServicesForCategories categoryService = new ServicesForCategories();
         ServicesForProducts productService = new ServicesForProducts();
         ServicesForShop shopService = new ServicesForShop();
+        BOVContext context = new BOVContext();
+
         public ActionResult Index(string search, int? minPrice, int? maxPrice, int? categoryID, int? sortBy)
         {
            
@@ -266,7 +269,34 @@ namespace BoxOfVegs.Web.Controllers
         }
         public ActionResult YourOrder()
         {
-            return View();
+            if (Session["UserID"] != null)
+            {
+                int userId = Convert.ToInt32(Session["UserID"].ToString());
+                var orderRecords = context.Orders.Join(context.Invoices, o => o.InvoiceID, i => i.InvoiceID, (o, i) => new { o, i })
+                                                .Where(u => u.i.UserID == userId).OrderByDescending(u=>u.i.InvoiceDate)
+                                                .Select(u => new OrdersVeiwModel
+                                                {
+                                                    OrderID= u.o.OrderID,
+                                                    ProductID= u.o.ProductID,
+                                                    ProductName= u.o.ProductName,
+                                                    Quantity=u.o.Quantity,
+                                                    Product= u.o.Product,
+                                                    Subtotal=u.o.Subtotal,
+                                                    UnitPrice= u.o.UnitPrice,
+                                                    Invoice=u.o.Invoice,
+                                                    InvoiceDate=u.i.InvoiceDate,
+                                                    UserID= u.i.UserID,
+                                                    User=u.i.User,
+                                                    PostCode= u.i.PostCode,
+                                                    Address=u.i.Address,
+                                                    City=u.i.City
+                                                });
+                       return View(orderRecords.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login", "User");
+            }
         }
     }
 }
